@@ -29,7 +29,7 @@ public class TestController {
 //        logger.trace("TRACE Level 테스트");
 //        logger.debug("DEBUG Level 테스트");
 
-//        info 레벨은 Console 로깅 O, 파일 로깅 X
+//        info 레벨은 Console 로깅 O, 파일 로깅 Xtest
         logger.info("INFO Level 테스트");
 //        warn 레벨은 Console 로깅 O, 파일 로깅 O
         logger.warn("Warn Level 테스트");
