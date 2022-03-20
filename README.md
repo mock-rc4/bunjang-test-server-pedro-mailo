@@ -16,3 +16,11 @@
   + Password : pbcwsf
   
 ## 2022-03-20 진행상황
++ ERD 설계 -> 추가 수정사항
+  + product와 product_copy 테이블 createAt에  AI체크 해제
+  + SubCategory 테이블 categoryName 타입 누락 -> 추가완료
+  + Product 테이블 directtrans 타입 누락 -> 추가 완료
+
++ 제작할 API리스트업, 명세서 작성 시작
+
++ RDS에 ERD설계한 DB 생성하고 DataGrip 연결 -> 더미 데이터 생성 시작
