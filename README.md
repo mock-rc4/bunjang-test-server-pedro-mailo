@@ -1,4 +1,5 @@
 # Bunjang Clone coding Project 
+> ## [🙈 기획서](https://docs.google.com/document/d/1mJEql5gy8jLTYZXEtAzuZwmRtznI321b/edit)
 > ## [📫 API Sheet](https://docs.google.com/spreadsheets/d/1saKFspgb7g0NZVLX445RVXS27s1UKaY5/edit#gid=990061567)    
 > ## [🧩 ERD]()
 >> password:
