@@ -36,6 +36,17 @@
 </div>
 </details>
 
+
+<details> 
+<summary> 2022.3.20 (Sun) </summary>
+<div markdown="1">
+ 
+ > 
+  - 마일로와 ERD 설계
+  - API 명세서 작성(리스트만 작성)
+</div>
+</details>
+
 <br /> 
 
 ## ⚠ Issue
