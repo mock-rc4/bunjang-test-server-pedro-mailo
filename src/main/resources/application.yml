@@ -7,7 +7,7 @@ spring:
 
   datasource:
     platform: mysql
-    url: jdbc:mysql://rc4-pedro-server-db.cuupyzlcppur.ap-northeast-2.rds.amazonaws.com:3306/rasingtest-bunjang?useSSL=false&autoReconnect=true # 변경해주세요
+    url: jdbc:mysql://rc4-pedro-server-db.cuupyzlcppur.ap-northeast-2.rds.amazonaws.com:3306/rasingtest-bunjangver2?useSSL=false&autoReconnect=true # 변경해주세요
     username: pedro # 변경해주세요
     password: GUStjr1085!  # 변경해주세요
     #driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전

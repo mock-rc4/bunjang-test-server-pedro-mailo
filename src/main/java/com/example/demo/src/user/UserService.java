@@ -53,8 +53,9 @@ public class UserService {
             //jwt 발급.
             String jwt = jwtService.createJwt(Idx);
             System.out.println("jwt : "+jwt);
-            return new PostUserRes(jwt,Idx);
-        } catch (Exception exception) {
+            return new PostUserRes(jwt,Idx,postUserReq.getShopName(), postUserReq.getPhoneNumber(), postUserReq.getUserName(), postUserReq.getUserBirth(), postUserReq.getUserPwd());
+        }
+        catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
