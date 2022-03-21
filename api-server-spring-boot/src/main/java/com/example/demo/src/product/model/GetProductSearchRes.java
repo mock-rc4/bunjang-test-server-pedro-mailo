@@ -13,4 +13,5 @@ public class GetProductSearchRes {
     private String productName; // 제품 제목
     private int saftyPay;   // 번개페이(안전페이) 여부        1/2
     private String imageUrl;
+
 }

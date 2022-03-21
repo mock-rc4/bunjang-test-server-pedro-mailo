@@ -42,8 +42,8 @@ public class ProductController {
     @ResponseBody
     @GetMapping("/productName")
     public BaseResponse<List<GetProductSearchRes>> getProductBySearch(@RequestParam(required = false) String Keyword){
-        System.out.println("키워드 컨트롤러 들어옴");
-        System.out.println(Keyword);
+        //System.out.println("키워드 컨트롤러 들어옴");
+        //.out.println(Keyword);
         try{
             if(Keyword == ""){ // 검색어를 입력하지 않았을 때
                 System.out.println("검색어 입력 안함");
