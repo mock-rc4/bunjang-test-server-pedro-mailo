@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class PostUserReq {
-    private String UserName;
-    private String id;
-    private String email;
-    private String password;
+    private String shopName;
+    private String phoneNumber;
+    private String userName;
+    private String userBirth;
+    private String userPwd;
 }

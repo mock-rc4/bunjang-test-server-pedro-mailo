@@ -59,11 +59,15 @@ public class UserDao {
     
 
     public int createUser(PostUserReq postUserReq){
-        String createUserQuery = "insert into UserInfo (userName, ID, password, email) VALUES (?,?,?,?)";
-        Object[] createUserParams = new Object[]{postUserReq.getUserName(), postUserReq.getId(), postUserReq.getPassword(), postUserReq.getEmail()};
-        this.jdbcTemplate.update(createUserQuery, createUserParams);
-
+        System.out.println("CCC6");
+        String createUserQuery = "insert into User123 (shopName, phoneNumber, userName,userBirth,userPwd) VALUES (?,?,?,?,?);";
+        System.out.println("CCC8");
+        Object[] createUserParams = new Object[]{postUserReq.getShopName(),postUserReq.getPhoneNumber(),postUserReq.getUserName(),postUserReq.getUserBirth(),postUserReq.getUserPwd()};
+        System.out.println("CCC9");
+        this.jdbcTemplate.update(createUserQuery, createUserParams);//// 에러 나는 라인!
+        System.out.println("CCC10");
         String lastInserIdQuery = "select last_insert_id()";
+        System.out.println("CCC11");
         return this.jdbcTemplate.queryForObject(lastInserIdQuery,int.class);
     }
 

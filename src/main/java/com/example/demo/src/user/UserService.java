@@ -33,25 +33,27 @@ public class UserService {
 
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-        //중복
-        if(userProvider.checkEmail(postUserReq.getEmail()) ==1){
-            throw new BaseException(POST_USERS_EXISTS_EMAIL);
-        }
+        //해당 코드는 아마 회원정보 등록된 여부 확인후, 회원가입 또는 로그인으로 넘어가는 플랫폼이라서 아마 조금 복잡할 가능성 있음
+//        if(userProvider.checkEmail(postUserReq.getPhoneNumber()) ==1){
+//            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+//        }
 
         String pwd;
         try{
             //암호화
-            pwd = new SHA256().encrypt(postUserReq.getPassword());
-            postUserReq.setPassword(pwd);
+            pwd = new SHA256().encrypt(postUserReq.getUserPwd());
+            System.out.println("pwd : "+pwd); // 정상적으로 암호화 처리 되었는지 확인
+            postUserReq.setUserPwd(pwd);
 
         } catch (Exception ignored) {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
         try{
-            int userIdx = userDao.createUser(postUserReq);
+            int Idx = userDao.createUser(postUserReq);
             //jwt 발급.
-            String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
+            String jwt = jwtService.createJwt(Idx);
+            System.out.println("jwt : "+jwt);
+            return new PostUserRes(jwt,Idx);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
