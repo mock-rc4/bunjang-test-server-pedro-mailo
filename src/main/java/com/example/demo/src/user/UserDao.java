@@ -83,7 +83,7 @@ public class UserDao {
     }
 
     public int checkPhone(String phoneNumber) {
-        String checkPhoneQuery = "select exists(select phoneNumber from User where phoneNumber = ?)";
+        String checkPhoneQuery = "select exists(select phoneNumber from User where phoneNumber = ? and status = 1)";
         String checkPhoneParams = phoneNumber;
         return this.jdbcTemplate.queryForObject(checkPhoneQuery,
                 int.class,
@@ -97,8 +97,8 @@ public class UserDao {
         return this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
     }
 
-    public User getPwd(PostLoginReq postLoginReq) {
-        String getPwdQuery = "select Idx, phoneNumber,userBirth,userName,userPwd from User where phoneNumber = ? and userName= ? and userBirth = ?";
+    public User getUserInfo(PostLoginReq postLoginReq) {
+        String getPwdQuery = "select Idx, phoneNumber,userBirth,userName,userPwd from User where phoneNumber = ? and status = 1 ";
         String getPhoneParams = postLoginReq.getPhoneNumber();
         String getNameParams = postLoginReq.getUserName();
         String getBirthParams = postLoginReq.getUserBirth();
@@ -111,7 +111,7 @@ public class UserDao {
                         rs.getString("userName"),
                         rs.getString("userPwd")
                 ),
-                getPhoneParams,getNameParams,getBirthParams
+                getPhoneParams
         );
 
     }

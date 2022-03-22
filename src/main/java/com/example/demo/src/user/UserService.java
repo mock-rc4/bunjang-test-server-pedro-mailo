@@ -31,14 +31,10 @@ public class UserService {
 
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-        //해당 코드는 아마 회원정보 등록된 여부 확인후, 회원가입 또는 로그인으로 넘어가는 플랫폼이라서 아마 조금 복잡할 가능성 있음
-//        if(userProvider.checkEmail(postUserReq.getPhoneNumber()) ==1){
-//            throw new BaseException(POST_USERS_EXISTS_EMAIL);
-//        }
         //해당 코드는 질의 한다.
-        if(userProvider.checkPhone(postUserReq.getPhoneNumber()) ==1){
+        if(userProvider.checkPhone(postUserReq.getPhoneNumber())==1){
             //userProvider.logIn(postLoginReq);
-//            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+            throw new BaseException(POST_USERS_EXISTS_PHONE);
         }
         String pwd;
         try{
@@ -74,12 +70,12 @@ public class UserService {
     }
 
     public PostLoginRes userLogin(PostLoginReq postLoginReq) throws BaseException {
-        User user = userDao.getPwd(postLoginReq);
+        User user = userDao.getUserInfo(postLoginReq);
         String userPhoneNumber;
         userPhoneNumber = user.getPhoneNumber();
 
         if (postLoginReq.getPhoneNumber().equals(userPhoneNumber)) {
-            int userIdx = userDao.getPwd(postLoginReq).getIdx();
+            int userIdx = userDao.getUserInfo(postLoginReq).getIdx();
             String authJwt = jwtService.createJwt(userIdx);
             return new PostLoginRes(userIdx, authJwt);
         }

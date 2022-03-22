@@ -122,6 +122,20 @@ public class UserController {
             if (postLoginReq.getPhoneNumber() == null || postLoginReq.getPhoneNumber().length() == 0) {
                 return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
             }
+            if (postLoginReq.getUserName() == null || postLoginReq.getUserName().length() == 0) {
+                return new BaseResponse<>(POST_USERS_EMPTY_NAME);
+            }
+            if (postLoginReq.getUserBirth() == null || postLoginReq.getUserBirth().length() == 0) {
+                return new BaseResponse<>(POST_USERS_EMPTY_BIRTH);
+            }
+
+            if(userProvider.checkPhone(postLoginReq.getPhoneNumber())==0){
+                //userProvider.logIn(postLoginReq);
+                return new BaseResponse<>(POST_USERS_INVALID_PHONENUMBER);
+            }
+
+
+
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
             return new BaseResponse<>(postLoginRes);
         } catch (BaseException exception){
