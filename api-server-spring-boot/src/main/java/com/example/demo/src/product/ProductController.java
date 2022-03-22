@@ -37,7 +37,7 @@ public class ProductController {
 
     /**
      * 검색어로 제품 조회 API
-     * [GET] /products/productName? productName
+     * [GET] products/productName?Keyword=
      */
     @ResponseBody
     @GetMapping("/productName")
@@ -62,4 +62,45 @@ public class ProductController {
         }
     }
 
-}
+
+    @ResponseBody
+    @GetMapping("/category/{categoryIdx}")
+    public BaseResponse<List<GetProductSearchRes>> getProductByCategory(@PathVariable("categoryIdx") int categoryIdx){
+        System.out.println("카테고리 컨트롤러 들어옴");
+        System.out.println(categoryIdx);
+        try{
+            List<GetProductSearchRes> getProductByCategory = productProvider.getProductsByCategory(categoryIdx);
+            if(getProductByCategory.size() == 0){ // 검색어에 해당하는 정보가 없을 때
+                System.out.println("검색어에 해당하는 정보 없음");
+                return new BaseResponse<>(EMPTY_RESPONSE); // 3001 입력한 키워드에 대한 검색결과가 없습니다.
+            }
+            else{
+                return new BaseResponse<>(getProductByCategory);
+            }
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+/**
+ * public BaseResponse<GetShopRes> getShop(@PathVariable("shopIdx") int restNum) {
+ *         //System.out.println(restNum);
+ *         try{
+ *             //System.out.println("try 들어옴");
+ *             GetShopRes getShopRes = shopProvider.getShop(restNum);
+ *             return new BaseResponse<>(getShopRes);
+ *         } catch(BaseException exception){
+ *             //System.out.println("에러 체크");
+ *             return new BaseResponse<>((exception.getStatus()));
+ *         }
+ *
+ *     }
+ */
+
+
+
+
+
+
+} /** class ProductController 끝나는 괄호 **/

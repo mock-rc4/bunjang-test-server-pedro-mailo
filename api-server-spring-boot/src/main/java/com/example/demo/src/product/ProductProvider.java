@@ -26,6 +26,7 @@ public class ProductProvider {
         this.jwtService = jwtService;
     }
 
+// 검색어로 제품 조회
     public List<GetProductSearchRes> getProductsBySearch(String keyword) throws BaseException{
         try{
             List<GetProductSearchRes> getProductSearchRes = productDao.getProductSearchRes(keyword);
@@ -37,8 +38,20 @@ public class ProductProvider {
 
     }
 
+// 카테고리로 제품 조회
+    public List<GetProductSearchRes> getProductsByCategory(int categoryIdx) throws BaseException{
+        System.out.println("카테고리 provider 들어옴");
+        try{
+            List<GetProductSearchRes> getProductByCategory = productDao.getProductByCategory(categoryIdx);
+            System.out.println("getProductByCategory 나오나?");
+            System.out.println(getProductByCategory);
+            return  getProductByCategory;
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
 
-
+    }
 
 
 

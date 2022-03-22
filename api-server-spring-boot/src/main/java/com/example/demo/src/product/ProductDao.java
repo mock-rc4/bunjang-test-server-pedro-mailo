@@ -37,7 +37,43 @@ public class ProductDao {
 
 
 
+/** 카테고리로 제품 조회 **/
+    public List<GetProductSearchRes> getProductByCategory(int categoryIdx){
+        System.out.println("카테고리 dao 들어옴");
+        String getProductsQuery = "select P.Idx, P.price, P.productName, P.saftyPay, PI.imageUrl\n" +
+                "                from Product as P\n" +
+                "                left join ProductImage as PI on P.Idx = PI.productIdx\n" +
+                "                join Category as C on P.categoryIdx = C.Idx\n" +
+                "                where C.Idx = ?\n" +
+                "                group by P.Idx";
+        int GetProductByCategoryPrams = categoryIdx;
+        System.out.println("쿼리 파라미터 받음");
+        return this.jdbcTemplate.query(getProductsQuery,
+                (rs,rowNum) -> new GetProductSearchRes(
+                        rs.getInt("Idx"),
+                        rs.getInt("price"),
+                        rs.getString("productName"),
+                        rs.getInt("saftyPay"),
+                        rs.getString("imageUrl")),
+                GetProductByCategoryPrams);
+    }   // getProductByCategory() 끝
+
+
+
+
+
+
+
+
+
+
+
 } /** productDao class 닫는 괄호 **/
+
+
+
+
+
 
 /**
 private int Idx;    // 제품 인덱스
