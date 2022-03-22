@@ -22,13 +22,11 @@ public class UserService {
     private final UserProvider userProvider;
     private final JwtService jwtService;
 
-
     @Autowired
     public UserService(UserDao userDao, UserProvider userProvider, JwtService jwtService) {
         this.userDao = userDao;
         this.userProvider = userProvider;
         this.jwtService = jwtService;
-
     }
 
     //POST
@@ -37,7 +35,11 @@ public class UserService {
 //        if(userProvider.checkEmail(postUserReq.getPhoneNumber()) ==1){
 //            throw new BaseException(POST_USERS_EXISTS_EMAIL);
 //        }
-
+        //해당 코드는 질의 한다.
+        if(userProvider.checkPhone(postUserReq.getPhoneNumber()) ==1){
+            //userProvider.logIn(postLoginReq);
+//            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+        }
         String pwd;
         try{
             //암호화
@@ -69,5 +71,39 @@ public class UserService {
         } catch(Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
+    }
+
+    public PostLoginRes userLogin(PostLoginReq postLoginReq) throws BaseException {
+        User user = userDao.getPwd(postLoginReq);
+        String userPhoneNumber;
+        userPhoneNumber = user.getPhoneNumber();
+
+        if (postLoginReq.getPhoneNumber().equals(userPhoneNumber)) {
+            int userIdx = userDao.getPwd(postLoginReq).getIdx();
+            String authJwt = jwtService.createJwt(userIdx);
+            return new PostLoginRes(userIdx, authJwt);
+        }
+        else{
+            throw new BaseException(LOGIN_USERS_NOT_JOIN);
+        }
+    }
+
+    public PostLoginRes userJoin(PostLoginReq postLoginReq) throws BaseException {
+        String pwd;
+        try{
+            pwd = new SHA256().encrypt(postLoginReq.getUserPwd());
+            postLoginReq.setUserPwd(pwd);
+        } catch (Exception ignored) {
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+        }
+//        try{
+        int userInfoIdx = userDao.userJoin(postLoginReq).getIdx();
+        //jwt 발급.
+        String authJwt = jwtService.createJwt(userInfoIdx);
+        return new PostLoginRes(userInfoIdx, authJwt);
+//        } catch (Exception exception) {
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+
     }
 }

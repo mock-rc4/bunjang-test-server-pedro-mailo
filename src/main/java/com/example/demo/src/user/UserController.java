@@ -87,9 +87,15 @@ public class UserController {
     @PostMapping("")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
-//        if(postUserReq.getEmail() == null){
-//            return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
-//        }
+        if (postUserReq.getPhoneNumber() == null || postUserReq.getPhoneNumber().length() == 0) {
+            return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
+        }
+        if (postUserReq.getUserName() == null || postUserReq.getUserName().length() == 0) {
+            return new BaseResponse<>(POST_USERS_EMPTY_NAME);
+        }
+        if (postUserReq.getUserBirth() == null || postUserReq.getUserBirth().length() == 0) {
+            return new BaseResponse<>(POST_USERS_EMPTY_BIRTH);
+        }
 //        //이메일 정규표현
 //        if(!isRegexEmail(postUserReq.getEmail())){
 //            return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
@@ -112,12 +118,64 @@ public class UserController {
         try{
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
+
+            if (postLoginReq.getPhoneNumber() == null || postLoginReq.getPhoneNumber().length() == 0) {
+                return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
+            }
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
             return new BaseResponse<>(postLoginRes);
         } catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
+
+    /**
+     * 로그인 - 회원가입 API
+     * [POST] /app/users
+     *
+     * @return PostLoginRes
+     * @return BaseResponse<PostLoginRes>
+     * @RequestBody PostLoginReq
+     * <p>
+     *
+     */
+    @ResponseBody
+    @PostMapping("/join-login")
+    public BaseResponse<PostLoginRes> joinAndLogIn(@RequestBody PostLoginReq postLoginReq) throws BaseException {
+        if (postLoginReq.getPhoneNumber() == null || postLoginReq.getPhoneNumber().length() == 0) {
+            return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
+        }
+        if (postLoginReq.getUserName() == null || postLoginReq.getUserName().length() == 0) {
+            return new BaseResponse<>(POST_USERS_EMPTY_NAME);
+        }
+        if (postLoginReq.getUserBirth() == null || postLoginReq.getUserBirth().length() == 0) {
+            return new BaseResponse<>(POST_USERS_EMPTY_BIRTH);
+        }
+//        if (!isRegexPhoneNumber(postUserLoginReq.getPhoneNumber())) {
+//            return new BaseResponse<>(INVALID_PHONE_NUMBER);
+//        }
+        // service 단으로 보내야함
+        // 이미 존재하는 회원이라면 그냥 로그인
+//        try {
+        int numberIsExist = userProvider.checkPhone(postLoginReq.getPhoneNumber());
+        if (numberIsExist == 1) {
+            PostLoginRes postLoginRes = userService.userLogin(postLoginReq);
+            return new BaseResponse<>(postLoginRes);
+        }
+
+        // 존재하지 않는다면 회원가입
+//        try {
+        PostLoginRes postLoginRes = userService.userJoin(postLoginReq);
+        return new BaseResponse<>(postLoginRes);
+//        }
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+    }
+
+
+
 
     /**
      * 유저정보변경 API
