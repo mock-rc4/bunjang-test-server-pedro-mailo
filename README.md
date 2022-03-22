@@ -38,12 +38,35 @@
 
 
 <details> 
-<summary> 2022.3.20 (Sun) </summary>
+<summary> 2022.3.20 (SUN) </summary>
 <div markdown="1">
  
  > 
   - 마일로와 ERD 설계
   - API 명세서 작성(리스트만 작성)
+  - 회원가입 API 작성(50%)
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.21 (MON) </summary>
+<div markdown="1">
+ 
+ > 
+  - API 명세서 작성(완성된 API 업데이트)
+  - 회원가입 API 작성(100%)
+  - 로그인 API (100%) 
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.22 (TUE) </summary>
+<div markdown="1">
+ 
+ > 
+  - API 명세서 작성(리스트만 작성)
+  - validation 처리 작성(화원가입, 로그인 API 관련 처리 but 정규식은 아직 안함)
+  - 
 </div>
 </details>
 
