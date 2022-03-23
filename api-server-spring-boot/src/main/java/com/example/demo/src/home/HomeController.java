@@ -38,6 +38,7 @@ public class HomeController {
     @ResponseBody
     @GetMapping("")
     public BaseResponse<List<String>> getHomepageData(){
+        System.out.println("홈컨트롤러 진입");
         try{
             int userIdx = jwtService.getUserIdx();
             List<String> getHomepageByUserIdx = homeProvider.getHomepage(userIdx);

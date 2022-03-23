@@ -30,13 +30,21 @@ public class HomeProvider {
     }
 
     public List<String> getHomepage(int userIdx) throws BaseException{
+        System.out.println("홈 provider 진입");
         try{
             List HomeAd = homeDao.getAdListByHome();
+            System.out.println(HomeAd);
+
             List HomeProduct = homeDao.getProductListByHome(userIdx);
+            System.out.println(HomeProduct);
             List HomepageData = new ArrayList<>(Arrays.asList(HomeAd, HomeProduct));
+
+            System.out.println(HomepageData);
+
             return HomepageData;
         }
         catch (Exception exception){
+            System.out.println("provider error");
             throw new BaseException(DATABASE_ERROR);
         }
     }

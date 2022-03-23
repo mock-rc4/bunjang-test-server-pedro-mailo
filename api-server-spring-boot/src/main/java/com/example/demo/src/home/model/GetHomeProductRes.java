@@ -15,6 +15,6 @@ public class GetHomeProductRes {
     private int saftyPay;   // 안전결제 여부
     private String productName; // 제품 이름
     private String directtrans; // 직거래 가능 지역
-    private String creareAt;    // 게시물 등록 시간
+    private String createAt;    // 게시물 등록 시간
     private int productLike;    // 게시물 찜한 사람 수
 }

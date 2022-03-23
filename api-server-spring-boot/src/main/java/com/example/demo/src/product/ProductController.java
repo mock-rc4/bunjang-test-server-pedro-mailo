@@ -36,6 +36,30 @@ public class ProductController {
     }
 
     /**
+     * 제품 상세조회 API
+     * [GET] products/:productIdx
+     *
+     */
+    @ResponseBody
+    @GetMapping("/{productIdx}")
+    public BaseResponse<List<GetProductDetailRes>> getProductDetail(@PathVariable("productIdx") int productIdx){
+        try{
+            //jwt에서 idx 추출.
+            int userIdx = jwtService.getUserIdx();
+
+            List<GetProductDetailRes> getProductDetail = productProvider.getProductDetail(userIdx,productIdx);
+
+            return new BaseResponse<>(getProductDetail);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+
+
+
+    /**
      * 검색어로 제품 조회 API
      * [GET] products/productName?Keyword=
      */

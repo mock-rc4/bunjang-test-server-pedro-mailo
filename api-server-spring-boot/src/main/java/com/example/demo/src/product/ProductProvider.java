@@ -26,6 +26,22 @@ public class ProductProvider {
         this.jwtService = jwtService;
     }
 
+// 제품 상세페이지
+    public List<GetProductDetailRes> getProductDetail(int userIdx, int productIdx) throws BaseException{
+        try{
+            List<GetProductDetailRes> getProductDetailRes = productDao.getProductDetailRes(userIdx, productIdx);
+            return  getProductDetailRes;
+        }
+        catch (Exception exception){
+            System.out.println("provider의 catch부분");
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+
+
+
 // 검색어로 제품 조회
     public List<GetProductSearchRes> getProductsBySearch(String keyword) throws BaseException{
         try{

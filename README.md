@@ -49,8 +49,8 @@
   + Password : 42g555
   
   API는 피드백 받은 내용 참고해 작성해나갈 예정
-  
-  ## 2022-03-22 진행상황
+   
+## 2022-03-22 진행상황
   + ERD 설계 -> 추가 수정사항
     +  Payment 테이블의 sellerIdx를 buyerIdx로 변경
     +  광고에 대한 정보를 저장하는 AD 테이블 추가
@@ -58,3 +58,22 @@
     +  피드백받은 내용을 고려해 전체적인 URI 구성 변경
     +  API 생성 -> 카테고리에 따른 상품 조회
     +  상품 상세조회에 대한 한 방 쿼리 작성 완료
+
+## 2022-03-23 진행상황
+  + 22일까지 진행헀던 commit을 기준으로 페드로의 코드와 병합 진행 -> 특별한 오류 X
+
+    병합 후 페드로가 작성한 유저 관련 API 테스트 해보고 내 로컬 환경에서 작동하는지 확인
+  
+  + API 설계 -> 추가 수정사항
+    + 메인페이지 API 작성 -> URI 형식 변경
+    + 상품 상세조회 API 작성
+    + 상품명검색, 카테고리로 상품 조회 API에서 빠진 부분 추가 필요 -> path variable로 idx를 받아오는 방식이 아닌 jwt 토큰 이용하는 방식으로 변경해보자
+
+
+  + ⚠Issue: local환경에서 post API, jwt token을 이용한 API를 호출하지 못하는 문제 발생
+  
+     error code -> java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter
+     
+    +  최신 jdk의 java EE API 미포함에 따른 문제
+    +  build.grade에 추가적인 dependency 설정해 문제 해결
+

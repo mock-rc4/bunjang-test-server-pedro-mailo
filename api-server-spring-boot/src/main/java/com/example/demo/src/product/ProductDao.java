@@ -17,6 +17,86 @@ public class ProductDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+/** 제품 상세조회 **/
+    public List<GetProductDetailRes> getProductDetailRes(int userIdx, int productIdx){
+        System.out.println("dao 들어옴");
+        System.out.println(userIdx);
+        System.out.println(productIdx);
+        String getProductDetailQuery = "select P.Idx PIdx, group_concat(distinct PI.imageUrl) imageUrl,\n" +
+                "       P.price, P.saftyPay,\n" +
+                "       P.productName,\n" +
+                "       case when 24 >= timestampdiff(HOUR, P.createAt, current_timestamp)\n" +
+                "                           then concat(timestampdiff(HOUR, P.createAt, current_timestamp),'시간 전')\n" +
+                "                           else concat(timestampdiff(DAY, P.createAt, current_timestamp), '일 전') end createAt,\n" +
+                "       count(distinct V.Idx) viewCount, count(distinct F.Idx) likeCount,\n" +
+                "       P.directtrans,\n" +
+                "       P.productCondition, P.includeFee, P.amount,\n" +
+                "       P.productDesc,\n" +
+                "       group_concat(distinct PT.tagName) tag,\n" +
+                "       C.categoryName,\n" +
+                "       U.Idx UIdx, U.profileImage, U.shopName,\n" +
+                "       count(distinct FW.Idx) follower,\n" +
+                "       avg(distinct FORRATE.reviewRate) avgStar,\n" +
+                "       case when UF.FavoriteUserIdx = ? then 1\n" +
+                "            else 0 end myLike\n" +
+                "from Product P\n" +
+                "left join ProductImage PI on P.Idx = PI.productIdx\n" +
+                "join Views V on P.Idx = V.productIdx\n" +
+                "join Favorite F on P.Idx = F.productIdx\n" +
+                "join ProductTag PT on P.Idx = PT.productIdx\n" +
+                "join Category C on P.categoryIdx = C.Idx\n" +
+                "join User U on P.userIdx = U.Idx\n" +
+                "join Follow FW on U.Idx = FW.followingIdx\n" +
+                "join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
+                "    from Product P2\n" +
+                "    join (select PY.productIdx,R.reviewRate\n" +
+                "                from Payment PY\n" +
+                "                join Review R on PY.Idx = R.paymentIdx) as PYR on PYR.productIdx = P2.Idx) as FORRATE)\n" +
+                "    on U.Idx = FORRATE.userIdx\n" +
+                "left join (select U.Idx FavoriteUserIdx, F.productIdx FavoriteProcductIdx\n" +
+                "      from Favorite F\n" +
+                "      join User U on U.Idx = F.userIdx\n" +
+                "      where U.Idx =?) UF on UF.FavoriteProcductIdx = P.Idx\n" +
+                "\n" +
+                "where P.Idx = ?\n" +
+                "group by P.Idx";
+        int GetUserIdx = userIdx;
+        int GetProductIdx = productIdx;
+
+        return  this.jdbcTemplate.query(getProductDetailQuery,
+                (rs,rowNum) -> new GetProductDetailRes(
+                        rs.getInt("PIdx"),
+                        rs.getString("imageUrl"),
+                        rs.getInt("price"),
+                        rs.getInt("saftyPay"),
+                        rs.getString("productName"),
+                        rs.getInt("viewCount"),
+                        rs.getInt("likeCount"),
+                        rs.getString("directtrans"),
+                        rs.getInt("productCondition"),
+                        rs.getInt("includeFee"),
+                        rs.getInt("amount"),
+                        rs.getString("productDesc"),
+                        rs.getString("tag"),
+                        rs.getString("categoryName"),
+                        rs.getInt("UIdx"),
+                        rs.getString("profileImage"),
+                        rs.getString("shopName"),
+                        rs.getInt("follower"),
+                        rs.getFloat("avgStar"),
+                        rs.getInt("myLike")),
+                GetUserIdx, GetUserIdx, GetProductIdx
+                );
+    }
+
+
+
+
+
+
+
+
+
 /** 검색어로 제품 조회 **/
     public List<GetProductSearchRes> getProductSearchRes(String keyword){
         String getProductsQuery = "select P.Idx, P.price, P.productName, P.saftyPay, PI.imageUrl\n" +
