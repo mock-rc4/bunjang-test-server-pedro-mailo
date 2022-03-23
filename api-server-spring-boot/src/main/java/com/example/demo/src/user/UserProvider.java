@@ -69,18 +69,38 @@ public class UserProvider {
         }
     }
 
+    //3/22 핸드폰 번호 조회 확인
+    public int checkPhone(String phoneNumber) throws BaseException{
+        try{
+            return userDao.checkPhone(phoneNumber);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
-        User user = userDao.getPwd(postLoginReq);
+        User user = userDao.getUserInfo(postLoginReq);
         String encryptPwd;
         try {
-            encryptPwd=new SHA256().encrypt(postLoginReq.getPassword());
+            encryptPwd=new SHA256().encrypt(postLoginReq.getUserPwd());
         } catch (Exception ignored) {
             throw new BaseException(PASSWORD_DECRYPTION_ERROR);
         }
 
-        if(user.getPassword().equals(encryptPwd)){
-            int userIdx = user.getUserIdx();
+        //유저 정보 중 입력한 이름과 실제 등록된 이름이 일치하지 않는 경우 발생
+        if(!postLoginReq.getUserName().equals(user.getUserName())){
+            throw new BaseException(POST_USERS_INVALID_USERNAME);
+        }
+
+        //유저 정보 중 입력한 생년월일과 실제 등록된 생년월일이 일치하지 않는 경우 발생
+        if(!postLoginReq.getUserBirth().equals(user.getUserBirth())){
+            throw new BaseException(POST_USERS_INVALID_USERBIRTH);
+        }
+
+        if(user.getUserPwd().equals(encryptPwd)){
+            int userIdx = user.getIdx();
             String jwt = jwtService.createJwt(userIdx);
+            System.out.println("jwt:" + jwt);
             return new PostLoginRes(userIdx,jwt);
         }
         else{

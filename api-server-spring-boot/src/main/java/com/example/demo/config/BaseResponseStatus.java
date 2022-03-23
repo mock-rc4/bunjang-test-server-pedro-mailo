@@ -21,15 +21,22 @@ public enum BaseResponseStatus {
     EMPTY_JWT(false, 2001, "JWT를 입력해주세요."),
     INVALID_JWT(false, 2002, "유효하지 않은 JWT입니다."),
     INVALID_USER_JWT(false,2003,"권한이 없는 유저의 접근입니다."),
-    EMPTY_REQUEST(false, 2004, "키워드를 입력하지 않았습니다"),      // 추가함 -> 검색시 키워드 아무것도 안넣었을때 c
+    EMPTY_REQUEST(false, 2004, "키워드를 입력하지 않았습니다"),      // milo 추가함 -> 검색시 키워드 아무것도 안넣었을때 c
 
     // users
     USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
 
     // [POST] /users
-    POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),
+    POST_USERS_EMPTY_NAME(false, 2015, "이름을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
+    POST_USERS_EMPTY_PHONE(false, 2018, "핸드폰번호를 입력해주세요."),      //pedro
+    POST_USERS_EMPTY_BIRTH(false, 2019, "생년월일 입력해주세요."),            //pedro
+    POST_USERS_EMPTY_USERPWD(false, 2020, "인증번호 6 자리를 입력해주세요."),    //pedro
+    POST_USERS_EXISTS_PHONE(false,2021,"이미 등록된 회원 정보입니다."),         //pedro
+    POST_USERS_INVALID_USERNAME(false,2022,"등록된 이름과 일치하지 않습니다."),       //pedro
+    POST_USERS_INVALID_PHONENUMBER(false,2023,"등록되지 않은 핸드폰번호입니다."),     //pedro
+    POST_USERS_INVALID_USERBIRTH(false,2024,"등록된 생년월일과 일치하지 않습니다."),    //pedro
 
 
 
@@ -38,12 +45,14 @@ public enum BaseResponseStatus {
      */
     // Common
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
-    EMPTY_RESPONSE(false, 3001, "입력한 키워드에 대한 검색결과가 없습니다."), // 추가함
+    EMPTY_RESPONSE(false, 3001, "입력한 키워드에 대한 검색결과가 없습니다."), // 마일로 추가함
 
     // [POST] /users
     DUPLICATED_EMAIL(false, 3013, "중복된 이메일입니다."),
     FAILED_TO_LOGIN(false,3014,"없는 아이디거나 비밀번호가 틀렸습니다."),
 
+
+    LOGIN_USERS_NOT_JOIN(false,3015 , "로그인실패"),      // 페드로 추가
 
 
     /**

@@ -22,37 +22,38 @@ public class UserService {
     private final UserProvider userProvider;
     private final JwtService jwtService;
 
-
     @Autowired
     public UserService(UserDao userDao, UserProvider userProvider, JwtService jwtService) {
         this.userDao = userDao;
         this.userProvider = userProvider;
         this.jwtService = jwtService;
-
     }
 
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-        //중복
-        if(userProvider.checkEmail(postUserReq.getEmail()) ==1){
-            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+        //해당 코드는 질의 한다.
+        if(userProvider.checkPhone(postUserReq.getPhoneNumber())==1){
+            //userProvider.logIn(postLoginReq);
+            throw new BaseException(POST_USERS_EXISTS_PHONE);
         }
-
         String pwd;
         try{
             //암호화
-            pwd = new SHA256().encrypt(postUserReq.getPassword());
-            postUserReq.setPassword(pwd);
+            pwd = new SHA256().encrypt(postUserReq.getUserPwd());
+            System.out.println("pwd : "+pwd); // 정상적으로 암호화 처리 되었는지 확인
+            postUserReq.setUserPwd(pwd);
 
         } catch (Exception ignored) {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
         try{
-            int userIdx = userDao.createUser(postUserReq);
+            int Idx = userDao.createUser(postUserReq);
             //jwt 발급.
-            String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
-        } catch (Exception exception) {
+            String jwt = jwtService.createJwt(Idx);
+            System.out.println("jwt : "+jwt);
+            return new PostUserRes(jwt,Idx,postUserReq.getShopName(), postUserReq.getPhoneNumber(), postUserReq.getUserName(), postUserReq.getUserBirth(), postUserReq.getUserPwd());
+        }
+        catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -66,5 +67,39 @@ public class UserService {
         } catch(Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
+    }
+
+    public PostLoginRes userLogin(PostLoginReq postLoginReq) throws BaseException {
+        User user = userDao.getUserInfo(postLoginReq);
+        String userPhoneNumber;
+        userPhoneNumber = user.getPhoneNumber();
+
+        if (postLoginReq.getPhoneNumber().equals(userPhoneNumber)) {
+            int userIdx = userDao.getUserInfo(postLoginReq).getIdx();
+            String authJwt = jwtService.createJwt(userIdx);
+            return new PostLoginRes(userIdx, authJwt);
+        }
+        else{
+            throw new BaseException(LOGIN_USERS_NOT_JOIN);
+        }
+    }
+
+    public PostLoginRes userJoin(PostLoginReq postLoginReq) throws BaseException {
+        String pwd;
+        try{
+            pwd = new SHA256().encrypt(postLoginReq.getUserPwd());
+            postLoginReq.setUserPwd(pwd);
+        } catch (Exception ignored) {
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+        }
+//        try{
+        int userInfoIdx = userDao.userJoin(postLoginReq).getIdx();
+        //jwt 발급.
+        String authJwt = jwtService.createJwt(userInfoIdx);
+        return new PostLoginRes(userInfoIdx, authJwt);
+//        } catch (Exception exception) {
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+
     }
 }
