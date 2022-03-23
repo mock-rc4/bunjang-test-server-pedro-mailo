@@ -57,8 +57,18 @@ dependencies {
 
 
 
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.4.0-b180830.0359'
+
+
+    // java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter 해결 위해 추가
+    // JAX-B dependencies for JDK 9+
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+
+
 }
 
 test {
     useJUnitPlatform()
 }
+

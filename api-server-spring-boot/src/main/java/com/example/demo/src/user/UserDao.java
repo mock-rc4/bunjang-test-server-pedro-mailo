@@ -116,53 +116,70 @@ public class UserDao {
 
     }
 
+    public List<GetUserInfoRes> UserInfo(int userIdx) {
+        String GetUserInfoResQuery = "select U.shopName  userShopName,\n" +
+                "       U.profileImage userProfileImage,\n" +
+                "       count(F.userIdx)       as userFavCount,\n" +
+                "       count(R.userIdx)       as userReviewCount,\n" +
+                "       count(F2.userIdx)      as userFollowingCount,\n" +
+                "       count(F2.followingIdx) as userFollwerCount,\n" +
+                "       case when avg(R.reviewRate) is null then 0 else avg(R.reviewRate) end as `reviewrate`\n" +
+                "from User U\n" +
+                "         left join Favorite F on U.Idx = F.userIdx\n" +
+                "         left join Review R on U.Idx = R.userIdx\n" +
+                "         left join (select * from Follow where status = 1) F2 on F2.userIdx = U.Idx\n" +
+                "where U.Idx = ?;" ;
+        int GetUserInfoResParams = userIdx;
+        return this.jdbcTemplate.query(GetUserInfoResQuery,
+                (rs, rowNum) -> new GetUserInfoRes(
+                                rs.getString("userShopName"),
+                                rs.getString("userProfileImage"),
+                                rs.getInt("userFavCount"),
+                                rs.getInt("userReviewCount"),
+                                rs.getInt("userFollowingCount"),
+                                rs.getInt("userFollwerCount"),
+                                rs.getFloat("reviewrate")),
+                        GetUserInfoResParams);
 
-//    public User userLogin(PostLoginReq postLoginReq) {
-//        String getUserByPhoneNumberQuery = "select userInfoIdx, phoneNumber, password, nickname, profileImageUrl from UserInfo where phoneNumber = ?";
-//        String getUserByPhoneNumberParams = postLoginReq.getPhoneNumber();
-//
-//        return this.jdbcTemplate.queryForObject(getUserByPhoneNumberQuery,
-//                (rs, rowNum) -> new User(
-//                        rs.getInt("Idx"),
-//                        rs.getString("phoneNumber"),
-//                        rs.getString("userBirth"),
-//                        rs.getString("userName"),
-//                        rs.getString("userPwd")
-//                getUserByPhoneNumberParams
-//        );
-//
-//    }
-
-
-    public User userJoin(PostLoginReq postLoginReq) {
-        String createUserQuery = "insert into User (phoneNumber, userName,userBirth,userPwd) VALUES (?,?,?,?);";
-        Object[] createUserParams = new Object[]{postLoginReq.getPhoneNumber(), postLoginReq.getUserName(), postLoginReq.getUserBirth(), postLoginReq.getUserPwd()};
-        this.jdbcTemplate.update(createUserQuery, createUserParams);
-
-        String lastInsertUserIdQuery = "select last_insert_id()";
-        int lastInsertUserId = this.jdbcTemplate.queryForObject(lastInsertUserIdQuery, int.class);
-
-//        String createUserRegionQuery = "insert into Region (userInfoId, regionNameCity, regionNameGu, regionNameTown) VALUES (?,?,?,?)";
-//        Object[] createUserRegionParams = new Object[]{lastInsertUserId, postUserLoginReq.getRegionNameCity(), postUserLoginReq.getRegionNameGu(), postUserLoginReq.getRegionNameTown()};
-//        this.jdbcTemplate.update(createUserRegionQuery,createUserRegionParams);
-
-        // String lastInsertIdQuery = "select last_insert_id()";
-        // return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
-        // return lastInsertUserId;
-        String getPwdQuery = "select Idx, phoneNumber,userBirth,userName,userPwd from User where phoneNumber = ? and userName= ? and userBirth = ?";
-        String getPhoneParams = postLoginReq.getPhoneNumber();
-        String getNameParams = postLoginReq.getUserName();
-        String getBirthParams = postLoginReq.getUserBirth();
-        //Object[] createUserParams = new Object[]{postLoginReq.getPhoneNumber(),postLoginReq.getUserBirth(),postLoginReq.getUserName(),postLoginReq.getUserPwd()};
-        return this.jdbcTemplate.queryForObject(getPwdQuery,
-                (rs, rowNum) -> new User(
-                        rs.getInt("Idx"),
-                        rs.getString("phoneNumber"),
-                        rs.getString("userBirth"),
-                        rs.getString("userName"),
-                        rs.getString("userPwd")
-                ),
-                getPhoneParams,getNameParams,getBirthParams
-        );
     }
+
+    public List<UserProductCountRes> ProductCount(int userIdx, int progress) {
+        String UserProductCntResQuery = "select count(*) as count from Product where userIdx = ? and status = 1 and progress = ? ;" ;
+        int UserProductCntParams = userIdx;
+        int UserProductCntParams2 = progress;
+        return this.jdbcTemplate.query(UserProductCntResQuery,
+                (rs, rowNum) -> new UserProductCountRes(
+                        rs.getInt("count")),
+                UserProductCntParams,UserProductCntParams2);
+
+    }
+
+    public List<UserProductListRes> ProductDetail(int userIdx, int progress) {
+        String UserProductCntResQuery = "select P.Idx Idx, P.productName ProductName, P.price ProductPrice , P.saftyPay SaftyPay, PI.imageUrl ProductImage,\n" +
+                "       case\n" +
+                "           when 24 >= timestampdiff(HOUR, P.updateAt, current_timestamp)\n" +
+                "               then concat(timestampdiff(HOUR, P.updateAt, current_timestamp), '시간 전')\n" +
+                "           else concat(timestampdiff(DAY, P.updateAt, current_timestamp), '일 전') end Posteddate\n" +
+                "from Product P\n" +
+                "left join(select * from ProductImage group by productIdx) PI on P.Idx = PI.productIdx\n" +
+                "where userIdx=? and P.status = 1 and progress =?;" ;
+        int UserProductCntParams = userIdx;
+        int UserProductCntParams2 = progress;
+        return this.jdbcTemplate.query(UserProductCntResQuery,
+                (rs, rowNum) -> new UserProductListRes(
+                        rs.getString("Idx"),
+                        rs.getString("ProductName"),
+                        rs.getInt("ProductPrice"),
+                        rs.getInt("SaftyPay"),
+                        rs.getString("ProductImage"),
+                        rs.getString("Posteddate")
+                        ),
+                UserProductCntParams,UserProductCntParams2);
+    }
+
+
+///
+
+/*로그인 주석*/
+///
 }

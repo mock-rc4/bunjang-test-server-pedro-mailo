@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetHomeProductRes {
     private int Idx;    // 게시물 인덷스
-    private String myLike;    // 찜 여부
+    private int myLike;    // 찜 여부
     private String imageUrl;    // 제품 사진
     private int price;  // 제품 가격
     private int saftyPay;   // 안전결제 여부
