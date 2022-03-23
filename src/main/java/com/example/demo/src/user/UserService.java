@@ -69,37 +69,9 @@ public class UserService {
         }
     }
 
-    public PostLoginRes userLogin(PostLoginReq postLoginReq) throws BaseException {
-        User user = userDao.getUserInfo(postLoginReq);
-        String userPhoneNumber;
-        userPhoneNumber = user.getPhoneNumber();
 
-        if (postLoginReq.getPhoneNumber().equals(userPhoneNumber)) {
-            int userIdx = userDao.getUserInfo(postLoginReq).getIdx();
-            String authJwt = jwtService.createJwt(userIdx);
-            return new PostLoginRes(userIdx, authJwt);
-        }
-        else{
-            throw new BaseException(LOGIN_USERS_NOT_JOIN);
-        }
-    }
 
-    public PostLoginRes userJoin(PostLoginReq postLoginReq) throws BaseException {
-        String pwd;
-        try{
-            pwd = new SHA256().encrypt(postLoginReq.getUserPwd());
-            postLoginReq.setUserPwd(pwd);
-        } catch (Exception ignored) {
-            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
-        }
-//        try{
-        int userInfoIdx = userDao.userJoin(postLoginReq).getIdx();
-        //jwt 발급.
-        String authJwt = jwtService.createJwt(userInfoIdx);
-        return new PostLoginRes(userInfoIdx, authJwt);
-//        } catch (Exception exception) {
-//            throw new BaseException(DATABASE_ERROR);
-//        }
+///
 
-    }
+
 }

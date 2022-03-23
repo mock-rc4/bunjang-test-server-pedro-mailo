@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -109,4 +111,17 @@ public class UserProvider {
 
     }
 
+    public List<String> getUserMainPage(int userIdx,int progress) throws BaseException{
+        try{
+            List UserInfo = userDao.UserInfo(userIdx);
+            List productCount = userDao.ProductCount(userIdx,progress);
+            List producList = userDao.ProductDetail(userIdx,progress);
+            List resultDetailList = new ArrayList<>(Arrays.asList(UserInfo,productCount,producList));
+            return resultDetailList;
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+    }
 }

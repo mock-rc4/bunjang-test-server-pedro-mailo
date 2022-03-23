@@ -143,50 +143,8 @@ public class UserController {
         }
     }
 
-
-    /**
-     * 로그인 - 회원가입 API
-     * [POST] /app/users
-     *
-     * @return PostLoginRes
-     * @return BaseResponse<PostLoginRes>
-     * @RequestBody PostLoginReq
-     * <p>
-     *
-     */
-    @ResponseBody
-    @PostMapping("/join-login")
-    public BaseResponse<PostLoginRes> joinAndLogIn(@RequestBody PostLoginReq postLoginReq) throws BaseException {
-        if (postLoginReq.getPhoneNumber() == null || postLoginReq.getPhoneNumber().length() == 0) {
-            return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
-        }
-        if (postLoginReq.getUserName() == null || postLoginReq.getUserName().length() == 0) {
-            return new BaseResponse<>(POST_USERS_EMPTY_NAME);
-        }
-        if (postLoginReq.getUserBirth() == null || postLoginReq.getUserBirth().length() == 0) {
-            return new BaseResponse<>(POST_USERS_EMPTY_BIRTH);
-        }
-//        if (!isRegexPhoneNumber(postUserLoginReq.getPhoneNumber())) {
-//            return new BaseResponse<>(INVALID_PHONE_NUMBER);
-//        }
-        // service 단으로 보내야함
-        // 이미 존재하는 회원이라면 그냥 로그인
-//        try {
-        int numberIsExist = userProvider.checkPhone(postLoginReq.getPhoneNumber());
-        if (numberIsExist == 1) {
-            PostLoginRes postLoginRes = userService.userLogin(postLoginReq);
-            return new BaseResponse<>(postLoginRes);
-        }
-
-        // 존재하지 않는다면 회원가입
-//        try {
-        PostLoginRes postLoginRes = userService.userJoin(postLoginReq);
-        return new BaseResponse<>(postLoginRes);
-//        }
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-    }
+// 주석 라인
+ // /
 
 
 
@@ -215,6 +173,32 @@ public class UserController {
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
+    }
+
+
+/*
+* 자기 메인페이지 접근*/
+    @ResponseBody
+    @GetMapping("/{userIdx}/{progress}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
+    public BaseResponse<List<String>> getHotelrooms(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress){
+        try {
+            //jwt에서 idx 추출.
+            System.out.println(userIdx);
+            int userIdxByJwt = jwtService.getUserIdx();
+            System.out.println(userIdxByJwt);
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저네임 변경
+            List<String> getUserMainPage = userProvider.getUserMainPage(userIdx,progress);
+
+            String result = "";
+            return new BaseResponse<>(getUserMainPage);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
     }
 
 
