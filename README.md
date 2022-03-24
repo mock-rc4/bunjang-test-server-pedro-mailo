@@ -83,7 +83,7 @@
 </details>
 
 <details> 
-<summary> 2022.3.23 (WEN) </summary>
+<summary> 2022.3.23 (TUE) </summary>
 <div markdown="1">
  
  > 
