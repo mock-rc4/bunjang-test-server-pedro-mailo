@@ -27,8 +27,28 @@ public class ProductService {
         this.productDao = productDao;
         this.productProvider = productProvider;
         this.jwtService = jwtService;
+    }
+
+
+// product 생성
+    public PostProductRes createProduct(PostProductReq postProductReq, int userIdx) throws BaseException{
+        try{
+            System.out.println("제품생성 서비스 들어옴");
+            int userIdxPram = userIdx;
+            int Idx = productDao.createProduct(postProductReq,userIdxPram);
+
+            return new PostProductRes(Idx, userIdxPram, postProductReq.getCategoryIdx(),
+                    postProductReq.getProductName(), postProductReq.getProductDesc(), postProductReq.getProductCondition(),
+                    postProductReq.getSaftyPay(), postProductReq.getIsExchange(), postProductReq.getAmount(),
+                    postProductReq.getIncludeFee(), postProductReq.getPrice(), postProductReq.getDirecttrans());
+        }catch(Exception exception){
+            System.out.println("dao에서 불러올때 에러");
+            throw new BaseException(DATABASE_ERROR);
+        }
 
     }
+
+
 
 
 }

@@ -17,6 +17,54 @@ public class ProductDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
+/** 제품 생성 **/
+    public int createProduct(PostProductReq postProductReq, int userIdx){
+        System.out.println("제품생성 Dao 들어옴");
+        String createProductQuery = "insert into Product (userIdx, categoryIdx, " +
+                "productName, productDesc, " +
+                "productCondition, saftyPay," +
+                "isExchange, amount," +
+                "includeFee, price, directtrans) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+        int userIdxParams = userIdx;
+        System.out.println(userIdxParams);
+        /**
+        Object[] createProcuctParams = new Object[]{userIdxParams, postProductReq.getCategoryIdx(),
+                postProductReq.getProductName(), postProductReq.getProductDesc(), postProductReq.getProductCondition(),
+                postProductReq.getSaftyPay(), postProductReq.getIsExchange(), postProductReq.getAmount(),
+                postProductReq.getIncludeFee(), postProductReq.getPrice(), postProductReq.getDirecttrans()};
+        System.out.println(createProcuctParams);
+        this.jdbcTemplate.update(createProductQuery, createProcuctParams);
+        System.out.println("확인1");
+         **/
+        System.out.println(createProductQuery);
+
+        this.jdbcTemplate.update(createProductQuery, userIdxParams, postProductReq.getCategoryIdx(),
+                postProductReq.getProductName(), postProductReq.getProductDesc(), postProductReq.getProductCondition(),
+                postProductReq.getSaftyPay(), postProductReq.getIsExchange(), postProductReq.getAmount(),
+                postProductReq.getIncludeFee(), postProductReq.getPrice(), postProductReq.getDirecttrans());
+        System.out.println("확인1");
+        String lastInserIdQuery = "select last_insert_id()";
+        System.out.println("확인2");
+        return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /** 제품 상세조회 **/
     public List<GetProductDetailRes> getProductDetailRes(int userIdx, int productIdx){
         System.out.println("dao 들어옴");
@@ -137,9 +185,6 @@ public class ProductDao {
                         rs.getString("imageUrl")),
                 GetProductByCategoryPrams);
     }   // getProductByCategory() 끝
-
-
-
 
 
 

@@ -70,10 +70,15 @@
     + 상품명검색, 카테고리로 상품 조회 API에서 빠진 부분 추가 필요 -> path variable로 idx를 받아오는 방식이 아닌 jwt 토큰 이용하는 방식으로 변경해보자
 
 
+ 
+ ## 2022-03-24 진행상황
+  + API 설계 -> 추가 수정사항
+    + 상품등록 API 작성 
+    + 상품명검색, 카테고리로 상품 조회 페이지에서 AD 표시 여부 추가해야 함 -> 페드로와 협의 후 진행하기로
+
   + ⚠Issue: local환경에서 post API, jwt token을 이용한 API를 호출하지 못하는 문제 발생
   
      error code -> java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter
      
     +  최신 jdk의 java EE API 미포함에 따른 문제
     +  build.grade에 추가적인 dependency 설정해 문제 해결
-

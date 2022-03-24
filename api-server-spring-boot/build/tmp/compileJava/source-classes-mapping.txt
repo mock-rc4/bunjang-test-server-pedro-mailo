@@ -64,6 +64,10 @@ com/example/demo/src/product/model/GetProductDetailRes.java
  com.example.demo.src.product.model.GetProductDetailRes
 com/example/demo/src/home/HomeProvider.java
  com.example.demo.src.home.HomeProvider
+com/example/demo/src/product/model/PostProductReq.java
+ com.example.demo.src.product.model.PostProductReq
+com/example/demo/src/product/model/PostProductRes.java
+ com.example.demo.src.product.model.PostProductRes
 com/example/demo/src/product/ProductProvider.java
  com.example.demo.src.product.ProductProvider
 com/example/demo/src/product/ProductDao.java

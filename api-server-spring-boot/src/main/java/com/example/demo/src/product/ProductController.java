@@ -36,6 +36,29 @@ public class ProductController {
     }
 
     /**
+     * 제품 생성 API
+     * [POST] products
+     *
+     */
+    @ResponseBody
+    @PostMapping("")
+    public BaseResponse<PostProductRes> createProduct(@RequestBody PostProductReq postProductReq){
+        try {
+            System.out.println("제품생성 컨트롤러 들어옴");
+            int userIdx = jwtService.getUserIdx();
+            PostProductRes postProductRes = productService.createProduct(postProductReq, userIdx);
+            return new BaseResponse<>(postProductRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+
+
+
+
+    /**
      * 제품 상세조회 API
      * [GET] products/:productIdx
      *
@@ -105,6 +128,11 @@ public class ProductController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
+
+
+
 
 
 /**
