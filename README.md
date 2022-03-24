@@ -12,7 +12,7 @@
 - [x] API Sheet 리스트업
 - [x] 유저 회원가입 API 제작
 - [x] 유저 로그인 API 제작
-- [ ] 상품 조회 API 제작
+- [x] 상품 조회 API 제작
 - [ ] 결제 API 제작
 
 <br /> 
@@ -76,11 +76,23 @@
 <div markdown="1">
  
  > 
-  - 마일로가 작성한 API 서버에 반영
+  - 마일로가 작성한 API 서버에 반영(상품검색어 기준 조회, 상품카테고리 기준 조회)
   - 회원 MyPage API 작성 완료 (100%)
   - 서버 인스턴스 에러 발생 확인후 조치 완료
 </div>
 </details>
+
+<details> 
+<summary> 2022.3.23 (WEN) </summary>
+<div markdown="1">
+ 
+ > 
+  - 마일로가 작성한 API 서버에 반영(상품상세조회, 메인페이지 API)
+  - 회원 MyPage API 작성 완료 (100%)
+  - 
+</div>
+</details>
+
 <br /> 
 
 ## ⚠ Issue
