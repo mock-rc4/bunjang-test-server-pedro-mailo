@@ -174,11 +174,115 @@ public class UserController {
     }
 
 
+    /**
+     * 유저 상점명 변경 API 솔직히 그렇게 필요없는 API
+     * [PATCH] /users/:userIdx
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @PatchMapping("/{userIdx}/shopName")
+    public BaseResponse<String> modifyshopName(@PathVariable("userIdx") int userIdx, @RequestBody User user){
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저네임 변경
+            PatchShopNameReq patchShopNameReq = new PatchShopNameReq(userIdx,user.getShopName());
+            userService.modifyshopName(patchShopNameReq);
+
+            String result = "";
+            return new BaseResponse<>(user.getShopName());
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
+     * 유저생년월일 변경 API
+     * [PATCH] /users/:userIdx
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @PatchMapping("/{userIdx}/birth")
+    public BaseResponse<String> modifyUserBirth(@PathVariable("userIdx") int userIdx, @RequestBody User user){
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저 생년월일 변경
+            PatchUserBirthReq patchUserBirthReq = new PatchUserBirthReq(userIdx,user.getUserBirth());
+            userService.modifyUserBrith(patchUserBirthReq);
+            return new BaseResponse<>(user.getUserBirth());
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 유저 성별변경 API
+     * [PATCH] /users/:userIdx
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @PatchMapping("/{userIdx}/sex")
+    public BaseResponse<String> modifyUserSex(@PathVariable("userIdx") int userIdx, @RequestBody PatchUserSexReq user){
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저 생년월일 변경
+            PatchUserSexReq patchUserSexReq = new PatchUserSexReq(userIdx,user.getUserSex());
+            userService.modifyUserSex(patchUserSexReq);
+            return new BaseResponse<>(user.getUserSex());
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
+     * 유저 성별변경 API
+     * [PATCH] /users/:userIdx
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @PatchMapping("/{userIdx}/phonenumber")
+    public BaseResponse<String> modifyPhoneNumber(@PathVariable("userIdx") int userIdx, @RequestBody User user){
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저 생년월일 변경
+            PatchUserPhoneReq patchUserPhoneReq = new PatchUserPhoneReq(userIdx,user.getPhoneNumber());
+            userService.modifyUserPhone(patchUserPhoneReq);
+            return new BaseResponse<>(user.getPhoneNumber());
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+
+
+
 /**
 * 자기 메인페이지 접근*/
     @ResponseBody
     @GetMapping("/{userIdx}/{progress}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
-    public BaseResponse<List<String>> getHotelrooms(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress){
+    public BaseResponse<List<String>> getUserMainPage(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress){
         try {
             //jwt에서 idx 추출.
             System.out.println(userIdx);

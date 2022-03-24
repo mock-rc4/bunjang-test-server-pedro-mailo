@@ -79,6 +79,15 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+    public int checkShopName(String shopName)throws BaseException {
+        try{
+
+            return userDao.checkShopName(shopName);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+    }
 
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
         User user = userDao.getUserInfo(postLoginReq);
@@ -124,4 +133,6 @@ public class UserProvider {
         }
 
     }
+
+
 }

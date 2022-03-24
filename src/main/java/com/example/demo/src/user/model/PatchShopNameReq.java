@@ -4,15 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class User {
-    private int Idx;
-    private String phoneNumber;
-    private String userBirth;
-    private String userName;
-    private String userPwd;
+public class PatchShopNameReq {
+    private int userIdx;
     private String shopName;
-
 }

@@ -90,6 +90,14 @@ public class UserDao {
                 checkPhoneParams);
     }
 
+    public int checkShopName(String shopName) {
+        String checkShopNameQuery = "select exists(select shopName from User where shopName = ? and status = 1)";
+        String checkShopNameParams = shopName;
+        return this.jdbcTemplate.queryForObject(checkShopNameQuery,
+                int.class,
+                checkShopNameParams);
+    }
+
     public int modifyUserName(PatchUserReq patchUserReq) {
         String modifyUserNameQuery = "update UserInfo set userName = ? where userIdx = ? ";
         Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserIdx()};
@@ -97,8 +105,37 @@ public class UserDao {
         return this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
     }
 
+    public int modifyshopName(PatchShopNameReq patchShopNameReq) {
+        String modifyshopNameQuery = "update User set shopName = ? where Idx = ? ";
+        Object[] modifyshopNameParams = new Object[]{patchShopNameReq.getShopName(), patchShopNameReq.getUserIdx()};
+
+        return this.jdbcTemplate.update(modifyshopNameQuery, modifyshopNameParams);
+    }
+
+    public int modifyUserBirth(PatchUserBirthReq patchUserBirthReq) {
+        String modifyUserBirthQuery = "update User set userBirth = ? where Idx = ? ";
+        Object[] modifyUserBirthParams = new Object[]{patchUserBirthReq.getUserBirth(), patchUserBirthReq.getUserIdx()};
+
+        return this.jdbcTemplate.update(modifyUserBirthQuery, modifyUserBirthParams);
+    }
+    public int modifyUserSex(PatchUserSexReq patchUserSexReq) {
+        String modifyUserSexQuery = "update User set userSex = ? where Idx = ? ";
+        Object[] modifyUserSexParams = new Object[]{patchUserSexReq.getUserSex(), patchUserSexReq.getUserIdx()};
+
+        return this.jdbcTemplate.update(modifyUserSexQuery, modifyUserSexParams);
+
+    }
+    public int modifyUserPhone(PatchUserPhoneReq patchUserPhoneReq) {
+        String modifyUserPhoneQuery = "update User set phoneNumber = ? where Idx = ? ";
+        Object[] modifyUserPhoneParams = new Object[]{patchUserPhoneReq.getPhoneNumber(), patchUserPhoneReq.getUserIdx()};
+
+        return this.jdbcTemplate.update(modifyUserPhoneQuery, modifyUserPhoneParams);
+
+    }
+
+
     public User getUserInfo(PostLoginReq postLoginReq) {
-        String getPwdQuery = "select Idx, phoneNumber,userBirth,userName,userPwd from User where phoneNumber = ? and status = 1 ";
+        String getPwdQuery = "select Idx, phoneNumber,userBirth,userName,userPwd,shopName from User where phoneNumber = ? and status = 1 ";
         String getPhoneParams = postLoginReq.getPhoneNumber();
         String getNameParams = postLoginReq.getUserName();
         String getBirthParams = postLoginReq.getUserBirth();
@@ -109,7 +146,8 @@ public class UserDao {
                         rs.getString("phoneNumber"),
                         rs.getString("userBirth"),
                         rs.getString("userName"),
-                        rs.getString("userPwd")
+                        rs.getString("userPwd"),
+                        rs.getString("shopName")
                 ),
                 getPhoneParams
         );
@@ -176,6 +214,8 @@ public class UserDao {
                         ),
                 UserProductCntParams,UserProductCntParams2);
     }
+
+
 
 
 ///

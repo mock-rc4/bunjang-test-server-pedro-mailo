@@ -31,11 +31,12 @@ public class UserService {
 
     //POST
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-        //해당 코드는 질의 한다.
+        //해당 코드는 질의 한다. 그리고 닉네임이 동일한것은 존재할수 없기 떄문에 동일한 닉네임 입력시 나오는
         if(userProvider.checkPhone(postUserReq.getPhoneNumber())==1){
             //userProvider.logIn(postLoginReq);
             throw new BaseException(POST_USERS_EXISTS_PHONE);
         }
+
         String pwd;
         try{
             //암호화
@@ -68,9 +69,50 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+    public void modifyshopName(PatchShopNameReq patchShopNameReq) throws BaseException {
+            if(userProvider.checkShopName(patchShopNameReq.getShopName())==1){
+                throw new BaseException(POST_USERS_EXISTS_ShopName);
+            }
+            int result = userDao.modifyshopName(patchShopNameReq);
+
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_USERNAME);
+            }
+    }
 
 
+    public void modifyUserSex(PatchUserSexReq patchUserSexReq) throws BaseException {
+        try{
+            int result = userDao.modifyUserSex(patchUserSexReq);
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_USERNAME);
+            }
+        } catch(Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
+    public void modifyUserBrith(PatchUserBirthReq patchUserBirthReq) throws BaseException {
+        try{
+            int result = userDao.modifyUserBirth(patchUserBirthReq);
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_USERNAME);
+            }
+        } catch(Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void modifyUserPhone(PatchUserPhoneReq patchUserPhoneReq) throws BaseException {
+        if (userProvider.checkPhone(patchUserPhoneReq.getPhoneNumber()) == 1) {
+            throw new BaseException(POST_USERS_EXISTS_PHONE);
+        }
+        int result = userDao.modifyUserPhone(patchUserPhoneReq);
+        if (result == 0) {
+            throw new BaseException(MODIFY_FAIL_USERNAME);
+
+        }
+    }
 ///
 
 

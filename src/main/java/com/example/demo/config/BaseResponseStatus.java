@@ -33,6 +33,7 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_BIRTH(false, 2019, "생년월일 입력해주세요."),
     POST_USERS_EMPTY_USERPWD(false, 2020, "인증번호 6 자리를 입력해주세요."),
     POST_USERS_EXISTS_PHONE(false,2021,"이미 등록된 회원 정보입니다."),
+    POST_USERS_EXISTS_ShopName(false,2025,"이미 등록된 상점명 정보입니다."),
     POST_USERS_INVALID_USERNAME(false,2022,"등록된 이름과 일치하지 않습니다."),
     POST_USERS_INVALID_PHONENUMBER(false,2023,"등록되지 않은 핸드폰번호입니다."),
     POST_USERS_INVALID_USERBIRTH(false,2024,"등록된 생년월일과 일치하지 않습니다."),
