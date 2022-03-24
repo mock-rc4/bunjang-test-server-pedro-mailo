@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserProductCountRes {
+public class GetUserProductCountRes {
     private int count;
 }

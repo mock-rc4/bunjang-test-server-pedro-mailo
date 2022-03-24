@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserProductListRes {
+public class GetUserProductListRes {
     private String Idx;
     private String ProductName;
     private int ProductPrice;

@@ -143,18 +143,18 @@ public class UserDao {
 
     }
 
-    public List<UserProductCountRes> ProductCount(int userIdx, int progress) {
+    public List<GetUserProductCountRes> ProductCount(int userIdx, int progress) {
         String UserProductCntResQuery = "select count(*) as count from Product where userIdx = ? and status = 1 and progress = ? ;" ;
         int UserProductCntParams = userIdx;
         int UserProductCntParams2 = progress;
         return this.jdbcTemplate.query(UserProductCntResQuery,
-                (rs, rowNum) -> new UserProductCountRes(
+                (rs, rowNum) -> new GetUserProductCountRes(
                         rs.getInt("count")),
                 UserProductCntParams,UserProductCntParams2);
 
     }
 
-    public List<UserProductListRes> ProductDetail(int userIdx, int progress) {
+    public List<GetUserProductListRes> ProductDetail(int userIdx, int progress) {
         String UserProductCntResQuery = "select P.Idx Idx, P.productName ProductName, P.price ProductPrice , P.saftyPay SaftyPay, PI.imageUrl ProductImage,\n" +
                 "       case\n" +
                 "           when 24 >= timestampdiff(HOUR, P.updateAt, current_timestamp)\n" +
@@ -166,7 +166,7 @@ public class UserDao {
         int UserProductCntParams = userIdx;
         int UserProductCntParams2 = progress;
         return this.jdbcTemplate.query(UserProductCntResQuery,
-                (rs, rowNum) -> new UserProductListRes(
+                (rs, rowNum) -> new GetUserProductListRes(
                         rs.getString("Idx"),
                         rs.getString("ProductName"),
                         rs.getInt("ProductPrice"),

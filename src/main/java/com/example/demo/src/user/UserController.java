@@ -134,8 +134,6 @@ public class UserController {
                 return new BaseResponse<>(POST_USERS_INVALID_PHONENUMBER);
             }
 
-
-
             PostLoginRes postLoginRes = userProvider.logIn(postLoginReq);
             return new BaseResponse<>(postLoginRes);
         } catch (BaseException exception){
@@ -176,7 +174,7 @@ public class UserController {
     }
 
 
-/*
+/**
 * 자기 메인페이지 접근*/
     @ResponseBody
     @GetMapping("/{userIdx}/{progress}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
