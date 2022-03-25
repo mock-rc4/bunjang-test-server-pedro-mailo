@@ -17,6 +17,22 @@ public class ProductDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+/** 거래정보 생성 */
+    public int createPayment(PostPaymentReq postPaymentReq, int buyerIdx){
+        String createPaymentQuery = "insert into Payment (status, productIdx, buyerIdx, safetyTax," +
+                "point, totalPaymentAmount, paymentMethod, transactionMethod, address) VALUES (?,?,?,?,?,?,?,?,?)";
+        int buyerIdxParms = buyerIdx;
+        this.jdbcTemplate.update(createPaymentQuery,postPaymentReq.getStatus(), postPaymentReq.getProductIdx(), buyerIdxParms, postPaymentReq.getSafetyTax(),
+                postPaymentReq.getPoint(), postPaymentReq.getTotalPaymentAmount(), postPaymentReq.getPaymentMethod(), postPaymentReq.getTransactionMethod(),
+                postPaymentReq.getAddress());
+        String lastInsertIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
+    }
+
+
+
+
+
 
 /** 제품 생성 **/
     public int createProduct(PostProductReq postProductReq, int userIdx){
@@ -28,15 +44,7 @@ public class ProductDao {
                 "includeFee, price, directtrans) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
         int userIdxParams = userIdx;
         System.out.println(userIdxParams);
-        /**
-        Object[] createProcuctParams = new Object[]{userIdxParams, postProductReq.getCategoryIdx(),
-                postProductReq.getProductName(), postProductReq.getProductDesc(), postProductReq.getProductCondition(),
-                postProductReq.getSaftyPay(), postProductReq.getIsExchange(), postProductReq.getAmount(),
-                postProductReq.getIncludeFee(), postProductReq.getPrice(), postProductReq.getDirecttrans()};
-        System.out.println(createProcuctParams);
-        this.jdbcTemplate.update(createProductQuery, createProcuctParams);
-        System.out.println("확인1");
-         **/
+
         System.out.println(createProductQuery);
 
         this.jdbcTemplate.update(createProductQuery, userIdxParams, postProductReq.getCategoryIdx(),
@@ -60,13 +68,8 @@ public class ProductDao {
 
 
 
-
-
-
-
-
 /** 제품 상세조회 **/
-    public List<GetProductDetailRes> getProductDetailRes(int userIdx, int productIdx){
+    public GetProductDetailRes getProductDetailRes(int userIdx, int productIdx){
         System.out.println("dao 들어옴");
         System.out.println(userIdx);
         System.out.println(productIdx);
@@ -111,7 +114,7 @@ public class ProductDao {
         int GetUserIdx = userIdx;
         int GetProductIdx = productIdx;
 
-        return  this.jdbcTemplate.query(getProductDetailQuery,
+        return  this.jdbcTemplate.queryForObject(getProductDetailQuery,
                 (rs,rowNum) -> new GetProductDetailRes(
                         rs.getInt("PIdx"),
                         rs.getString("imageUrl"),

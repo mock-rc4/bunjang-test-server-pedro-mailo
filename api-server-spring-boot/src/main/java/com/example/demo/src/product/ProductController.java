@@ -36,6 +36,24 @@ public class ProductController {
     }
 
     /**
+     * 거래 정보 생성 API
+     * [POST] payment
+     *
+     */
+    @ResponseBody
+    @PostMapping("")
+    public BaseResponse<PostPaymentRes> createPayment(@RequestBody PostPaymentReq postPaymentReq){
+        try{
+            int buyerIdx = jwtService.getUserIdx();
+            PostPaymentRes postPaymentRes = productService.createPayment(postPaymentReq, buyerIdx);
+            return new BaseResponse<>(postPaymentRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
      * 제품 생성 API
      * [POST] products
      *
@@ -65,12 +83,12 @@ public class ProductController {
      */
     @ResponseBody
     @GetMapping("/{productIdx}")
-    public BaseResponse<List<GetProductDetailRes>> getProductDetail(@PathVariable("productIdx") int productIdx){
+    public BaseResponse<GetProductDetailRes> getProductDetail(@PathVariable("productIdx") int productIdx){
         try{
             //jwt에서 idx 추출.
             int userIdx = jwtService.getUserIdx();
 
-            List<GetProductDetailRes> getProductDetail = productProvider.getProductDetail(userIdx,productIdx);
+            GetProductDetailRes getProductDetail = productProvider.getProductDetail(userIdx,productIdx);
 
             return new BaseResponse<>(getProductDetail);
         }catch (BaseException exception){

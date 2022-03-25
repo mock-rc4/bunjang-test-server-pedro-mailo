@@ -27,9 +27,9 @@ public class ProductProvider {
     }
 
 // 제품 상세페이지
-    public List<GetProductDetailRes> getProductDetail(int userIdx, int productIdx) throws BaseException{
+    public GetProductDetailRes getProductDetail(int userIdx, int productIdx) throws BaseException{
         try{
-            List<GetProductDetailRes> getProductDetailRes = productDao.getProductDetailRes(userIdx, productIdx);
+            GetProductDetailRes getProductDetailRes = productDao.getProductDetailRes(userIdx, productIdx);
             return  getProductDetailRes;
         }
         catch (Exception exception){

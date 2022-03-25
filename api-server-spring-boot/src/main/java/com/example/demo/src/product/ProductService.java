@@ -41,11 +41,26 @@ public class ProductService {
                     postProductReq.getProductName(), postProductReq.getProductDesc(), postProductReq.getProductCondition(),
                     postProductReq.getSaftyPay(), postProductReq.getIsExchange(), postProductReq.getAmount(),
                     postProductReq.getIncludeFee(), postProductReq.getPrice(), postProductReq.getDirecttrans());
+
         }catch(Exception exception){
             System.out.println("dao에서 불러올때 에러");
             throw new BaseException(DATABASE_ERROR);
         }
 
+    }
+
+// payment 생성
+    public PostPaymentRes createPayment(PostPaymentReq postPaymentReq, int buyerIdx) throws BaseException{
+        try{
+            int buyerIdxParm = buyerIdx;
+            int Idx = productDao.createPayment(postPaymentReq, buyerIdxParm);
+
+            return new PostPaymentRes(Idx, postPaymentReq.getStatus(), postPaymentReq.getProductIdx(), buyerIdxParm, postPaymentReq.getSafetyTax(),
+                    postPaymentReq.getPoint(), postPaymentReq.getTotalPaymentAmount(), postPaymentReq.getPaymentMethod(), postPaymentReq.getTransactionMethod(),
+                    postPaymentReq.getAddress());
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 
 
