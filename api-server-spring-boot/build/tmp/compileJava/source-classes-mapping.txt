@@ -72,6 +72,8 @@ com/example/demo/src/product/model/PostPaymentRes.java
  com.example.demo.src.product.model.PostPaymentRes
 com/example/demo/src/product/model/PostPaymentReq.java
  com.example.demo.src.product.model.PostPaymentReq
+com/example/demo/src/product/model/GetBuyRes.java
+ com.example.demo.src.product.model.GetBuyRes
 com/example/demo/src/product/ProductProvider.java
  com.example.demo.src.product.ProductProvider
 com/example/demo/src/product/ProductDao.java

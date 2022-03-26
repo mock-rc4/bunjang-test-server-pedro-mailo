@@ -126,7 +126,10 @@ public class ProductController {
         }
     }
 
-
+    /**
+     * 카테고리로 제품 조회 API
+     * [GET] products/category/{categoryIdx}
+     */
     @ResponseBody
     @GetMapping("/category/{categoryIdx}")
     public BaseResponse<List<GetProductSearchRes>> getProductByCategory(@PathVariable("categoryIdx") int categoryIdx){
@@ -147,8 +150,23 @@ public class ProductController {
     }
 
 
-
-
+    /**
+     * 구매내역 조회 API
+     * [GET] products/buy
+     */
+    @ResponseBody
+    @GetMapping("/buy")
+    public BaseResponse<List<GetBuyRes>> getPeymentListByBuyer(){
+        try{
+            System.out.println("구매내역 조회 컨트롤러 들어옴");
+            int buyerIdx = jwtService.getUserIdx();
+            List<GetBuyRes> getPaymentByBuyer = productProvider.getPaymentByBuyer(buyerIdx);
+            return new BaseResponse<>(getPaymentByBuyer);
+        }
+        catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
 

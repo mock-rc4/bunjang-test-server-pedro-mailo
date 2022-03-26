@@ -70,6 +70,20 @@ public class ProductProvider {
 
     }
 
+// 구매내역 조회
+    public List<GetBuyRes> getPaymentByBuyer(int buyerIdx) throws BaseException{
+        try {
+            System.out.println("구매내역 조회 provider 들어옴");
+            List<GetBuyRes> getPaymentByBuyer = productDao.getBuyListByUserIdx(buyerIdx);
+            return getPaymentByBuyer;
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+
+
 
 
 

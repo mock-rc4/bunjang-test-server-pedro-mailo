@@ -13,12 +13,14 @@ public class ProductDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource){
+    public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-/** 거래정보 생성 */
-    public int createPayment(PostPaymentReq postPaymentReq, int buyerIdx, int productIdx){
+    /**
+     * 거래정보 생성
+     */
+    public int createPayment(PostPaymentReq postPaymentReq, int buyerIdx, int productIdx) {
         System.out.println("제품생성 dao 들어옴");
         String createPaymentQuery = "insert into Payment (productIdx, buyerIdx, safetyTax," +
                 "point, totalPaymentAmount, paymentMethod, transactionMethod, address) VALUES (?,?,?,?,?,?,?,?)";
@@ -26,7 +28,7 @@ public class ProductDao {
         int productIdxParm = productIdx;
         System.out.println(buyerIdx);
         System.out.println(productIdx);
-        this.jdbcTemplate.update(createPaymentQuery,productIdxParm, buyerIdxParm, postPaymentReq.getSafetyTax(),
+        this.jdbcTemplate.update(createPaymentQuery, productIdxParm, buyerIdxParm, postPaymentReq.getSafetyTax(),
                 postPaymentReq.getPoint(), postPaymentReq.getTotalPaymentAmount(), postPaymentReq.getPaymentMethod(), postPaymentReq.getTransactionMethod(),
                 postPaymentReq.getAddress());
         String lastInsertIdQuery = "select last_insert_id()";
@@ -43,11 +45,10 @@ public class ProductDao {
     }
 
 
-
-
-
-    /** 제품 생성 **/
-    public int createProduct(PostProductReq postProductReq, int userIdx){
+    /**
+     * 제품 생성
+     **/
+    public int createProduct(PostProductReq postProductReq, int userIdx) {
         System.out.println("제품생성 Dao 들어옴");
         String createProductQuery = "insert into Product (userIdx, categoryIdx, " +
                 "productName, productDesc, " +
@@ -70,18 +71,10 @@ public class ProductDao {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-/** 제품 상세조회 **/
-    public GetProductDetailRes getProductDetailRes(int userIdx, int productIdx){
+    /**
+     * 제품 상세조회
+     **/
+    public GetProductDetailRes getProductDetailRes(int userIdx, int productIdx) {
         System.out.println("dao 들어옴");
         System.out.println(userIdx);
         System.out.println(productIdx);
@@ -126,8 +119,8 @@ public class ProductDao {
         int GetUserIdx = userIdx;
         int GetProductIdx = productIdx;
 
-        return  this.jdbcTemplate.queryForObject(getProductDetailQuery,
-                (rs,rowNum) -> new GetProductDetailRes(
+        return this.jdbcTemplate.queryForObject(getProductDetailQuery,
+                (rs, rowNum) -> new GetProductDetailRes(
                         rs.getInt("PIdx"),
                         rs.getString("imageUrl"),
                         rs.getInt("price"),
@@ -149,37 +142,30 @@ public class ProductDao {
                         rs.getFloat("avgStar"),
                         rs.getInt("myLike")),
                 GetUserIdx, GetUserIdx, GetProductIdx
-                );
+        );
     }
 
     public int CreateView(int userIdx, int productIdx) {
         String createViewQuery = "insert into Views (userIdx,productIdx) values (?,?)";
         int userParams = userIdx;
         int productParams = productIdx;
-        Object[] createViewParams = new Object[]{userIdx,productIdx};
+        Object[] createViewParams = new Object[]{userIdx, productIdx};
         return this.jdbcTemplate.update(createViewQuery, createViewParams);
     }
 
 
-
-
-
-
-
-
-
-
-
-/** 검색어로 제품 조회 **/
-    public List<GetProductSearchRes> getProductSearchRes(String keyword){
+    /**
+     * 검색어로 제품 조회
+     **/
+    public List<GetProductSearchRes> getProductSearchRes(String keyword) {
         String getProductsQuery = "select P.Idx, P.price, P.productName, P.saftyPay, PI.imageUrl\n" +
-                                  "from Product as P\n" +
-                                  "left join ProductImage as PI on P.Idx = PI.productIdx\n" +
-                                  "where P.productName like concat('%',?,'%')\n" +
-                                  "group by P.Idx";
+                "from Product as P\n" +
+                "left join ProductImage as PI on P.Idx = PI.productIdx\n" +
+                "where P.productName like concat('%',?,'%')\n" +
+                "group by P.Idx";
         String GetProductSearchResPrams = keyword;
         return this.jdbcTemplate.query(getProductsQuery,
-                (rs,rowNum) -> new GetProductSearchRes(
+                (rs, rowNum) -> new GetProductSearchRes(
                         rs.getInt("Idx"),
                         rs.getInt("price"),
                         rs.getString("productName"),
@@ -189,9 +175,10 @@ public class ProductDao {
     }   // getProductSearchRes() 끝
 
 
-
-/** 카테고리로 제품 조회 **/
-    public List<GetProductSearchRes> getProductByCategory(int categoryIdx){
+    /**
+     * 카테고리로 제품 조회
+     **/
+    public List<GetProductSearchRes> getProductByCategory(int categoryIdx) {
         System.out.println("카테고리 dao 들어옴");
         String getProductsQuery = "select P.Idx, P.price, P.productName, P.saftyPay, PI.imageUrl\n" +
                 "                from Product as P\n" +
@@ -202,7 +189,7 @@ public class ProductDao {
         int GetProductByCategoryPrams = categoryIdx;
         System.out.println("쿼리 파라미터 받음");
         return this.jdbcTemplate.query(getProductsQuery,
-                (rs,rowNum) -> new GetProductSearchRes(
+                (rs, rowNum) -> new GetProductSearchRes(
                         rs.getInt("Idx"),
                         rs.getInt("price"),
                         rs.getString("productName"),
@@ -211,23 +198,46 @@ public class ProductDao {
                 GetProductByCategoryPrams);
     }   // getProductByCategory() 끝
 
+    /**
+     * 구매내역 조회
+     */
+    public List<GetBuyRes> getBuyListByUserIdx(int buyerIdx) {
+        System.out.println("구매내역 Dao 들어옴");
+        String getProductsByBuyerQuery = "select PY.Idx PYIdx, P.Idx PIdx,\n" +
+                "       PI.imageUrl, P.productName,\n" +
+                "       P.price,\n" +
+                "       U.shopName buyerName, PY.paymentMethod,\n" +
+                "       case when instr(DATE_FORMAT(PY.updateAt, '%Y-%m-%d %p %h:%i'), 'PM') > 0\n" +
+                "       then replace(DATE_FORMAT(PY.updateAt, '%Y-%m-%d %p %h:%i'), 'PM', '오후')\n" +
+                "       else replace(DATE_FORMAT(PY.updateAt, '%Y-%m-%d %p %h:%i'), 'AM', '오전')\n" +
+                "       end as updateTime\n" +
+                "from Payment PY\n" +
+                "join Product P on PY.productIdx = P.Idx\n" +
+                "join User U on PY.buyerIdx = U.Idx\n" +
+                "left join ProductImage PI on PY.productIdx = PI.Idx\n" +
+                "where PY.buyerIdx = ?";
+        int getBuyerIdxPrams = buyerIdx;
+        return this.jdbcTemplate.query(getProductsByBuyerQuery,
+                (rs, rowNum) -> new GetBuyRes(
+                        rs.getInt("PYIdx"),
+                        rs.getInt("PIdx"),
+                        rs.getString("imageUrl"),
+                        rs.getString("productName"),
+                        rs.getInt("price"),
+                        rs.getString("buyerName"),
+                        rs.getInt("paymentMethod"),
+                        rs.getString("updateTime")),
+                getBuyerIdxPrams);
+    }
+
+
+
+
+
+}   /** class  productDao 끝나는  괄호 */
 
 
 
 
 
 
-
-} /** productDao class 닫는 괄호 **/
-
-
-
-
-
-
-/**
-private int Idx;    // 제품 인덱스
-private int price;  // 제품 가격
-private String productName; // 제품 제목
-private int saftyPay;
- **/
