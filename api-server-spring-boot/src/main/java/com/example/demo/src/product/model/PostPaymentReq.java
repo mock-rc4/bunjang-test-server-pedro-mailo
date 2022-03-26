@@ -9,9 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostPaymentReq {
     //private int idx;
-    private String status;
-    private int productIdx;
-    private int buyerIdx;
+    //private String status;
+    //private int productIdx;
+    //private int buyerIdx;
     private int safetyTax;
     private int point;
     private int totalPaymentAmount;

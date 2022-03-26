@@ -29,6 +29,7 @@ public class ProductProvider {
 // 제품 상세페이지
     public GetProductDetailRes getProductDetail(int userIdx, int productIdx) throws BaseException{
         try{
+            int ViewSync = productDao.CreateView(userIdx,productIdx);
             GetProductDetailRes getProductDetailRes = productDao.getProductDetailRes(userIdx, productIdx);
             return  getProductDetailRes;
         }

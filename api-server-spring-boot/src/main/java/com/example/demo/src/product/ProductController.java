@@ -41,11 +41,12 @@ public class ProductController {
      *
      */
     @ResponseBody
-    @PostMapping("")
-    public BaseResponse<PostPaymentRes> createPayment(@RequestBody PostPaymentReq postPaymentReq){
+    @PostMapping("/{productIdx}/payment")
+    public BaseResponse<PostPaymentRes> createPayment(@RequestBody PostPaymentReq postPaymentReq, @PathVariable("productIdx") int productIdx){
         try{
+            System.out.println("거래점보 생성 컨트롤러 들어옴");
             int buyerIdx = jwtService.getUserIdx();
-            PostPaymentRes postPaymentRes = productService.createPayment(postPaymentReq, buyerIdx);
+            PostPaymentRes postPaymentRes = productService.createPayment(postPaymentReq, buyerIdx, productIdx);
             return new BaseResponse<>(postPaymentRes);
         }catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
@@ -70,8 +71,6 @@ public class ProductController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-
-
 
 
 

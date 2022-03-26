@@ -50,12 +50,15 @@ public class ProductService {
     }
 
 // payment 생성
-    public PostPaymentRes createPayment(PostPaymentReq postPaymentReq, int buyerIdx) throws BaseException{
+    public PostPaymentRes createPayment(PostPaymentReq postPaymentReq, int buyerIdx, int productIdx) throws BaseException{
         try{
+            System.out.println("제품생성 서비스 들어옴");
             int buyerIdxParm = buyerIdx;
-            int Idx = productDao.createPayment(postPaymentReq, buyerIdxParm);
+            int productIdxParm = productIdx;
+            int changeProductProgress = productDao.changeProductProgress(productIdxParm);
+            int Idx = productDao.createPayment(postPaymentReq, buyerIdxParm, productIdxParm);
 
-            return new PostPaymentRes(Idx, postPaymentReq.getStatus(), postPaymentReq.getProductIdx(), buyerIdxParm, postPaymentReq.getSafetyTax(),
+            return new PostPaymentRes(Idx, productIdxParm, buyerIdxParm, postPaymentReq.getSafetyTax(),
                     postPaymentReq.getPoint(), postPaymentReq.getTotalPaymentAmount(), postPaymentReq.getPaymentMethod(), postPaymentReq.getTransactionMethod(),
                     postPaymentReq.getAddress());
         }catch (Exception exception){

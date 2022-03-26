@@ -18,23 +18,35 @@ public class ProductDao {
     }
 
 /** 거래정보 생성 */
-    public int createPayment(PostPaymentReq postPaymentReq, int buyerIdx){
-        String createPaymentQuery = "insert into Payment (status, productIdx, buyerIdx, safetyTax," +
-                "point, totalPaymentAmount, paymentMethod, transactionMethod, address) VALUES (?,?,?,?,?,?,?,?,?)";
-        int buyerIdxParms = buyerIdx;
-        this.jdbcTemplate.update(createPaymentQuery,postPaymentReq.getStatus(), postPaymentReq.getProductIdx(), buyerIdxParms, postPaymentReq.getSafetyTax(),
+    public int createPayment(PostPaymentReq postPaymentReq, int buyerIdx, int productIdx){
+        System.out.println("제품생성 dao 들어옴");
+        String createPaymentQuery = "insert into Payment (productIdx, buyerIdx, safetyTax," +
+                "point, totalPaymentAmount, paymentMethod, transactionMethod, address) VALUES (?,?,?,?,?,?,?,?)";
+        int buyerIdxParm = buyerIdx;
+        int productIdxParm = productIdx;
+        System.out.println(buyerIdx);
+        System.out.println(productIdx);
+        this.jdbcTemplate.update(createPaymentQuery,productIdxParm, buyerIdxParm, postPaymentReq.getSafetyTax(),
                 postPaymentReq.getPoint(), postPaymentReq.getTotalPaymentAmount(), postPaymentReq.getPaymentMethod(), postPaymentReq.getTransactionMethod(),
                 postPaymentReq.getAddress());
         String lastInsertIdQuery = "select last_insert_id()";
         return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
     }
 
+    public int changeProductProgress(int productIdx) {
+        String changeProgressQuery = "update Product P\n" +
+                "set P.progress = 3\n" +
+                "where P.Idx = ?";
+        int productParams = productIdx;
+        Object[] changeProgressParams = new Object[]{productIdx};
+        return this.jdbcTemplate.update(changeProgressQuery, changeProgressParams);
+    }
 
 
 
 
 
-/** 제품 생성 **/
+    /** 제품 생성 **/
     public int createProduct(PostProductReq postProductReq, int userIdx){
         System.out.println("제품생성 Dao 들어옴");
         String createProductQuery = "insert into Product (userIdx, categoryIdx, " +
@@ -139,6 +151,16 @@ public class ProductDao {
                 GetUserIdx, GetUserIdx, GetProductIdx
                 );
     }
+
+    public int CreateView(int userIdx, int productIdx) {
+        String createViewQuery = "insert into Views (userIdx,productIdx) values (?,?)";
+        int userParams = userIdx;
+        int productParams = productIdx;
+        Object[] createViewParams = new Object[]{userIdx,productIdx};
+        return this.jdbcTemplate.update(createViewQuery, createViewParams);
+    }
+
+
 
 
 
