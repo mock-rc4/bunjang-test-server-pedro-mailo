@@ -118,6 +118,7 @@ public class UserDao {
 
         return this.jdbcTemplate.update(modifyUserBirthQuery, modifyUserBirthParams);
     }
+
     public int modifyUserSex(PatchUserSexReq patchUserSexReq) {
         String modifyUserSexQuery = "update User set userSex = ? where Idx = ? ";
         Object[] modifyUserSexParams = new Object[]{patchUserSexReq.getUserSex(), patchUserSexReq.getUserIdx()};
@@ -125,6 +126,7 @@ public class UserDao {
         return this.jdbcTemplate.update(modifyUserSexQuery, modifyUserSexParams);
 
     }
+
     public int modifyUserPhone(PatchUserPhoneReq patchUserPhoneReq) {
         String modifyUserPhoneQuery = "update User set phoneNumber = ? where Idx = ? ";
         Object[] modifyUserPhoneParams = new Object[]{patchUserPhoneReq.getPhoneNumber(), patchUserPhoneReq.getUserIdx()};
@@ -166,29 +168,29 @@ public class UserDao {
                 "         left join Favorite F on U.Idx = F.userIdx\n" +
                 "         left join Review R on U.Idx = R.userIdx\n" +
                 "         left join (select * from Follow where status = 1) F2 on F2.userIdx = U.Idx\n" +
-                "where U.Idx = ?;" ;
+                "where U.Idx = ?;";
         int GetUserInfoResParams = userIdx;
         return this.jdbcTemplate.query(GetUserInfoResQuery,
                 (rs, rowNum) -> new GetUserInfoRes(
-                                rs.getString("userShopName"),
-                                rs.getString("userProfileImage"),
-                                rs.getInt("userFavCount"),
-                                rs.getInt("userReviewCount"),
-                                rs.getInt("userFollowingCount"),
-                                rs.getInt("userFollwerCount"),
-                                rs.getFloat("reviewrate")),
-                        GetUserInfoResParams);
+                        rs.getString("userShopName"),
+                        rs.getString("userProfileImage"),
+                        rs.getInt("userFavCount"),
+                        rs.getInt("userReviewCount"),
+                        rs.getInt("userFollowingCount"),
+                        rs.getInt("userFollwerCount"),
+                        rs.getFloat("reviewrate")),
+                GetUserInfoResParams);
 
     }
 
     public List<GetUserProductCountRes> ProductCount(int userIdx, int progress) {
-        String UserProductCntResQuery = "select count(*) as count from Product where userIdx = ? and status = 1 and progress = ? ;" ;
+        String UserProductCntResQuery = "select count(*) as count from Product where userIdx = ? and status = 1 and progress = ? ;";
         int UserProductCntParams = userIdx;
         int UserProductCntParams2 = progress;
         return this.jdbcTemplate.query(UserProductCntResQuery,
                 (rs, rowNum) -> new GetUserProductCountRes(
                         rs.getInt("count")),
-                UserProductCntParams,UserProductCntParams2);
+                UserProductCntParams, UserProductCntParams2);
 
     }
 
@@ -200,7 +202,7 @@ public class UserDao {
                 "           else concat(timestampdiff(DAY, P.updateAt, current_timestamp), '일 전') end Posteddate\n" +
                 "from Product P\n" +
                 "left join(select * from ProductImage group by productIdx) PI on P.Idx = PI.productIdx\n" +
-                "where userIdx=? and P.status = 1 and progress =?;" ;
+                "where userIdx=? and P.status = 1 and progress =?;";
         int UserProductCntParams = userIdx;
         int UserProductCntParams2 = progress;
         return this.jdbcTemplate.query(UserProductCntResQuery,
@@ -211,15 +213,31 @@ public class UserDao {
                         rs.getInt("SaftyPay"),
                         rs.getString("ProductImage"),
                         rs.getString("Posteddate")
-                        ),
-                UserProductCntParams,UserProductCntParams2);
+                ),
+                UserProductCntParams, UserProductCntParams2);
     }
 
-
+    public List<GetSearchByUserNameRes> SearchByUserName(String shopName) {
+        String GetSearchByUserNameQuery = "select U.Idx userIdx, U.profileImage profileImage , U.shopName shopName, case when followercnt is null then 0 else followercnt end followercnt,case when productCnt is null then 0 else productCnt end  productCnt\n" +
+                "from User U\n" +
+                "left join (select count(userIdx) followercnt,followingIdx from Follow group by followingIdx)F on U.Idx = F.followingIdx\n" +
+                "left join (select count(distinct userIdx) productCnt,userIdx from Product)P on U.Idx=P.userIdx\n" +
+                "where U.shopName like concat('%',?,'%')";
+        String GetSearchByUserNameParams = shopName;
+        System.out.println("다오에러");
+        return this.jdbcTemplate.query(GetSearchByUserNameQuery,
+                (rs, rowNum) -> new GetSearchByUserNameRes(
+                        rs.getInt("userIdx"),
+                        rs.getString("profileImage"),
+                        rs.getString("shopName"),
+                        rs.getInt("followercnt"),
+                        rs.getInt("productCnt")),
+                GetSearchByUserNameParams);
+    }
 
 
 ///
 
-/*로그인 주석*/
+    /*로그인 주석*/
 ///
 }

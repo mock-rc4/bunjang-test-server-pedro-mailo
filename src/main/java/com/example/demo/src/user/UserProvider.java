@@ -135,4 +135,15 @@ public class UserProvider {
     }
 
 
+    public List<GetSearchByUserNameRes> SearchByUserName(String shopName) throws BaseException{
+        try{
+            System.out.println("3");
+            List<GetSearchByUserNameRes> getSearchByUserNameResList = userDao.SearchByUserName(shopName);
+            System.out.println("4");
+            return getSearchByUserNameResList;
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

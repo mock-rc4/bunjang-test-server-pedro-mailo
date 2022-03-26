@@ -304,4 +304,21 @@ public class UserController {
     }
 
 
+
+    @ResponseBody
+    @GetMapping("/shopName")
+    public BaseResponse<List<GetSearchByUserNameRes>> SeatchByUserName(@RequestParam(required = false) String shopName) { //
+        try{
+
+            // Get Users
+
+            List<GetSearchByUserNameRes> getSearchByUserNameResList = userProvider.SearchByUserName(shopName); // 검색조회
+            System.out.println("2");
+            return new BaseResponse<>(getSearchByUserNameResList);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
 }
