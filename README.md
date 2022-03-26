@@ -83,13 +83,22 @@
 </details>
 
 <details> 
-<summary> 2022.3.23 (WEN) </summary>
+<summary> 2022.3.23 (TUE) </summary>
 <div markdown="1">
  
  > 
   - 마일로가 작성한 API 서버에 반영(상품상세조회, 메인페이지 API)
   - 회원 MyPage API 작성 완료 (100%)
-  - 
+  - 회원 성별, 핸드폰번호, 생년월일 수정 총 3개 API 작성(50%)
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.23 (FRI) </summary>
+<div markdown="1">
+ 
+ > 
+  - 회원 성별, 핸드폰번호, 생년월일 수정 총 3개 API 작성완료(100%)
 </div>
 </details>
 
@@ -107,6 +116,15 @@
 ### 3. 인스턴스 오류(22-03-23)
 - 문제 : 서버 가동중 3/23 새벽 2시경 EC2 인스턴스 에러 나는것 확인 시스템은 정상이었지만, 통신상 오류가 나는 상황 확인.
 - 해결 : 인스턴스 재부팅 후 정상으로 되는것 확인 완료
+
+
+### 4. 찜 API 오루(22-03-26)
+- 문제 : 찜 비활성화 하는 과정에서 코드 에러가 나는것 확인
+``` JAVA
+in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause]- Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause
+org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2
+```
+- 해결 : DAO에서 Body 에 작성한 내용을 파라미터로 받고 Favorite 테이블에 데이터 조회해 데이터 유무를 파악하는데, status = 1 처럼 특정 조건으로 지정해서 쿼리문 오류 나는것 확인
 <br /> 
 
 ## 🚀 참고자료
