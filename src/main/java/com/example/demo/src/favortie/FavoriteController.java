@@ -21,7 +21,7 @@ import static com.example.demo.config.BaseResponseStatus.*;
 
 
 @RestController
-@RequestMapping("/app/fav")
+@RequestMapping("/app/favs")
 public class FavoriteController {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -2,10 +2,7 @@ package com.example.demo.src.favortie;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.src.favortie.model.*;
-import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
-import com.example.demo.src.product.model.*;
-import com.example.demo.src.product.ProductDao;
-import com.example.demo.src.product.ProductProvider;
+
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
@@ -47,7 +44,7 @@ public class FavoriteService {
                 favoriteDao.statusChangeFavorite(postFavoriteInfoReq);
                 //return new PostFavoriteInfoRes(getfav.getProductIdx(),getfav.getUserIdx(),getfav.getStatus());
             }
-//
+
         }
         else {
             favoriteDao.createFavorite(postFavoriteInfoReq);

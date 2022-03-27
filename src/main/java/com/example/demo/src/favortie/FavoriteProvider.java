@@ -3,7 +3,7 @@ package com.example.demo.src.favortie;
 
 import com.example.demo.config.BaseException;
 //import com.example.demo.config.BaseResponseStatus;
-import com.example.demo.src.favortie.FavoriteDao;
+
 import com.example.demo.src.favortie.model.*;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;

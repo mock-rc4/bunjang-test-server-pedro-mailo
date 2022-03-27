@@ -305,6 +305,14 @@ public class UserController {
 
 
 
+
+//    @ResponseBody
+//    @GetMapping("/{userIdx}/{progress}")
+//    public BaseResponse<List<String>> getUserFollow(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress){}
+//
+//
+//    public BaseResponse<List<String>> getUserFollowDesc(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress)
+
     @ResponseBody
     @GetMapping("/shopName")
     public BaseResponse<List<GetSearchByUserNameRes>> SeatchByUserName(@RequestParam(required = false) String shopName) { //

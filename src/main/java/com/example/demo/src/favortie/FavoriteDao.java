@@ -19,10 +19,10 @@ public class FavoriteDao {
     }
 
     public int checkFavoriteInfo(int userIdx, int productIdx) {
-        String checkShopNameQuery = "select exists(select userIdx from Favorite where userIdx = ? and productIdx = ?)";
+        String checkFavoriteInfoQuery = "select exists(select userIdx from Favorite where userIdx = ? and productIdx = ?)";
         int checkUserIdxParams = userIdx;
         int checkProductIdxParams = productIdx;
-        return this.jdbcTemplate.queryForObject(checkShopNameQuery,
+        return this.jdbcTemplate.queryForObject(checkFavoriteInfoQuery,
                 int.class,
                 checkUserIdxParams,checkProductIdxParams);
     }
