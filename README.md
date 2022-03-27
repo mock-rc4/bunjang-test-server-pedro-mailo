@@ -83,7 +83,7 @@
 </details>
 
 <details> 
-<summary> 2022.3.23 (TUE) </summary>
+<summary> 2022.3.24(THU) </summary>
 <div markdown="1">
  
  > 
@@ -96,6 +96,24 @@
 <details> 
 <summary> 2022.3.25 (FRI) </summary>
 <div markdown="1">
+ 
+
+ 
+<details> 
+<summary> 2022.3.27(SUN) </summary>
+<div markdown="1">
+ 
+ > 
+  - 마일로가 작성한 API 서버에 반영(결제 관련 API)
+  - 회원 팔로우 등록 및 삭제 API  작성 완료 (100%)
+  - API 명세서 정리
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.25 (FRI) </summary>
+<div markdown="1">
+ 
  
  > 
   - 회원 성별, 핸드폰번호, 생년월일 수정 총 3개 API 작성완료(100%)
