@@ -27,11 +27,10 @@ public class ProductProvider {
     }
 
 // 제품 상세페이지
-    public List<GetProductDetailRes> getProductDetail(int userIdx, int productIdx) throws BaseException{
+    public GetProductDetailRes getProductDetail(int userIdx, int productIdx) throws BaseException{
         try{
             int ViewSync = productDao.CreateView(userIdx,productIdx);
-            List<GetProductDetailRes> getProductDetailRes = productDao.getProductDetailRes(userIdx, productIdx);
-
+            GetProductDetailRes getProductDetailRes = productDao.getProductDetailRes(userIdx, productIdx);
             return  getProductDetailRes;
         }
         catch (Exception exception){
@@ -70,6 +69,20 @@ public class ProductProvider {
         }
 
     }
+
+// 구매내역 조회
+    public List<GetBuyRes> getPaymentByBuyer(int buyerIdx) throws BaseException{
+        try {
+            System.out.println("구매내역 조회 provider 들어옴");
+            List<GetBuyRes> getPaymentByBuyer = productDao.getBuyListByUserIdx(buyerIdx);
+            return getPaymentByBuyer;
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+
 
 
 
