@@ -97,6 +97,12 @@
 <summary> 2022.3.25 (FRI) </summary>
 <div markdown="1">
  
+ 
+ > 
+  - 회원 성별, 핸드폰번호, 생년월일 수정 총 3개 API 작성완료(100%)
+</div>
+</details>
+ 
 
  
 <details> 
@@ -110,15 +116,6 @@
 </div>
 </details>
 
-<details> 
-<summary> 2022.3.25 (FRI) </summary>
-<div markdown="1">
- 
- 
- > 
-  - 회원 성별, 핸드폰번호, 생년월일 수정 총 3개 API 작성완료(100%)
-</div>
-</details>
 
 <br /> 
 
