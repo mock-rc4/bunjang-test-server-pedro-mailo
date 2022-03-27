@@ -168,6 +168,75 @@ public class ProductController {
         }
     }
 
+    /**
+     * 판매내역 조회 API
+     * [GET] products/sell
+     */
+    @ResponseBody
+    @GetMapping("/sell")
+    public BaseResponse<List<GetBuyRes>> getPaymentListBySeller(){
+        try{
+            int sellerIdx = jwtService.getUserIdx();
+            List<GetBuyRes> getPaymentBySeller = productProvider.getPaymentBySeller(sellerIdx);
+            return new BaseResponse<>(getPaymentBySeller);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 상품문의 등록 API
+     * [POST] products/{productIdx}/question
+     */
+    @ResponseBody
+    @PostMapping("/{productIdx}/question")
+    public BaseResponse<PostProductQuesRes> createProductQuestion(@RequestBody PostProductQuesReq postProductQuesReq, @PathVariable("productIdx") int productIdx){
+        try{
+            System.out.println("상품문의 생성 컨트롤러 들어옴");
+            int userIdx = jwtService.getUserIdx();
+            PostProductQuesRes postProductQuesRes = productService.createProductQuestion(postProductQuesReq,userIdx,productIdx);
+            return new BaseResponse<>(postProductQuesRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+    /**
+     *  @ResponseBody
+     *     @PostMapping("/{productIdx}/payment")
+     *     public BaseResponse<PostPaymentRes> createPayment(@RequestBody PostPaymentReq postPaymentReq, @PathVariable("productIdx") int productIdx){
+     *         try{
+     *             System.out.println("거래점보 생성 컨트롤러 들어옴");
+     *             int buyerIdx = jwtService.getUserIdx();
+     *             PostPaymentRes postPaymentRes = productService.createPayment(postPaymentReq, buyerIdx, productIdx);
+     *             return new BaseResponse<>(postPaymentRes);
+     *         }catch (BaseException exception){
+     *             return new BaseResponse<>((exception.getStatus()));
+     *         }
+     *     }
+     */
+
+
+
+
+    /**
+     * 상품 인데스에 따른 상품문의 조회 API
+     * [GET] products/{productIdx}/questions
+     */
+    @ResponseBody
+    @GetMapping("/{productIdx}/questions")
+    public BaseResponse<List<GetProductQuesRes>> getQuestionByProductIdx(@PathVariable("productIdx")int productIdx){
+        try {
+            List<GetProductQuesRes> getQuestion = productProvider.getProductQuestion(productIdx);
+            return new BaseResponse<>(getQuestion);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+
 
 
 /**

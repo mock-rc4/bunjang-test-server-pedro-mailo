@@ -66,7 +66,19 @@ public class ProductService {
         }
     }
 
+// ProductQuestion 생성
+    public PostProductQuesRes createProductQuestion(PostProductQuesReq postProductQuesReq, int userIdx, int productIdx) throws BaseException{
+        try{
+            System.out.println("상품문의 생성 서비스 들어옴");
+            int userIdxParm =userIdx;
+            int productIdxParm = productIdx;
+            int QIdx = productDao.createProductQuestion(postProductQuesReq, productIdxParm, userIdxParm);
 
+            return new PostProductQuesRes(QIdx, productIdxParm, userIdxParm, postProductQuesReq.getQuestionDesc());
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 
 }

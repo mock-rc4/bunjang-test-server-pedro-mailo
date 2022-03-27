@@ -81,10 +81,27 @@ public class ProductProvider {
         }
     }
 
+// 판매내역 조회
+    public List<GetBuyRes> getPaymentBySeller(int sellerIdx) throws BaseException{
+        try{
+            List<GetBuyRes> getPaymentBySeller = productDao.getSellListByUserIdx(sellerIdx);
+            return getPaymentBySeller;
+        }catch (Exception exception){
+            System.out.println("dao에서 에러");
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 
-
-
+// 상품 문의 조회
+    public List<GetProductQuesRes> getProductQuestion(int productIdx) throws BaseException{
+        try{
+            List<GetProductQuesRes> getQues = productDao.getProductQues(productIdx);
+            return getQues;
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 
 

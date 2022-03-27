@@ -74,8 +74,14 @@ com/example/demo/src/product/model/PostPaymentReq.java
  com.example.demo.src.product.model.PostPaymentReq
 com/example/demo/src/product/model/GetBuyRes.java
  com.example.demo.src.product.model.GetBuyRes
+com/example/demo/src/product/model/GetProductQuesRes.java
+ com.example.demo.src.product.model.GetProductQuesRes
 com/example/demo/src/product/ProductProvider.java
  com.example.demo.src.product.ProductProvider
+com/example/demo/src/product/model/PostProductQuesReq.java
+ com.example.demo.src.product.model.PostProductQuesReq
+com/example/demo/src/product/model/PostProductQuesRes.java
+ com.example.demo.src.product.model.PostProductQuesRes
 com/example/demo/src/product/ProductDao.java
  com.example.demo.src.product.ProductDao
 com/example/demo/src/product/ProductService.java

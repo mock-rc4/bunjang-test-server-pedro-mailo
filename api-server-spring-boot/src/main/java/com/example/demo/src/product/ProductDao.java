@@ -230,12 +230,94 @@ public class ProductDao {
                 getBuyerIdxPrams);
     }
 
+    /**
+     * 판매내역 조회
+     */
+    public List<GetBuyRes> getSellListByUserIdx(int userIdx) {
+        System.out.println("판매내역 Dao 들어옴");
+        String getProductsBySellerQuery = "select PY.Idx PYIdx, P.Idx PIdx,\n" +
+                "       PI.imageUrl, P.productName,\n" +
+                "       P.price,\n" +
+                "       U.shopName buyerNmae, PY.paymentMethod,\n" +
+                "  case when\n" +
+                "      instr(DATE_FORMAT(P.updateAt, '%Y-%m-%d %p %h:%i'), 'PM') > 0\n" +
+                "        THEN\n" +
+                "        replace(DATE_FORMAT(P.updateAt, '%Y-%m-%d %p %h:%i'), 'PM', '오후')\n" +
+                "        ELSE\n" +
+                "        replace(DATE_FORMAT(P.updateAt, '%Y-%m-%d %p %h:%i'), 'AM', '오전')\n" +
+                "        END AS updateTime\n" +
+                "from Payment PY\n" +
+                "join Product P on PY.productIdx = P.Idx\n" +
+                "join User U on PY.buyerIdx = U.Idx\n" +
+                "left join ProductImage PI on PY.productIdx = PI.Idx\n" +
+                "where P.userIdx = ?";
+        int getSellerIdx = userIdx;
+        System.out.println(getSellerIdx);
+        return this.jdbcTemplate.query(getProductsBySellerQuery,
+                (rs, rowNum) -> new GetBuyRes(
+                        rs.getInt("PYIdx"),
+                        rs.getInt("PIdx"),
+                        rs.getString("imageUrl"),
+                        rs.getString("productName"),
+                        rs.getInt("price"),
+                        rs.getString("buyerName"),
+                        rs.getInt("paymentMethod"),
+                        rs.getString("updateTime")),
+                getSellerIdx
+                );
+    }
+
+    /**
+     * 상품문의 등록
+     */
+    public int createProductQuestion(PostProductQuesReq postProductQuesReq, int productIdx, int userIdx){
+        String createQuesQuery = "insert into ProductQuestion (productIdx, userIdx, questionDesc)\n" +
+                "VALUES (?,?,?)";
+        int userIdxParm = userIdx;
+        int productIdxParm = productIdx;
+        this.jdbcTemplate.update(createQuesQuery, productIdxParm, userIdxParm, postProductQuesReq.getQuestionDesc());
+        String lastInsertIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
+    }
 
 
+
+
+    /**
+     * 상품문의 조회
+     */
+    public List<GetProductQuesRes> getProductQues(int productIdx) {
+        System.out.println("상품문의 Dao 들어옴");
+        System.out.println(productIdx);
+        String getQuesQuery = "select PQ.Idx QIdx, PQ.productIdx PIdx, PQ.userIdx UIdx,\n" +
+                "       U.profileImage, U.shopName, case when 60 > timestampdiff(MINUTE , PQ.createAt, current_timestamp)\n" +
+                "                                        then concat(timestampdiff(MINUTE, PQ.createAt, current_timestamp), '분 전')\n" +
+                "                                        when 24 >= timestampdiff(HOUR, PQ.createAt, current_timestamp)\n" +
+                "                                        then concat(timestampdiff(HOUR, PQ.createAt, current_timestamp), '시간 전')\n" +
+                "                                        when 31 >= timestampdiff(DAY , PQ.createAt, current_timestamp)\n" +
+                "                                        then concat(timestampdiff(Day , PQ.createAt, current_timestamp), '일 전')\n" +
+                "                                        else concat(timestampdiff(MONTH , PQ.createAt, current_timestamp), '달 전')\n" +
+                "                                        end createAt,\n" +
+                "       PQ.questionDesc\n" +
+                "from ProductQuestion PQ\n" +
+                "join User U on U.Idx = PQ.userIdx\n" +
+                "where PQ.productIdx = ?";
+        int getproductIdx = productIdx;
+        return this.jdbcTemplate.query(getQuesQuery,
+                (rs, rowNum)-> new GetProductQuesRes(
+                        rs.getInt("QIdx"),
+                        rs.getInt("PIdx"),
+                        rs.getInt("UIdx"),
+                        rs.getString("profileImage"),
+                        rs.getString("shopName"),
+                        rs.getString("createAt"),
+                        rs.getString("questionDesc")
+                ),getproductIdx
+                );
+    }
 
 
 }   /** class  productDao 끝나는  괄호 */
-
 
 
 
