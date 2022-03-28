@@ -128,6 +128,16 @@
 </div>
 </details>
 
+<details> 
+<summary> 2022.3.28(MON) </summary>
+<div markdown="1">
+ 
+ > 
+  - 유저 상점설정 조회, 수정 API 작성 완료 (100%)
+  - 채팅 API 구현 시작
+</div>
+</details>
+
 
 <br /> 
 
