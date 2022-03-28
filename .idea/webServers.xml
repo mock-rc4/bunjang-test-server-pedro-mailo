@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="23463013-30f1-44ef-9379-a96b0561f468" name="bunjang" url="http://prod.hiimpedro.site">
+        <fileTransfer rootFolder="/var/www/bunjang-test-server-pedro-mailo" accessType="SFTP" host="3.37.88.146" port="22" sshConfigId="51dc6f6a-b1cc-4df8-b700-1e1e60ec3ba3" sshConfig="ubuntu@3.37.88.146:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
