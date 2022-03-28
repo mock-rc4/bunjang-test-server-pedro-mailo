@@ -145,7 +145,7 @@
 - 해결 : 인스턴스 재부팅 후 정상으로 되는것 확인 완료
 
 
-### 4. 찜 API 오루(22-03-26)
+### 4. 찜 API 오(22-03-26)
 - 문제 : 찜 비활성화 하는 과정에서 코드 에러가 나는것 확인
 ``` JAVA
 in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause]- Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause
