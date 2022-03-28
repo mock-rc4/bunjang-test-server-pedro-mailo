@@ -9,6 +9,7 @@ import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -17,7 +18,7 @@ import static com.example.demo.config.BaseResponseStatus.*;
 @Service
 public class UserService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    private JdbcTemplate jdbcTemplate;
     private final UserDao userDao;
     private final UserProvider userProvider;
     private final JwtService jwtService;
@@ -112,6 +113,17 @@ public class UserService {
             throw new BaseException(MODIFY_FAIL_USERNAME);
 
         }
+    }
+
+    public void deleteUserInfo(DeleteUserReq deleteUserReq) throws BaseException {
+//        try{
+        int result = userDao.deleteUserInfo(deleteUserReq);
+        if (result == 0){
+            throw new BaseException(DELETE_FAIL_USER);
+        }
+//        } catch(Exception exception){
+//            throw new BaseException(DATABASE_ERROR);
+//        }
     }
 ///
 

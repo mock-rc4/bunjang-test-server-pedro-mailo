@@ -235,6 +235,12 @@ public class UserDao {
                 GetSearchByUserNameParams);
     }
 
+    public int deleteUserInfo(DeleteUserReq deleteUserReq) {
+        String deleteUserInfoQuery = "update User set status = 2, closingReason = ? where Idx = ? ";
+        Object[] deleteUserInfoParams = new Object[]{deleteUserReq.getClosingReason(), deleteUserReq.getUserIdx()};
+
+        return this.jdbcTemplate.update(deleteUserInfoQuery, deleteUserInfoParams);
+    }
 
 ///
 

@@ -304,15 +304,6 @@ public class UserController {
     }
 
 
-
-
-//    @ResponseBody
-//    @GetMapping("/{userIdx}/{progress}")
-//    public BaseResponse<List<String>> getUserFollow(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress){}
-//
-//
-//    public BaseResponse<List<String>> getUserFollowDesc(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress)
-
     @ResponseBody
     @GetMapping("/shopName")
     public BaseResponse<List<GetSearchByUserNameRes>> SeatchByUserName(@RequestParam(required = false) String shopName) { //
@@ -327,6 +318,39 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
+    /**
+     * 유저 탈퇴 API
+     * [PATCH] /users/:userInfoIdx/delete
+     *
+     * @return BaseResponse<String>
+     */
+    @PatchMapping("/delete/{userIdx}")
+    public BaseResponse<String> deleteUserInfo(@PathVariable("userIdx") int userIdx, @RequestBody DeleteUserReq deleteUserReq) {
+        if (deleteUserReq.getClosingReason() == null) {
+            return new BaseResponse<>(EMPTY_CLOSING_ACCOUNT_REASON);
+        }
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if (userIdx != userIdxByJwt) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 탈퇴로 status 변경
+            deleteUserReq = new DeleteUserReq(userIdx
+                    , deleteUserReq.getClosingReason());
+            userService.deleteUserInfo(deleteUserReq);
+
+            return new BaseResponse<>(SUCCESS_DELETE_USER);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
 
 
 }

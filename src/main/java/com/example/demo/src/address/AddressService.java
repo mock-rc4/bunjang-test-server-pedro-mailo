@@ -56,7 +56,8 @@ public class AddressService {
         int j =  addressDao.patchaddressInfo(patchAddressReq,addressIdx);
     }
 
-    public void deleteaddressInfo(int addressIdx,int userIdx) {
+    public void deleteaddressInfo(int addressIdx,int userIdx) throws BaseException {
+
         int j = addressDao.deleteaddress(addressIdx,userIdx);
     }
 }

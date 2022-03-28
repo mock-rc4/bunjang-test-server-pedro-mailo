@@ -78,7 +78,7 @@ public class AddressController {
             int userIdx = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
             addressService.deleteaddressInfo(addressIdx,userIdx);
-            String result = "주소 삭제 완료";
+            String result = "주소가 삭제 되었습니다";
             return new BaseResponse<>(result);
         }catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
