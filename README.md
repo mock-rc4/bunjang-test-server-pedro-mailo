@@ -1,8 +1,8 @@
 # Bunjang Clone coding Project 
 > ## [🙈 기획서](https://docs.google.com/document/d/1mJEql5gy8jLTYZXEtAzuZwmRtznI321b/edit)
 > ## [📫 API Sheet](https://docs.google.com/spreadsheets/d/1saKFspgb7g0NZVLX445RVXS27s1UKaY5/edit#gid=990061567)    
-> ## [🧩 ERD]()
->> password:
+> ## [🧩 ERD](https://aquerytool.com/aquerymain/index/?rurl=f5891c32-395a-4960-8e52-5380280e35ef&)
+>> password:42g555
 
 <br /> 
 
@@ -83,7 +83,7 @@
 </details>
 
 <details> 
-<summary> 2022.3.23 (TUE) </summary>
+<summary> 2022.3.24(THU) </summary>
 <div markdown="1">
  
  > 
@@ -97,10 +97,35 @@
 <summary> 2022.3.25 (FRI) </summary>
 <div markdown="1">
  
+ 
  > 
   - 회원 성별, 핸드폰번호, 생년월일 수정 총 3개 API 작성완료(100%)
 </div>
 </details>
+ 
+
+ 
+<details> 
+<summary> 2022.3.27(SUN) </summary>
+<div markdown="1">
+ 
+ > 
+  - 마일로가 작성한 API 서버에 반영(결제 관련 API)
+  - 회원 팔로우 등록 및 삭제 API  작성 완료 (100%)
+  - API 명세서 정리
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.28(MON) </summary>
+<div markdown="1">
+ 
+ > 
+  - 배송지 주소 등록, 조회 , 삭제 API 작성 완료 (100%)
+  - API 명세서 정리
+</div>
+</details>
+
 
 <br /> 
 
