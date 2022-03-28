@@ -52,5 +52,44 @@ public class FollowController {
         }
     }
 
+    @ResponseBody
+    @GetMapping("/follow/{userIdx}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
+    public BaseResponse<List<String>> getuserFollowList(@PathVariable("userIdx") int userIdx){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            System.out.println(userIdxByJwt);
+
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            List<String> getUserMainPage = followProvider.getuserFollowList(userIdx);
+            return new BaseResponse<>(getUserMainPage);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
+    @ResponseBody
+    @GetMapping("/followers/{userIdx}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
+    public BaseResponse<List<GetFollowerRes>> getuserFollower(@PathVariable("userIdx") int userIdx) {
+        try {
+            int userIdxByJwt = jwtService.getUserIdx();
+            System.out.println(userIdxByJwt);
+
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            List<GetFollowerRes> getuserFollower = followProvider.getuserFollower(userIdx);
+            return new BaseResponse<>(getuserFollower);
+        }
+     catch (BaseException exception) {
+        return new BaseResponse<>((exception.getStatus()));
+    }
+
+    }
+
+
 
 }

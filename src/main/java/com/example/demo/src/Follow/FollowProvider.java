@@ -2,8 +2,11 @@ package com.example.demo.src.Follow;
 
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.Follow.*;
+import com.example.demo.src.Follow.model.*;
 
+import com.example.demo.src.Follow.model.FollointIdxRes;
+import com.example.demo.src.Follow.model.GetFollowerRes;
+import com.example.demo.src.user.model.GetUserRes;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
@@ -11,7 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
@@ -38,5 +44,52 @@ public class FollowProvider {
             throw new BaseException(DATABASE_ERROR);
         }
 
+    }
+
+    public List<String> getuserFollowList(int userIdx) throws BaseException{
+        List folidx = followDao.getfollowIdxInfo(userIdx);
+        System.out.println(folidx);
+        List<Map<String,Object>> listMap = folidx;
+
+        listMap.get(1);
+//        int isi = folidx.size();
+//        for (int i = 0 ; i<isi ; i++){
+//        }
+//            List FollowList = followDao.FollowList(userIdx);
+//
+//            List FollowListDesc = followDao.FollowListDesc(userIdx);
+//            List resultDetailList = new ArrayList<>(Arrays.asList(FollowList,FollowListDesc));
+//            return resultDetailList;
+//
+//
+//        }
+    List FollowList = followDao.FollowList(userIdx);
+
+    List FollowListDesc = followDao.FollowListDesc(userIdx);
+    List resultDetailList = new ArrayList<>(Arrays.asList(FollowList,FollowListDesc));
+            return resultDetailList;
+//        List<FollointIdxRes> folidx = followDao.getfollowIdxInfo(userIdx);
+//
+//        System.out.println(folidx);
+//        int isi = folidx.size();
+//        List FollowList = followDao.FollowList(userIdx,folidx.get(1));
+//
+//        List FollowListDesc = followDao.FollowListDesc(userIdx);
+//        List resultDetailList = new ArrayList<>(FollowList);
+//        return resultDetailList;
+
+
+/**
+ * 조건 값을 의 갯수를 length 로 만든 다음에 해당 값을 포문 돌려서 한다. */
+    }
+
+    public List<GetFollowerRes> getuserFollower(int userIdx) throws BaseException{
+        try{
+            List<GetFollowerRes> GetFollowerRes = followDao.getuserFollower(userIdx);
+            return GetFollowerRes;
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 }
