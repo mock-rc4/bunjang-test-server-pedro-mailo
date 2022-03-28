@@ -116,6 +116,16 @@
 </div>
 </details>
 
+<details> 
+<summary> 2022.3.28(MON) </summary>
+<div markdown="1">
+ 
+ > 
+  - 배송지 주소 등록, 조회 , 삭제 API 작성 완료 (100%)
+  - API 명세서 정리
+</div>
+</details>
+
 
 <br /> 
 
