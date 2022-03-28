@@ -61,12 +61,12 @@ public class ProductController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<PostProductRes> createProduct(@RequestBody PostProductReq postProductReq){
+    public BaseResponse<List<String>> createProduct(@RequestBody PostProductReq postProductReq){
         try {
             System.out.println("제품생성 컨트롤러 들어옴");
             int userIdx = jwtService.getUserIdx();
-            PostProductRes postProductRes = productService.createProduct(postProductReq, userIdx);
-            return new BaseResponse<>(postProductRes);
+            List<String> getProductDetail = productService.createProduct(postProductReq, userIdx);
+            return new BaseResponse<>(getProductDetail);
         }catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
@@ -228,7 +228,8 @@ public class ProductController {
     @GetMapping("/{productIdx}/questions")
     public BaseResponse<List<GetProductQuesRes>> getQuestionByProductIdx(@PathVariable("productIdx")int productIdx){
         try {
-            List<GetProductQuesRes> getQuestion = productProvider.getProductQuestion(productIdx);
+            int userIdx = jwtService.getUserIdx();
+            List<GetProductQuesRes> getQuestion = productProvider.getProductQuestion(userIdx, productIdx);
             return new BaseResponse<>(getQuestion);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
@@ -236,7 +237,22 @@ public class ProductController {
     }
 
 
-
+    /**
+     * 상품문의 삭제 API
+     * [PATCH] products/{productIdx}/questions/{questionIdx}
+     */
+    @ResponseBody
+    @PatchMapping("/{productIdx}/questions/{questionIdx}")
+    public BaseResponse<String> deleteProductQuestion(@PathVariable("productIdx") int productIdx, @PathVariable("questionIdx") int questionIdx){
+        try{
+            System.out.println("상품문의 삭제 컨트롤러 들어옴");
+            int userIdxByJwt = jwtService.getUserIdx();
+            productService.deleteProductQuestion(userIdxByJwt, questionIdx);
+            return new BaseResponse<>("상품문의 삭제 성공");
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
 /**

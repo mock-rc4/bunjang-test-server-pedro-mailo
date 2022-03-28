@@ -14,4 +14,5 @@ public class GetProductQuesRes {
     private String shopName;
     private String createAt;
     private String questionDesc;
+    private int myQuestion;
 }

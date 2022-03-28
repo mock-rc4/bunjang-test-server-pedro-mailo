@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostProductRes {
-    private int Idx;
+    //private int Idx;
     private int userIdx;
     private int categoryIdx;
     private String productName;

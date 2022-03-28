@@ -94,13 +94,22 @@ public class ProductProvider {
 
 
 // 상품 문의 조회
-    public List<GetProductQuesRes> getProductQuestion(int productIdx) throws BaseException{
+    public List<GetProductQuesRes> getProductQuestion(int userIdx, int productIdx) throws BaseException{
         try{
-            List<GetProductQuesRes> getQues = productDao.getProductQues(productIdx);
+            List<GetProductQuesRes> getQues = productDao.getProductQues(userIdx, productIdx);
             return getQues;
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
+    }
+
+    public int checkQuestionUser(int userIdx, int QIdx) throws BaseException{
+        try{
+            return productDao.checkQuestionUser(userIdx, QIdx);
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+
     }
 
 
