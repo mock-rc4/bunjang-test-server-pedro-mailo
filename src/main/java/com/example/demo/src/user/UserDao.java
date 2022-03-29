@@ -60,11 +60,8 @@ public class UserDao {
 
 
     public int createUser(PostUserReq postUserReq) {
-        System.out.println("CCC6");
         String createUserQuery = "insert into User (shopName, phoneNumber, userName,userBirth,userPwd) VALUES (?,?,?,?,?);";
-        System.out.println("CCC8");
         //Object[] createUserParams = new Object[]{postUserReq.getShopName(),postUserReq.getPhoneNumber(),postUserReq.getUserName(),postUserReq.getUserBirth(),postUserReq.getUserPwd()};
-        System.out.println("CCC9");
         System.out.println(createUserQuery);
         //System.out.println(createUserParams);
         this.jdbcTemplate.update(createUserQuery, postUserReq.getShopName(), postUserReq.getPhoneNumber(), postUserReq.getUserName(), postUserReq.getUserBirth(), postUserReq.getUserPwd());//// 에러 나는 라인!
