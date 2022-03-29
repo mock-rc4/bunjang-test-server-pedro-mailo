@@ -82,8 +82,13 @@ public class ProductController {
     public BaseResponse<String> deleteProduct(@PathVariable("productIdx") int productIdx){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
-            productService.deleteProduct(userIdxByJwt, productIdx);
-            return new BaseResponse<>("상품 삭제 성공");
+            int deleteProduct = productService.deleteProduct(userIdxByJwt, productIdx);
+            if(deleteProduct == 0){
+                throw new BaseException(INVALID_USER_JWT);
+            }
+            else {
+                return new BaseResponse<>("상품 삭제 성공");
+            }
         }catch(BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

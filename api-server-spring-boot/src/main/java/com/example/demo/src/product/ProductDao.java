@@ -228,13 +228,13 @@ public class ProductDao {
                 "            else 0 end myLike\n" +
                 "from Product P\n" +
                 "left join ProductImage PI on P.Idx = PI.productIdx\n" +
-                "join Views V on P.Idx = V.productIdx\n" +
-                "join Favorite F on P.Idx = F.productIdx\n" +
-                "join ProductTag PT on P.Idx = PT.productIdx\n" +
-                "join Category C on P.categoryIdx = C.Idx\n" +
-                "join User U on P.userIdx = U.Idx\n" +
-                "join Follow FW on U.Idx = FW.followingIdx\n" +
-                "join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
+                "left join Views V on P.Idx = V.productIdx\n" +
+                "left join Favorite F on P.Idx = F.productIdx\n" +
+                "left join ProductTag PT on P.Idx = PT.productIdx\n" +
+                "left join Category C on P.categoryIdx = C.Idx\n" +
+                "left join User U on P.userIdx = U.Idx\n" +
+                "left join Follow FW on U.Idx = FW.followingIdx\n" +
+                "left join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
                 "    from Product P2\n" +
                 "    join (select PY.productIdx,R.reviewRate\n" +
                 "                from Payment PY\n" +

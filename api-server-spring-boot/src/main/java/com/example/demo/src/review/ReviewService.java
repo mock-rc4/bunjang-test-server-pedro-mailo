@@ -31,7 +31,27 @@ public class ReviewService {
     }
 
 
-
+// 후기 삭제
+    public int deleteReview(int userIdx, int reviewIdx)throws BaseException{
+        try{
+            System.out.println("리뷰 삭제 서비스 진입");
+            int checkMyReview = reviewDao.checkMyReview(userIdx, reviewIdx);
+            System.out.println("내가 쓴 리뷰 확인 dao 통과");
+            System.out.println(checkMyReview);
+            if(checkMyReview == 0){
+                System.out.println("내가 쓴 리뷰가 아니었음");
+                //throw new BaseException(NOT_MY_REVIEW); // 5001, "본인이 작성한 리뷰가 아닙니다."
+                return 0;
+            }
+            else{
+                reviewDao.deleteReviewImage(reviewIdx);
+                reviewDao.deleteReview(reviewIdx);
+                return 1;
+            }
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 
 

@@ -65,11 +65,12 @@ public class ProductService {
 
 
 // 상품 삭제
-    public void deleteProduct(int userIdx, int productIdx) throws BaseException{
+    public int deleteProduct(int userIdx, int productIdx) throws BaseException{
         try {
             int checkMyProduct = productDao.checkProductUser(userIdx,productIdx);
             if(checkMyProduct == 0){
-                throw new BaseException(INVALID_USER_JWT);
+                return 0;
+                //throw new BaseException(INVALID_USER_JWT);
             }
             else{
                 productDao.deleteProduct(productIdx);
@@ -80,6 +81,7 @@ public class ProductService {
                 System.out.println("상품태그 status 변경");
                 productDao.deleteProductQuestionByPIdx(productIdx);
                 System.out.println("상품문의 status 변경");
+                return 1;
              }
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);

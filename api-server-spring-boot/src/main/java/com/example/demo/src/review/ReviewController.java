@@ -56,7 +56,27 @@ public class ReviewController {
     }
 
 
-
+    /**
+     * userIdx에 따른 후기 조회 -> 특정 상점의 후기 보아보기
+     * [DELETE] reviews/{reviewIdx}/delete
+     */
+    @ResponseBody
+    @DeleteMapping("/{reviewIdx}/delete")
+    public BaseResponse<String> deleteReview(@PathVariable("reviewIdx") int reviewIdx){
+        try{
+            System.out.println("리뷰 삭제 컨트롤러 진입");
+            int userIdxByJwt = jwtService.getUserIdx();
+            int deleteReview = reviewService.deleteReview(userIdxByJwt, reviewIdx);
+            if (deleteReview == 0){
+                throw new BaseException(NOT_MY_REVIEW); // 5001, "본인이 작성한 리뷰가 아닙니다."
+            }
+            else {
+                return new BaseResponse<>("상품후기 삭제 성공");
+            }
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
 

@@ -62,6 +62,39 @@ public class ReviewDao {
     }
 
 
+    /**
+     * 내가 쓴 후기인지 확인 쿼리
+     **/
+    public int checkMyReview(int userIdx,int reviewIdx){
+        System.out.println("내가 쓴 후기인지 확인 dao 진입");
+        String checkReviewUserIdxquery ="select exists(\n" +
+                "    select *\n" +
+                "        where R.userIdx = ?\n" +
+                "           ) checkMyReview\n" +
+                "from Review R\n" +
+                "where R.Idx = ?";
+        return this.jdbcTemplate.queryForObject(checkReviewUserIdxquery,int.class, userIdx, reviewIdx);
+    }
+
+
+    /**
+     * 후기 이미지 삭제 쿼리
+     **/
+    public void deleteReviewImage(int reviewIdx){
+        System.out.println("후기 이미지 삭제 dao 진입");
+        String deleteReviewImagequery = "delete from ReviewImage where reviewIdx = ?";
+        this.jdbcTemplate.update(deleteReviewImagequery,reviewIdx);
+    }
+
+
+    /**
+     * 후기 삭제 쿼리
+     **/
+    public void deleteReview(int reviewIdx) {
+        System.out.println("후기 삭제 dao 진입");
+        String deleteReviewquery = "delete from Review where Idx = ?";
+        this.jdbcTemplate.update(deleteReviewquery,reviewIdx);
+    }
 
 
 
