@@ -125,6 +125,13 @@ public class UserService {
 //            throw new BaseException(DATABASE_ERROR);
 //        }
     }
+
+    public void patchUserSetting(PatchUserSettingReq patchUserSettingReq, int userIdx) throws BaseException{
+        if(userProvider.checkShopName(patchUserSettingReq.getShopName())==1){
+            throw new BaseException(POST_USERS_EXISTS_ShopName);
+        }
+        int j = userDao.patchUserSetting(patchUserSettingReq,userIdx);
+    }
 ///
 
 

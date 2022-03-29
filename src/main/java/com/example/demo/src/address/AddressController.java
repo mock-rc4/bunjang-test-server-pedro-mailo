@@ -1,14 +1,12 @@
 package com.example.demo.src.address;
 
 import com.example.demo.src.Follow.model.GetUserAddressRes;
-import com.example.demo.src.Follow.model.PatchaddressRes;
-import com.example.demo.src.address.model.*;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
-import com.example.demo.src.favortie.FavoriteProvider;
-import com.example.demo.src.favortie.FavoriteService;
-import com.example.demo.src.favortie.model.PostFavoriteInfoReq;
-import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
+import com.example.demo.src.address.model.PatchAddressReq;
+import com.example.demo.src.address.model.PostaddressReq;
+import com.example.demo.src.address.model.PostaddressRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;

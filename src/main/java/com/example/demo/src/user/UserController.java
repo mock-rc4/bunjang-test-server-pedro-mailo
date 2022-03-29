@@ -352,5 +352,42 @@ public class UserController {
 
 
 
+    @ResponseBody
+    @GetMapping("/{userIdx}/setting")
+    public BaseResponse<List<GerUserSettingRes>> GetsettingInfo(@PathVariable("userIdx") int userIdx) { //
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저네임 변경
+            List<GerUserSettingRes> GetsettingInfoRes = userProvider.GetsettingInfo(userIdx);
+
+            return new BaseResponse<>(GetsettingInfoRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @ResponseBody
+    @PatchMapping("/{userIdx}/setting")
+    public BaseResponse<String> patchUserSetting(@RequestBody PatchUserSettingReq patchUserSettingReq,@PathVariable("userIdx") int userIdx) { //
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            userService.patchUserSetting(patchUserSettingReq,userIdx);
+            String result = "설정변경완료";
+            return new BaseResponse<>(result);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
 
 }

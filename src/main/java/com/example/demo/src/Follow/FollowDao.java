@@ -3,12 +3,21 @@ package com.example.demo.src.Follow;
 import com.example.demo.src.Follow.model.*;
 import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
 import com.example.demo.src.user.model.GetUserRes;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+
+
+
 
 @Repository
 public class FollowDao {
@@ -119,11 +128,17 @@ public class FollowDao {
                 "from Follow F\n" +
                 "where F.userIdx = ?";
         int userParams = userIdx;
+        System.out.println(jdbcTemplate.query(FollointIdxResQuery,
+                (rs, rowNum) -> new FollointIdxRes11(
+                        rs.getInt("followingIdx")),
+                userParams)); // 캡처한 화면 결과값
         return this.jdbcTemplate.query(FollointIdxResQuery,
                 (rs, rowNum) -> new FollointIdxRes(
                         rs.getInt("followingIdx")),
                 userParams);
+
     }
+
 
     public List<GetFollowerRes> getuserFollower(int userIdx) {
         String getuserFollowerQuery = "select F.userIdx userIdx, U.shopName shopName, case when P.productCnt is null then 0 else  P.productCnt end productCnt ,case when F2.followerCnt is null then 0 else F2.followerCnt end followCnt, U.profileImage userImage\n" +
@@ -136,14 +151,20 @@ public class FollowDao {
                 "         left join (select userIdx, count(*) productCnt from Product group by userIdx) P on F.userIdx = P.userIdx\n" +
                 "\n" +
                 "where F.followingIdx = ? and F.status =1 ";
+
         int userParams = userIdx;
         return this.jdbcTemplate.query(getuserFollowerQuery,
-                (rs, rowNum) -> new GetFollowerRes(
+                (rs, rowNum) -> new GetFollowerRes (
                         rs.getInt("userIdx"),
                         rs.getString("shopName"),
                         rs.getInt("productCnt"),
                         rs.getInt("followCnt"),
                         rs.getString("userImage")),
                 userParams);
+    }
+    @Getter
+    @AllArgsConstructor
+    public class FollointIdxRes11 {
+        int followingIdx;
     }
 }

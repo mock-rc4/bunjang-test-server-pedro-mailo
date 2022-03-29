@@ -1,6 +1,7 @@
 package com.example.demo.src.user;
 
 
+import com.example.demo.src.Follow.model.GetUserAddressRes;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -240,6 +241,28 @@ public class UserDao {
         Object[] deleteUserInfoParams = new Object[]{deleteUserReq.getClosingReason(), deleteUserReq.getUserIdx()};
 
         return this.jdbcTemplate.update(deleteUserInfoQuery, deleteUserInfoParams);
+    }
+
+    public List<GerUserSettingRes> GerUserSetting(int userIdx) {
+        String GerUserSettingQuery = "select shopName, shopAddress , case when avaTimeStart=avaTimeEnd then '24시간'else concat(avaTimeStart,'~',avaTimeEnd)  end avaTime, shopIntro,shopPolicy,preCaution from User where Idx = ?;";
+        int userParams = userIdx;
+        return this.jdbcTemplate.query(GerUserSettingQuery,
+                (rs, rowNum) -> new GerUserSettingRes(
+                        rs.getString("shopName"),
+                        rs.getString("shopAddress"),
+                        rs.getString("avaTime"),
+                        rs.getString("shopIntro"),
+                        rs.getString("shopPolicy"),
+                        rs.getString("preCaution")),
+                userParams);
+
+    }
+
+    public int patchUserSetting(PatchUserSettingReq patchUserSettingReq, int userIdx) {
+        String patchUserSettingQuery = "update User set shopName=? , shopAddress =? , avaTimeStart =? , avaTimeEnd = ? , shopIntro = ? , shopPolicy =? , preCaution =? where Idx = ?;";
+        Object[]  patchUserSettingParams = new Object[]{patchUserSettingReq.getShopName(), patchUserSettingReq.getShopAddress() , patchUserSettingReq.getAvaTimeStart(),patchUserSettingReq.getAvaTimeEnd(),patchUserSettingReq.getShopIntro(),patchUserSettingReq.getShopPolicy(),patchUserSettingReq.getPreCaution(),userIdx};
+
+        return this.jdbcTemplate.update(patchUserSettingQuery, patchUserSettingParams);
     }
 
 ///

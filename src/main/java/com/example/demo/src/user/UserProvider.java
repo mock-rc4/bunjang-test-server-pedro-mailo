@@ -146,4 +146,19 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<GerUserSettingRes> GetsettingInfo(int userIdx) throws BaseException{
+
+        try{
+            List<GerUserSettingRes> getsettingInfoRes = userDao.GerUserSetting(userIdx);
+            return getsettingInfoRes;
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+
+    }
+
+
 }

@@ -1,15 +1,13 @@
 package com.example.demo.src.address;
 
 
-import com.example.demo.src.Follow.model.GetFollowerRes;
 import com.example.demo.src.Follow.model.GetUserAddressRes;
-import com.example.demo.src.Follow.model.PatchaddressRes;
-import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
+import com.example.demo.src.address.model.PatchAddressReq;
+import com.example.demo.src.address.model.PostaddressReq;
+import com.example.demo.src.address.model.PostaddressRes;
 import org.springframework.stereotype.Repository;
-import com.example.demo.src.address.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
