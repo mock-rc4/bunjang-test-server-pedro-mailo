@@ -13,7 +13,7 @@
 - [x] 유저 회원가입 API 제작
 - [x] 유저 로그인 API 제작
 - [x] 상품 조회 API 제작
-- [ ] 결제 API 제작
+- [x] 결제 API 제작
 
 <br /> 
 
@@ -129,12 +129,24 @@
 </details>
 
 <details> 
-<summary> 2022.3.28(MON) </summary>
+<summary> 2022.3.29(TUE) </summary>
 <div markdown="1">
  
  > 
-  - 유저 상점설정 조회, 수정 API 작성 완료 (100%)
-  - 채팅 API 구현 시작
+  - 팔로워 API 작성중  (35%)
+  - 번개톡 API 작성 시작 
+  - API 명세서 정리
+  - 번개톡 관련 샘플데이터 생성
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.30(WEN) </summary>
+<div markdown="1">
+ 
+ > 
+  - 번개톡 채팅방 생성 API 작성 완료(100%)
+  - API 명세서 정리
 </div>
 </details>
 
@@ -155,7 +167,7 @@
 - 해결 : 인스턴스 재부팅 후 정상으로 되는것 확인 완료
 
 
-### 4. 찜 API 오(22-03-26)
+### 4. 찜 API 오류(22-03-26)
 - 문제 : 찜 비활성화 하는 과정에서 코드 에러가 나는것 확인
 ``` JAVA
 in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause]- Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause
@@ -163,6 +175,9 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 ```
 - 해결 : DAO에서 Body 에 작성한 내용을 파라미터로 받고 Favorite 테이블에 데이터 조회해 데이터 유무를 파악하는데, status = 1 처럼 특정 조건으로 지정해서 쿼리문 오류 나는것 확인
 <br /> 
+
+### 5. 팔로워 생성 API (22-03-28)
+- 문제 : 팔로워 조회 API 관련 매개변수 처리 문제 
 
 ## 🚀 참고자료
 
