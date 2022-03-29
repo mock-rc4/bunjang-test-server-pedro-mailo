@@ -72,6 +72,25 @@ public class ProductController {
         }
     }
 
+    /**
+     * 제품 삭제 API
+     * [PATCH] products/{productIdx}/delete
+     *
+     */
+    @ResponseBody
+    @PatchMapping("/{productIdx}/delete")
+    public BaseResponse<String> deleteProduct(@PathVariable("productIdx") int productIdx){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            productService.deleteProduct(userIdxByJwt, productIdx);
+            return new BaseResponse<>("상품 삭제 성공");
+        }catch(BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+
 
 
 
@@ -200,23 +219,6 @@ public class ProductController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
-
-    /**
-     *  @ResponseBody
-     *     @PostMapping("/{productIdx}/payment")
-     *     public BaseResponse<PostPaymentRes> createPayment(@RequestBody PostPaymentReq postPaymentReq, @PathVariable("productIdx") int productIdx){
-     *         try{
-     *             System.out.println("거래점보 생성 컨트롤러 들어옴");
-     *             int buyerIdx = jwtService.getUserIdx();
-     *             PostPaymentRes postPaymentRes = productService.createPayment(postPaymentReq, buyerIdx, productIdx);
-     *             return new BaseResponse<>(postPaymentRes);
-     *         }catch (BaseException exception){
-     *             return new BaseResponse<>((exception.getStatus()));
-     *         }
-     *     }
-     */
-
 
 
 

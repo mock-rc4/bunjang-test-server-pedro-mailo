@@ -121,6 +121,85 @@ public class ProductDao {
     }
 
 
+    /**
+     * 상품이 내가 올린 상품인지 확인쿼리
+     */
+    public int checkProductUser(int userIdx, int productIdx){
+        String checkQuestionQuery = "select exists(\n" +
+                "    select *\n" +
+                "    where P.userIdx = ?\n" +
+                "           ) myProduct\n" +
+                "from Product P\n" +
+                "where P.Idx = ?";
+        return this.jdbcTemplate.queryForObject(checkQuestionQuery,int.class, userIdx, productIdx);
+    }
+
+
+
+    /**
+     * 상품 삭제 -> 상품 status 변경쿼리
+     */
+    public void deleteProduct(int productIdx){
+        System.out.println("삭제 dao 접근 성공");
+        System.out.println(productIdx);
+        String changeStatusQuery = "update Product P\n" +
+                "set status = 2\n" +
+                "where P.Idx = ?";
+        System.out.println(changeStatusQuery);
+        Object[] changeStatueParms  =new Object[]{productIdx};
+        this.jdbcTemplate.update(changeStatusQuery,changeStatueParms);
+        //return this.jdbcTemplate.update(changeStatusQuery,changeStatueParms);
+    }
+
+
+    /**
+     * 상품 삭제 -> 상품 사진 삭제(비활성화) 쿼리
+     */
+    public void deleteProductPicture(int productIdx){
+        System.out.println("사진 삭제 dao 접근 성공");
+        System.out.println(productIdx);
+        String changeStatusQuery = "update ProductImage PI\n" +
+                "set status = 2\n" +
+                "where PI.productIdx = ?";
+        System.out.println(changeStatusQuery);
+        Object[] changeStatueParms  =new Object[]{productIdx};
+
+        this.jdbcTemplate.update(changeStatusQuery,changeStatueParms);
+    }
+
+
+    /**
+     * 상품 삭제 -> 상품 태그 삭제(비활성화) 쿼리
+     */
+    public void deleteProductTag(int productIdx){
+        System.out.println("사진 삭제 dao 접근 성공");
+        System.out.println(productIdx);
+        String changeStatusQuery = "update ProductTag PT\n" +
+                "set status = 2\n" +
+                "where PT.productIdx = ?";
+        System.out.println(changeStatusQuery);
+        Object[] changeStatueParms  =new Object[]{productIdx};
+        this.jdbcTemplate.update(changeStatusQuery,changeStatueParms);
+    }
+
+    /**
+     * 상품 삭제 -> 상품 문의 삭제(비활성화) 쿼리
+     */
+    public void deleteProductQuestionByPIdx(int productIdx){
+        System.out.println("사진 삭제 dao 접근 성공");
+        System.out.println(productIdx);
+        String changeStatusQuery = "update ProductQuestion PQ\n" +
+                "set status = 2\n" +
+                "where PQ.productIdx = ?";
+        System.out.println(changeStatusQuery);
+        Object[] changeStatuePram  =new Object[]{productIdx};
+        this.jdbcTemplate.update(changeStatusQuery,changeStatuePram);
+    }
+
+
+
+
+
 
 
     /**
@@ -386,7 +465,7 @@ public class ProductDao {
         return this.jdbcTemplate.queryForObject(checkQuestionQuery,int.class, userIdx, QIdx);
     }
     /**
-     * 상품문의가 status 변경쿼리
+     * 상품문의 status 변경쿼리
      */
     public int deleteProductQuestion(int QIdx){
         System.out.println("삭제 dao 접근 성공");
