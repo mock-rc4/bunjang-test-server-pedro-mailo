@@ -262,8 +262,4 @@ public class UserDao {
         return this.jdbcTemplate.update(patchUserSettingQuery, patchUserSettingParams);
     }
 
-///
-
-    /*로그인 주석*/
-///
 }

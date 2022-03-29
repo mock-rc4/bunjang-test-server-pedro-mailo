@@ -373,7 +373,7 @@ public class UserController {
 
     @ResponseBody
     @PatchMapping("/{userIdx}/setting")
-    public BaseResponse<String> patchUserSetting(@RequestBody PatchUserSettingReq patchUserSettingReq,@PathVariable("userIdx") int userIdx) { //
+    public BaseResponse<String> patchUserSetting(@RequestBody PatchUserSettingReq patchUserSettingReq,@PathVariable("userIdx") int userIdx) {
         try{
             int userIdxByJwt = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인

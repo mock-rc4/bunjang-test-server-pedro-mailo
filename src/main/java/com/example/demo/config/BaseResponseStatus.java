@@ -56,7 +56,7 @@ public enum BaseResponseStatus {
 
     LOGIN_USERS_NOT_JOIN(false,3015 , "로그인실패"),
 
-
+     NOT_MY_REVIEW(false,5001 ,"본인이 작성한 리뷰가 아닙니다." ),
     /**
      * 4000 : Database, Server 오류
      */

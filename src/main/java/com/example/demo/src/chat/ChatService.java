@@ -31,7 +31,7 @@ public class ChatService {
 
     public PostChatRes postChatInfo(PostChatReq postChatReq, int userIdx) {
 
-
+        //1. 상태값에 따라 나오는 2면 탈퇴한 사용자[userIdx]
         //1. 채팅방 먼저 생성 -> 조인 라인 생성 -> 메시지 생성
         int createChatRommIdx = chatDao.postChatInfo(userIdx,postChatReq);
         return new PostChatRes(userIdx,postChatReq.getUserIdx(),createChatRommIdx);
