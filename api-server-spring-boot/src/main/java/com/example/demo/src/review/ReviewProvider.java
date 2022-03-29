@@ -36,8 +36,13 @@ public class ReviewProvider {
     }
 
 
-
-
+/**
+ * 내가 산 제품인지 확인
+ * payment의 buyerIdx와 jwt로 받은 userIdx 비교
+ **/
+    public int checkBuyerIdxandjwt(int paymentIdx, int userIdx){
+        return reviewDao.checkPaymentBuyerIdx(paymentIdx, userIdx);
+    }
 
 
 

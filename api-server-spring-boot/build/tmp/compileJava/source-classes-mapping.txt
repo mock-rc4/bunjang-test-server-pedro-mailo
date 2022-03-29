@@ -42,8 +42,8 @@ com/example/demo/src/product/model/PostProductReq.java
  com.example.demo.src.product.model.PostProductReq
 com/example/demo/src/user/model/GetUserInfoRes.java
  com.example.demo.src.user.model.GetUserInfoRes
-com/example/demo/src/review/ReviewProvider.java
- com.example.demo.src.review.ReviewProvider
+com/example/demo/src/product/ProductDao.java
+ com.example.demo.src.product.ProductDao
 com/example/demo/utils/SHA256.java
  com.example.demo.utils.SHA256
 com/example/demo/src/home/HomeService.java
@@ -82,12 +82,12 @@ com/example/demo/src/product/model/PostProductQuesRes.java
  com.example.demo.src.product.model.PostProductQuesRes
 com/example/demo/src/home/HomeController.java
  com.example.demo.src.home.HomeController
-com/example/demo/src/review/ReviewDao.java
- com.example.demo.src.review.ReviewDao
+com/example/demo/src/product/ProductController.java
+ com.example.demo.src.product.ProductController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
-com/example/demo/src/review/ReviewService.java
- com.example.demo.src.review.ReviewService
+com/example/demo/src/product/ProductProvider.java
+ com.example.demo.src.product.ProductProvider
 com/example/demo/src/home/HomeProvider.java
  com.example.demo.src.home.HomeProvider
 com/example/demo/utils/JwtService.java
@@ -100,15 +100,21 @@ com/example/demo/src/user/UserService.java
  com.example.demo.src.user.UserService
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
-com/example/demo/src/review/ReviewController.java
- com.example.demo.src.review.ReviewController
-com/example/demo/config/BaseException.java
- com.example.demo.config.BaseException
-com/example/demo/src/product/ProductProvider.java
- com.example.demo.src.product.ProductProvider
-com/example/demo/src/product/ProductDao.java
- com.example.demo.src.product.ProductDao
 com/example/demo/src/product/ProductService.java
  com.example.demo.src.product.ProductService
-com/example/demo/src/product/ProductController.java
- com.example.demo.src.product.ProductController
+com/example/demo/config/BaseException.java
+ com.example.demo.config.BaseException
+com/example/demo/src/review/model/PostReviewReq.java
+ com.example.demo.src.review.model.PostReviewReq
+com/example/demo/src/review/model/PostReviewRes.java
+ com.example.demo.src.review.model.PostReviewRes
+com/example/demo/src/review/model/PostCreateNewReview.java
+ com.example.demo.src.review.model.PostCreateNewReview
+com/example/demo/src/review/ReviewDao.java
+ com.example.demo.src.review.ReviewDao
+com/example/demo/src/review/ReviewController.java
+ com.example.demo.src.review.ReviewController
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
+com/example/demo/src/review/ReviewService.java
+ com.example.demo.src.review.ReviewService

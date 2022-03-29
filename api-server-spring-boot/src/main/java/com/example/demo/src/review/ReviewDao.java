@@ -1,5 +1,6 @@
 package com.example.demo.src.review;
 
+import com.example.demo.src.product.model.PostProductRes;
 import com.example.demo.src.review.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,6 +61,62 @@ public class ReviewDao {
                         rs.getInt("PIdx")
                 ), getUserIdxParm);
     }
+
+
+    /**
+     * 내가 산 제품인지 확인쿼리
+     * payment의 buyerIdx와 jwt로 받은 userIdx 비교
+     **/
+    public int checkPaymentBuyerIdx(int paymentIdx, int userIdx){
+        String checkQuery = "select exists(\n" +
+                "    select *\n" +
+                "    where PY.buyerIdx = ?\n" +
+                "           )\n" +
+                "from Payment PY\n" +
+                "where PY.idx = ?";
+        return this.jdbcTemplate.queryForObject(checkQuery,int.class, userIdx, paymentIdx);
+    }
+
+
+
+    /**
+     * 후기 등록
+     **/
+    public PostCreateNewReview createReview(PostReviewReq postReviewReq, int userIdx,int paymentIdx){
+        String createReviewQuery = "insert into Review(createAt, updateAt, reviewRate, reviewDesc, paymentIdx, userIdx)" +
+                "values (current_timestamp,current_timestamp,?,?,?,?)";
+        this.jdbcTemplate.update(createReviewQuery, postReviewReq.getReviewRate(), postReviewReq.getReviewDesc(), paymentIdx, userIdx);
+        String lastInsertQuery = "select last_insert_id()";
+
+        PostReviewRes postReviewRes;
+        postReviewRes = new PostReviewRes(postReviewReq.getReviewRate(), postReviewReq.getReviewDesc(), paymentIdx, userIdx);
+
+        PostCreateNewReview ReviewIdxandRes;
+        ReviewIdxandRes = new PostCreateNewReview(this.jdbcTemplate.queryForObject(lastInsertQuery, int.class), postReviewRes);
+        //return this.jdbcTemplate.queryForObject(lastInsertQuery,int.class);
+
+        return ReviewIdxandRes;
+    }
+
+    /**
+     * 후기 사진 등록
+     **/
+    public List<String> createReviewPicture(PostReviewReq postReviewReq, int reviewIdx){
+        List<String> pic = postReviewReq.getImageUrl();
+        List newPictureList = new ArrayList();
+        if(pic != null){
+            for(String newpic:pic){
+                String createReviewPicture = "insert into ReviewImage(imageUrl, reviewIdx) values(?,?)";
+                this.jdbcTemplate.update(createReviewPicture,newpic, reviewIdx);
+                newPictureList.add(newpic);
+            }
+        }
+        return newPictureList;
+    }
+
+
+
+
 
 
     /**

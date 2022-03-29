@@ -38,6 +38,32 @@ public class ReviewController {
     }
 
 
+    /**
+     * 후기 생성
+     * [POST] reviews/paymentIdx/{paymentIdx}
+     */
+    @ResponseBody
+    @PostMapping("/paymentIdx/{paymentIdx}")
+    public BaseResponse<List<String>> createReview(@RequestBody PostReviewReq postReviewReq, @PathVariable("paymentIdx") int paymentIdx){
+        try{
+            System.out.println(paymentIdx);
+            int userIdxByJwt = jwtService.getUserIdx();
+
+            int checkuserIdx = reviewProvider.checkBuyerIdxandjwt(paymentIdx, userIdxByJwt);
+            if(checkuserIdx == 0){
+                throw new BaseException(INVALID_USER_JWT);
+            }
+            else{
+                List<String> getReviewDetail = reviewService.createReview(postReviewReq, userIdxByJwt, paymentIdx);
+                return new BaseResponse<>(getReviewDetail);
+            }
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+
 
 
     /**
@@ -57,7 +83,7 @@ public class ReviewController {
 
 
     /**
-     * userIdx에 따른 후기 조회 -> 특정 상점의 후기 보아보기
+     * 후기 삭제
      * [DELETE] reviews/{reviewIdx}/delete
      */
     @ResponseBody

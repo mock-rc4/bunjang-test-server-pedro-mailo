@@ -30,6 +30,29 @@ public class ReviewService {
         this.jwtService = jwtService;
     }
 
+// 후기 등록
+    public List<String> createReview(PostReviewReq postReviewReq, int userIdx,int paymentIdx)throws BaseException{
+        try{
+            PostCreateNewReview newReviewRes = reviewDao.createReview(postReviewReq, userIdx, paymentIdx);
+            int ReviewIdx = newReviewRes.getReviewIdx();
+            PostReviewRes ReviewDetail = newReviewRes.getReviewDetail();
+
+            List newReview = new ArrayList<PostReviewRes>();
+            newReview.add(ReviewDetail);
+
+            List newReviewPictureList = reviewDao.createReviewPicture(postReviewReq, ReviewIdx);
+
+            List newReviewDetail = new ArrayList<>(Arrays.asList(newReview, newReviewPictureList));
+
+            return newReviewDetail;
+
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+
 
 // 후기 삭제
     public int deleteReview(int userIdx, int reviewIdx)throws BaseException{
