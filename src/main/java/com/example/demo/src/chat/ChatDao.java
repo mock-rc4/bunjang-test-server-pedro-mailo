@@ -39,4 +39,31 @@ public class ChatDao {
 
         return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class);
     }
+
+    public int checkUserStatus(int userIdx) {
+        String checkUserStatusQuery = "select exists(select status from User where Idx = ? and status =1);";
+        int checkUserStatusParams = userIdx;
+        return this.jdbcTemplate.queryForObject(checkUserStatusQuery,
+                int.class,
+                checkUserStatusParams);
+    }
+
+    public int checkExistChatroom(int userIdx, int getUserIdx) {
+        String checkExistChatroomQuery = "select exists(select * from ChatRoomjoinUser C inner join (select chatRoomIdx from ChatRoomjoinUser where userIdx = ?)CR on CR.chatRoomIdx = C.chatRoomIdx where C.userIdx =? group by CR.chatRoomIdx) ;";
+        int userIdxParams = userIdx;
+        int getUserIdxParams = getUserIdx;
+        return this.jdbcTemplate.queryForObject(checkExistChatroomQuery,
+                int.class,
+                userIdxParams,getUserIdxParams);
+
+    }
+
+    public int ChatMessage(int userIdx, int k, String message) {
+        String Chatmessage = "insert into ChatMessage(message,userIdx,chatRoomIdx) values (?,?,?);";
+        this.jdbcTemplate.update(Chatmessage,message,userIdx,k);
+
+        String lastInserIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class);
+
+    }
 }

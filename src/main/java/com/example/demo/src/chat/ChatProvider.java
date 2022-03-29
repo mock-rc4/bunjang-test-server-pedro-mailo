@@ -26,6 +26,23 @@ public class ChatProvider {
         this.jwtService = jwtService;
     }
 
+    public int checkUserStatus(int userIdx) throws BaseException{
+        try{
+            return chatDao.checkUserStatus(userIdx);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
-  //
+    public int checkExistChatroom(int userIdx, int getUserIdx) throws BaseException{
+
+        try{
+            return chatDao.checkExistChatroom(userIdx,getUserIdx);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+    //
 }
