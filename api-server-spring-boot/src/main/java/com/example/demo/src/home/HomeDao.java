@@ -46,7 +46,7 @@ public class HomeDao {
     public List<GetHomeProductRes> getProductListByHome(int userIdx){
         System.out.println("제품리스트 dao ");
         String getProductByHomeQuery = "select P.Idx,\n" +
-                "       case when UF.FavoriteUserIdx = ? then 1\n" +
+                "       case when UF.FavoriteUserIdx = ? and UF.status = 1 then 1\n" +
                 "            else 0 end myLike,\n" +
                 "       PI.imageUrl,\n" +
                 "       P.price,\n" +
@@ -56,7 +56,7 @@ public class HomeDao {
                 "                           else concat(timestampdiff(DAY, P.createAt, current_timestamp), '일 전') end createAt,\n" +
                 "       count(distinct F2.Idx) productLike\n" +
                 "from Product P\n" +
-                "left join (select U.Idx FavoriteUserIdx, F.productIdx FavoriteProcductIdx\n" +
+                "left join (select U.Idx FavoriteUserIdx, F.productIdx FavoriteProcductIdx, F.status\n" +
                 "      from Favorite F\n" +
                 "      join User U on U.Idx = F.userIdx\n" +
                 "      where U.Idx =?) UF on UF.FavoriteProcductIdx = P.Idx\n" +

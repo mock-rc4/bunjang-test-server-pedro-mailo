@@ -46,14 +46,14 @@ com/example/demo/src/product/ProductDao.java
  com.example.demo.src.product.ProductDao
 com/example/demo/utils/SHA256.java
  com.example.demo.utils.SHA256
-com/example/demo/src/home/HomeService.java
- com.example.demo.src.home.HomeService
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
 com/example/demo/src/user/model/PostUserReq.java
  com.example.demo.src.user.model.PostUserReq
 com/example/demo/src/review/model/GetReviewRes.java
  com.example.demo.src.review.model.GetReviewRes
-com/example/demo/src/home/HomeDao.java
- com.example.demo.src.home.HomeDao
+com/example/demo/src/review/ReviewDao.java
+ com.example.demo.src.review.ReviewDao
 com/example/demo/src/user/model/PostLoginRes.java
  com.example.demo.src.user.model.PostLoginRes
 com/example/demo/src/product/model/GetProductQuesStatus.java
@@ -80,16 +80,16 @@ com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
 com/example/demo/src/product/model/PostProductQuesRes.java
  com.example.demo.src.product.model.PostProductQuesRes
-com/example/demo/src/home/HomeController.java
- com.example.demo.src.home.HomeController
+com/example/demo/src/review/ReviewService.java
+ com.example.demo.src.review.ReviewService
 com/example/demo/src/product/ProductController.java
  com.example.demo.src.product.ProductController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
 com/example/demo/src/product/ProductProvider.java
  com.example.demo.src.product.ProductProvider
-com/example/demo/src/home/HomeProvider.java
- com.example.demo.src.home.HomeProvider
+com/example/demo/src/review/ReviewController.java
+ com.example.demo.src.review.ReviewController
 com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/UserController.java
@@ -110,11 +110,11 @@ com/example/demo/src/review/model/PostReviewRes.java
  com.example.demo.src.review.model.PostReviewRes
 com/example/demo/src/review/model/PostCreateNewReview.java
  com.example.demo.src.review.model.PostCreateNewReview
-com/example/demo/src/review/ReviewDao.java
- com.example.demo.src.review.ReviewDao
-com/example/demo/src/review/ReviewController.java
- com.example.demo.src.review.ReviewController
-com/example/demo/src/review/ReviewProvider.java
- com.example.demo.src.review.ReviewProvider
-com/example/demo/src/review/ReviewService.java
- com.example.demo.src.review.ReviewService
+com/example/demo/src/home/HomeController.java
+ com.example.demo.src.home.HomeController
+com/example/demo/src/home/HomeService.java
+ com.example.demo.src.home.HomeService
+com/example/demo/src/home/HomeProvider.java
+ com.example.demo.src.home.HomeProvider
+com/example/demo/src/home/HomeDao.java
+ com.example.demo.src.home.HomeDao
