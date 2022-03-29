@@ -13,7 +13,7 @@
 - [x] 유저 회원가입 API 제작
 - [x] 유저 로그인 API 제작
 - [x] 상품 조회 API 제작
-- [ ] 결제 API 제작
+- [x] 결제 API 제작
 
 <br /> 
 
@@ -133,10 +133,20 @@
 <div markdown="1">
  
  > 
-  - 팔로워 API 작성중  (35%)\
+  - 팔로워 API 작성중  (35%)
   - 번개톡 API 작성 시작 
   - API 명세서 정리
   - 번개톡 관련 샘플데이터 생성
+</div>
+</details>
+
+<details> 
+<summary> 2022.3.30(WEN) </summary>
+<div markdown="1">
+ 
+ > 
+  - 번개톡 채팅방 생성 API 작성 완료(100%)
+  - API 명세서 정리
 </div>
 </details>
 
@@ -167,7 +177,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 <br /> 
 
 ### 5. 팔로워 생성 API (22-03-28)
-- 문제 : 팔로워 조회 API 관련 매개변수  
+- 문제 : 팔로워 조회 API 관련 매개변수 처리 문제 
 
 ## 🚀 참고자료
 
