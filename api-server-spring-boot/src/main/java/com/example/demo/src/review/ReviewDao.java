@@ -138,12 +138,15 @@ public class ReviewDao {
      **/
     public int checkMyReview(int userIdx,int reviewIdx){
         System.out.println("내가 쓴 후기인지 확인 dao 진입");
-        String checkReviewUserIdxquery ="select exists(\n" +
-                "    select *\n" +
-                "        where R.userIdx = ?\n" +
-                "           ) checkMyReview\n" +
-                "from Review R\n" +
-                "where R.Idx = ?";
+        String checkReviewUserIdxquery ="select case when exists(select * from Review R\n" +
+                "                        where R.userIdx=? and R.Idx = ?) then 1\n" +
+                "            else 0 end checkMyReview";
+        if(this.jdbcTemplate.queryForObject(checkReviewUserIdxquery,int.class, userIdx, reviewIdx) == null){
+            return 3;
+        }
+        int checkResult = this.jdbcTemplate.queryForObject(checkReviewUserIdxquery,int.class, userIdx, reviewIdx);
+        System.out.println(checkResult);
+
         return this.jdbcTemplate.queryForObject(checkReviewUserIdxquery,int.class, userIdx, reviewIdx);
     }
 

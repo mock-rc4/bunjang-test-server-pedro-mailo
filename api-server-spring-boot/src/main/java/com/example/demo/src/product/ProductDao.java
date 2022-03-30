@@ -84,6 +84,30 @@ public class ProductDao {
     }
 
     /**
+     * 제품 정보 수정
+     **/
+    public void editProduct(PostProductReq postProductReq, int productIdx){
+        String editProductQuery = "update Product P\n" +
+                "set P.categoryIdx = ?,\n" +
+                "    P.productName = ?,\n" +
+                "    P.productDesc = ?,\n" +
+                "    P.productCondition = ?,\n" +
+                "    P.saftyPay = ?,\n" +
+                "    P.isExchange = ?,\n" +
+                "    P.amount = ?,\n" +
+                "    P.includeFee = ?,\n" +
+                "    P.price = ?,\n" +
+                "    P.directtrans = ?\n" +
+                "where P.Idx =?";
+        this.jdbcTemplate.update(editProductQuery, postProductReq.getCategoryIdx(), postProductReq.getProductName(),
+                postProductReq.getProductDesc(), postProductReq.getProductCondition(), postProductReq.getSaftyPay(),
+                postProductReq.getIsExchange(), postProductReq.getAmount(), postProductReq.getIncludeFee(),
+                postProductReq.getPrice(), postProductReq.getDirecttrans(), productIdx);
+    }
+
+
+
+    /**
      * 제품 등록시 사진 첨부
      **/
     public List<String> createProductPicture(PostProductReq postProductReq, int productIdx){
@@ -167,6 +191,16 @@ public class ProductDao {
         this.jdbcTemplate.update(changeStatusQuery,changeStatueParms);
     }
 
+    /**
+     * 상품 진짜 삭제 -> 상품 사진 삭제 쿼리
+     */
+    public void deleteProductPictureReal(int productIdx){
+        String deleteQuery = "delete from ProductImage where productIdx = ?";
+        this.jdbcTemplate.update(deleteQuery,productIdx);
+    }
+
+
+
 
     /**
      * 상품 삭제 -> 상품 태그 삭제(비활성화) 쿼리
@@ -181,6 +215,18 @@ public class ProductDao {
         Object[] changeStatueParms  =new Object[]{productIdx};
         this.jdbcTemplate.update(changeStatusQuery,changeStatueParms);
     }
+
+    /**
+     * 상품 태그 삭제 -> 상품 태그 진짜 삭제 쿼리
+     */
+    public void deleteTagReal(int productIdx){
+        String deleteQuery = "delete from ProductTag where productIdx = ?";
+        this.jdbcTemplate.update(deleteQuery,productIdx);
+    }
+
+
+
+
 
     /**
      * 상품 삭제 -> 상품 문의 삭제(비활성화) 쿼리

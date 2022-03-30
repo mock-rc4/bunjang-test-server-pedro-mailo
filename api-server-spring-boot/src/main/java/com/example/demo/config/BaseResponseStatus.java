@@ -72,7 +72,8 @@ public enum BaseResponseStatus {
 
 
     // 5000 : 필요시 만들어서 쓰세요
-    NOT_MY_REVIEW(false, 5001, "본인이 작성한 리뷰가 아닙니다.");
+    NOT_MY_REVIEW(false, 5001, "본인이 작성한 리뷰가 아닙니다."),
+    NOT_MY_PRODUCT(false, 5002, "본인이 생성한 제품이 아닙니다.");
     // 6000 : 필요시 만들어서 쓰세요
 
 
