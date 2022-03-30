@@ -209,5 +209,6 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 15:03:06.699 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:207] [Message:Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]]- Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
 
 ```
+- 해결 : 매핑하는 URL 잘못 기재하여 생긴 오류 , URL 수정후 정상적으로 나오는것 확인
 
 ## 🚀 참고자료
