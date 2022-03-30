@@ -178,7 +178,13 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 
 ### 5. 팔로워 생성 API (22-03-28)
 - 문제 : 팔로워 조회 API 관련 매개변수 처리 문제 
+### 6. 파싱 오류 (22-03-30)
+ - 문제 : 메세지 전송 API 테스트중 파싱 에러 나는 것 확인
+ ``` JAVA
+ 04:31:14.359 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:207] [Message:Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot construct instance of `com.example.demo.src.chat.model.PostChatMessageRep` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.example.demo.src.chat.model.PostChatMessageRep` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator)
 
+ ```
+- 해결 : Req 값으로 파라미터를 메세지만 받아서 생기는 결과.. 임의로 매개변수 하나 추가 해서 테스트 결과 나오는걸로 확인
 ## 🚀 참고자료
 
 
