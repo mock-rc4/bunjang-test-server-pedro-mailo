@@ -83,6 +83,29 @@ public class ReviewController {
 
 
     /**
+     * 후기 수정
+     * [PATCH] reviews/{reviewIdx}/edit
+     */
+    @ResponseBody
+    @PatchMapping("{reviewIdx}/edit")
+    public BaseResponse<String> editReview(@PathVariable("reviewIdx") int reviewIdx, @RequestBody PostReviewReq postReviewReq){
+        try {
+            System.out.println("리뷰 수정 컨트롤러 진입");
+            int userIdxByJwt = jwtService.getUserIdx();
+            int editReview = reviewService.editReview(postReviewReq, userIdxByJwt, reviewIdx);
+            if(editReview == 0){
+                throw new BaseException(NOT_MY_REVIEW); // 5001, "본인이 작성한 리뷰가 아닙니다.
+            }
+            else{
+                return new BaseResponse<>("상품후기 변경 성공");
+            }
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+    /**
      * 후기 삭제
      * [DELETE] reviews/{reviewIdx}/delete
      */

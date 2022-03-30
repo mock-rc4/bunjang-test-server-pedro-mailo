@@ -115,6 +115,20 @@ public class ReviewDao {
     }
 
 
+    /**
+     * 후기 수정 쿼리
+     **/
+    public void editReview(PostReviewReq postReviewReq, int reviewIdx){
+        System.out.println("리뷰 수정 다오 진입");
+        String editReviewQuery = "update Review R\n" +
+                "set R.reviewRate = ?, R.reviewDesc = ?\n" +
+                "where R.Idx = ?";
+        this.jdbcTemplate.update(editReviewQuery,postReviewReq.getReviewRate(), postReviewReq.getReviewDesc(), reviewIdx);
+    }
+
+
+
+
 
 
 

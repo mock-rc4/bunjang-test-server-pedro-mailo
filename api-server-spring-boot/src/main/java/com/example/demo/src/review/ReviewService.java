@@ -51,6 +51,28 @@ public class ReviewService {
         }
     }
 
+// 후기 수정
+    public int editReview(PostReviewReq postReviewReq,int userIdx, int reviewIdx){
+        System.out.println("리뷰 삭제 서비스 진입");
+        int checkMyReview = reviewDao.checkMyReview(userIdx, reviewIdx);
+        System.out.println(checkMyReview);
+        System.out.println("리뷰 본인 확인 통과");
+        List<String> editImageUrls = postReviewReq.getImageUrl();
+        if(checkMyReview == 0){
+            System.out.println("내가 쓴 리뷰가 아니었음");
+            //throw new BaseException(NOT_MY_REVIEW); // 5001, "본인이 작성한 리뷰가 아닙니다."
+            return 0;
+        }
+
+        if(editImageUrls != null){ /** 바꿀 사진이 있으면 */
+            reviewDao.deleteReviewImage(reviewIdx); // 리뷰 이미지 삭제하고
+            reviewDao.createReviewPicture(postReviewReq, reviewIdx);    // 새로운 이미지 집어넣는다
+        }
+        reviewDao.editReview(postReviewReq, reviewIdx);// 후기 별점, 내용 등 수정
+
+        return 1;
+    }
+
 
 
 
