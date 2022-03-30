@@ -1,9 +1,5 @@
 package com.example.demo.src.chat;
 
-import com.example.demo.src.address.AddressProvider;
-import com.example.demo.src.address.AddressService;
-import com.example.demo.src.address.model.PostaddressReq;
-import com.example.demo.src.address.model.PostaddressRes;
 import com.example.demo.src.chat.model.*;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -49,6 +45,40 @@ public class Chatcontroller {
             PostChatRes postChatRes = chatService.postChatInfo(postaddressReq,userIdx);
 
             return new BaseResponse<>(postChatRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    @ResponseBody
+    @PostMapping ("/{chatRoomIdx}/{userIdx}")
+    public BaseResponse<PostChatMessageRes> postMessage(@RequestBody PostChatMessageRep postChatMessageRep,@PathVariable("chatRoomIdx") int chatRoomIdx,@PathVariable("userIdx") int userIdx ){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            PostChatMessageRes postChatMessageRes = chatService.postMessage(userIdx,chatRoomIdx,postChatMessageRep);
+            return new BaseResponse<>(postChatMessageRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    @ResponseBody
+    @GetMapping ("/{chatRoomIdx}/{userIdx}")
+    public BaseResponse<List<String>> getChatInfo(@PathVariable("chatRoomIdx") int chatRoomIdx, @PathVariable("userIdx") int userIdx){
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            List<String> chatInfo = chatProvider.getChatInfo(userIdx,chatRoomIdx);
+            return new BaseResponse<>(chatInfo);
         }catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }

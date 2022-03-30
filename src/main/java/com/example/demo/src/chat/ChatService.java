@@ -12,6 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @Service
@@ -52,4 +56,12 @@ public class ChatService {
         //1. 채팅방 먼저 생성 -> 조인 라인 생성 -> 메시지 생성
 
     }
+
+
+    public PostChatMessageRes postMessage(int userIdx, int chatRoomIdx, PostChatMessageRep postChatMessageRep) throws BaseException {
+        int chatMessageIdx = chatDao.ChatMessage(userIdx,chatRoomIdx,postChatMessageRep);
+        return new PostChatMessageRes(userIdx,chatRoomIdx,chatMessageIdx,postChatMessageRep.getMessage());
+    }
+
+
 }

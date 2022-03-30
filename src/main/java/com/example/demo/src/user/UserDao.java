@@ -155,17 +155,29 @@ public class UserDao {
     }
 
     public List<GetUserInfoRes> UserInfo(int userIdx) {
-        String GetUserInfoResQuery = "select U.shopName  userShopName,\n" +
-                "       U.profileImage userProfileImage,\n" +
-                "       count(F.userIdx)       as userFavCount,\n" +
-                "       count(R.userIdx)       as userReviewCount,\n" +
-                "       count(F2.userIdx)      as userFollowingCount,\n" +
-                "       count(F2.followingIdx) as userFollwerCount,\n" +
-                "       case when avg(R.reviewRate) is null then 0 else avg(R.reviewRate) end as `reviewrate`\n" +
+        String GetUserInfoResQuery = "select U.shopName          userShopName,\n" +
+                "       U.profileImage      userProfileImage,\n" +
+                "       count(F.userIdx) as userFavCount,\n" +
+                "       count(R.userIdx) as userReviewCount,\n" +
+                "       F2.followcnt     as userFollowingCount,\n" +
+                "       F3.followercnt   as userFollwerCount,\n" +
+                "       case when avg(distinct FORRATE.reviewRate) is null then 0 else avg(distinct FORRATE.reviewRate) end as `reviewrate`\n" +
                 "from User U\n" +
+                "         left join (select count(userIdx) followcnt, userIdx from Follow where status = 1 group by userIdx) F2\n" +
+                "                   on F2.userIdx = U.Idx\n" +
+                "         left join (select count(followingIdx) followercnt, followingIdx\n" +
+                "                    from Follow\n" +
+                "                    where status = 1\n" +
+                "                    group by followingIdx) F3 on F3.followingIdx = U.Idx\n" +
                 "         left join Favorite F on U.Idx = F.userIdx\n" +
                 "         left join Review R on U.Idx = R.userIdx\n" +
-                "         left join (select * from Follow where status = 1) F2 on F2.userIdx = U.Idx\n" +
+                "\n" +
+                "left join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
+                "    from Product P2\n" +
+                "    join (select PY.productIdx,R.reviewRate\n" +
+                "                from Payment PY\n" +
+                "                join Review R on PY.Idx = R.paymentIdx) as PYR on PYR.productIdx = P2.Idx) as FORRATE) on U.Idx = FORRATE.userIdx\n" +
+                "\n" +
                 "where U.Idx = ?;";
         int GetUserInfoResParams = userIdx;
         return this.jdbcTemplate.query(GetUserInfoResQuery,

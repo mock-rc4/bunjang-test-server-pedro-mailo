@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.*;
 
@@ -43,6 +45,11 @@ public class ChatProvider {
         }
     }
 
-
+    public List<String> getChatInfo(int userIdx, int chatRoomIdx) {
+        List UserInfo = chatDao.UserInfo(userIdx,chatRoomIdx);
+        List chatMessagList = chatDao.chatMessagList(chatRoomIdx);
+        List resultDetailList = new ArrayList<>(Arrays.asList(UserInfo,chatMessagList));
+        return resultDetailList;
+    }
     //
 }

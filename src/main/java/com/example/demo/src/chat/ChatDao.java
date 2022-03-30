@@ -58,12 +58,95 @@ public class ChatDao {
 
     }
 
-    public int ChatMessage(int userIdx, int k, String message) {
+    public int ChatMessage(int userIdx, int chatRoomIdx,PostChatMessageRep postChatMessageRep) {
+        System.out.println("4");
         String Chatmessage = "insert into ChatMessage(message,userIdx,chatRoomIdx) values (?,?,?);";
-        this.jdbcTemplate.update(Chatmessage,message,userIdx,k);
+        this.jdbcTemplate.update(Chatmessage,postChatMessageRep.getMessage(),userIdx,chatRoomIdx);
+        System.out.println("5");
 
         String lastInserIdQuery = "select last_insert_id()";
         return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class);
 
+    }
+
+    public List<GetUserInfoRes> UserInfo(int userIdx, int chatRoomIdx) {
+        String GetUserInfoResQuery = "select C.userIdx,\n" +
+                "       U.userShopName,\n" +
+                "       U.userProfileImage,\n" +
+                "       U.reviewRateCnt,\n" +
+                "       U.reviewRateAvg,\n" +
+                "       U.producCnt,\n" +
+                "       U.procutCompelteCnt\n" +
+                "from ChatRoomjoinUser C\n" +
+                "         inner join (select U.shopName                                                                     userShopName,\n" +
+                "                            U.Idx,\n" +
+                "                            U.profileImage                                                                 userProfileImage,\n" +
+                "                            FORRATE.reviewRateAvg,\n" +
+                "                            FORRATE.reviewRateCnt,\n" +
+                "                            case when P.procutCnt is Null then 0 else P.procutCnt end                   as producCnt,\n" +
+                "                            case\n" +
+                "                                when P2.procutCompelteCnt is Null then 0\n" +
+                "                                else P2.procutCompelteCnt end                                           as procutCompelteCnt\n" +
+                "                     from User U\n" +
+                "                              left join Favorite F on U.Idx = F.userIdx\n" +
+                "                              left join Review R on U.Idx = R.userIdx\n" +
+                "                              left join (select count(*) procutCnt, userIdx\n" +
+                "                                         from Product\n" +
+                "                                         where status = 1\n" +
+                "                                         group by userIdx) P\n" +
+                "                                        on P.userIdx = U.Idx\n" +
+                "                              left join (select count(*) procutCompelteCnt, userIdx\n" +
+                "                                         from Product\n" +
+                "                                         where status = 1\n" +
+                "                                           and progress = 3\n" +
+                "                                         group by userIdx) P2 on P.userIdx = U.Idx\n" +
+                "                              left join (select avg(distinct reviewRate)   reviewRateAvg,\n" +
+                "                                                count(distinct reviewRate) reviewRateCnt,\n" +
+                "                                                P2.Idx,\n" +
+                "                                                P2.userIdx,\n" +
+                "                                                PYR.productIdx,\n" +
+                "                                                PYR.reviewRate\n" +
+                "                                         from Product P2\n" +
+                "                                                  join (select PY.productIdx, R.reviewRate\n" +
+                "                                                        from Payment PY\n" +
+                "                                                                 join Review R on PY.Idx = R.paymentIdx) as PYR\n" +
+                "                                                       on PYR.productIdx = P2.Idx) as FORRATE on U.Idx = FORRATE.userIdx\n" +
+                ") U on C.userIdx = U.Idx\n" +
+                "where C.chatRoomIdx = ?\n" +
+                "  and userIdx != ?\n" +
+                "group by userIdx;";
+        int chatRoomIdxResParams = chatRoomIdx;
+        int GetUserInfoResParams = userIdx;
+
+        return this.jdbcTemplate.query(GetUserInfoResQuery,
+                (rs, rowNum) -> new GetUserInfoRes(
+                        rs.getInt("userIdx"),
+                        rs.getString("userShopName"),
+                        rs.getString("userProfileImage"),
+                        rs.getInt("reviewRateCnt"),
+                        rs.getFloat("reviewRateAvg"),
+                        rs.getInt("producCnt"),
+                        rs.getInt("procutCompelteCnt")),
+                GetUserInfoResParams,chatRoomIdxResParams);
+
+    }
+
+    public List<getMessageRes> chatMessagList(int chatRoomIdx) {
+        String GetUserInfoResQuery ="select updateAt, message, userIdx, chatRoomIdx\n" +
+                "from ChatMessage\n" +
+                "where chatRoomIdx = ?\n" +
+                "  and status = 1\n" +
+                "order By updateAt";
+
+        int chatRoomIdxResParams = chatRoomIdx;
+
+
+        return this.jdbcTemplate.query(GetUserInfoResQuery,
+                (rs, rowNum) -> new getMessageRes(
+                        rs.getString("updateAt"),
+                        rs.getString("message"),
+                        rs.getInt("userIdx"),
+                        rs.getInt("chatRoomIdx")),
+                chatRoomIdxResParams);
     }
 }
