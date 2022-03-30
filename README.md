@@ -203,8 +203,8 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 - 해결 : Req 값으로 파라미터를 메세지만 받아서 생기는 결과.. 임의로 매개변수 하나 추가 해서 테스트 결과 나오는걸로 확인
 
 
-### 7. GET 오류
-- 문제 : 채팅방 입장및 조회 하는 API 테스트 중, 에러 나오는 것 확인
+### 7. GET 오류 (22-03-30)
+- 문제 : 채팅방 입장및 조회 하는 API 테스트 중 에러 나오는 것 확인
 ``` JAVA 
 15:03:06.699 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:207] [Message:Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]]- Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
 
