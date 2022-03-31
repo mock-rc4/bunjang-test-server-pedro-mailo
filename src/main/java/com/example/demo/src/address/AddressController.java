@@ -4,7 +4,9 @@ import com.example.demo.src.Follow.model.GetUserAddressRes;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
-import com.example.demo.src.address.model.*;
+import com.example.demo.src.address.model.PatchAddressReq;
+import com.example.demo.src.address.model.PostaddressReq;
+import com.example.demo.src.address.model.PostaddressRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;
