@@ -121,13 +121,16 @@ public class UserDao {
      * 유저 메인페이지 중, 유저 개인정보 나타내는 SQL 처리
      */
     public List<GetUserInfoRes> UserInfo(int userIdx) {
-        String GetUserInfoResQuery = "select U.shopName          userShopName,\n" +
-                "       U.profileImage      userProfileImage,\n" +
-                "       count(F.userIdx) as userFavCount,\n" +
-                "       count(R.userIdx) as userReviewCount,\n" +
-                "       F2.followcnt     as userFollowingCount,\n" +
-                "       F3.followercnt   as userFollwerCount,\n" +
-                "       case when avg(distinct FORRATE.reviewRate) is null then 0 else avg(distinct FORRATE.reviewRate) end as `reviewrate`\n" +
+        String GetUserInfoResQuery = "select U.shopName                                       userShopName,\n" +
+                "       U.profileImage                                   userProfileImage,\n" +
+                "       favCnt                            as userFavCount,\n" +
+                "       count(R.userIdx)                              as userReviewCount,\n" +
+                "       F2.followcnt                                  as userFollowingCount,\n" +
+                "       F3.followercnt                                as userFollwerCount,\n" +
+                "       case\n" +
+                "           when avg(distinct FORRATE.reviewRate) is null then 0\n" +
+                "           else avg(distinct FORRATE.reviewRate) end as `reviewrate`,\n" +
+                "       count(distinct FORRATE.reviewRate)               reviewCount\n" +
                 "from User U\n" +
                 "         left join (select count(userIdx) followcnt, userIdx from Follow where status = 1 group by userIdx) F2\n" +
                 "                   on F2.userIdx = U.Idx\n" +
@@ -135,14 +138,18 @@ public class UserDao {
                 "                    from Follow\n" +
                 "                    where status = 1\n" +
                 "                    group by followingIdx) F3 on F3.followingIdx = U.Idx\n" +
-                "         left join Favorite F on U.Idx = F.userIdx\n" +
+                "         left join (select count(userIdx) favCnt, userIdx\n" +
+                "                    from Favorite\n" +
+                "                    where status = 1\n" +
+                "                    group by userIdx) F on U.Idx = F.userIdx\n" +
                 "         left join Review R on U.Idx = R.userIdx\n" +
                 "\n" +
-                "left join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
-                "    from Product P2\n" +
-                "    join (select PY.productIdx,R.reviewRate\n" +
-                "                from Payment PY\n" +
-                "                join Review R on PY.Idx = R.paymentIdx) as PYR on PYR.productIdx = P2.Idx) as FORRATE) on U.Idx = FORRATE.userIdx\n" +
+                "         left join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
+                "                     from Product P2\n" +
+                "                              join (select PY.productIdx, R.reviewRate\n" +
+                "                                    from Payment PY\n" +
+                "                                             join Review R on PY.Idx = R.paymentIdx) as PYR\n" +
+                "                                   on PYR.productIdx = P2.Idx) as FORRATE) on U.Idx = FORRATE.userIdx\n" +
                 "\n" +
                 "where U.Idx = ?;";
         int GetUserInfoResParams = userIdx;

@@ -77,7 +77,7 @@ public class FavoriteDao {
      * */
     public PostFavoriteInfoRes getfav(PostFavoriteInfoReq postFavoriteInfoReq) {
 
-        String gefavQuery = "select userIdx,productIdx,status from Favorite where userIdx = ? and productIdx =?";
+        String gefavQuery = "select userIdx,productIdx,status from Favorite where userIdx = ? and productIdx =? ";
         int userParams = postFavoriteInfoReq.getUserIdx();
         int productParams = postFavoriteInfoReq.getProductIdx();
         return this.jdbcTemplate.queryForObject(gefavQuery,

@@ -88,7 +88,7 @@ public class Chatcontroller {
             if(userIdx != userIdxByJwt){
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
-            List<String> chatInfo = chatProvider.getChatInfo(userIdx,chatRoomIdx);
+            List<String> chatInfo = chatProvider.getChatInfo(chatRoomIdx,userIdx);
             return new BaseResponse<>(chatInfo);
         }catch (BaseException exception){
             return new BaseResponse<>((exception.getStatus()));

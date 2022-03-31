@@ -39,7 +39,9 @@ public class UserService {
             //userProvider.logIn(postLoginReq);
             throw new BaseException(POST_USERS_EXISTS_PHONE);
         }
-
+        if(userProvider.checkShopName(postUserReq.getShopName())==1){
+            throw new BaseException(POST_USERS_EXISTS_ShopName);
+        }
         String pwd;
         try{
             //암호화
