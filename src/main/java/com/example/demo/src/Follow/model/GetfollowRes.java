@@ -1,4 +1,4 @@
-package com.example.demo.src.follow.model;
+package com.example.demo.src.Follow.model;
 
 
 import lombok.AllArgsConstructor;

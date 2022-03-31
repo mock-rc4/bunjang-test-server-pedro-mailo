@@ -27,6 +27,11 @@ public class AddressProvider {
         this.jwtService = jwtService;
     }
 
+
+    /**
+     * 배송지 생성할려는 주소 체크
+     *
+     * */
     public int checkaddress(PostaddressReq postaddressReq) throws BaseException{
         try{
             return addressDao.checkaddress(postaddressReq);
@@ -35,6 +40,10 @@ public class AddressProvider {
         }
     }
 
+
+    /**
+     * 유저가 등록한 주소지 조회
+     * */
     public List<GetUserAddressRes> getaddressInfo(int userIdx) throws BaseException{
         try{
             List<GetUserAddressRes> getUserAddressResList = addressDao.getaddressInfo(userIdx);

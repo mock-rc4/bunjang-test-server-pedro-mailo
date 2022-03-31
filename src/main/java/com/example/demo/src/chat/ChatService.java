@@ -34,6 +34,12 @@ public class ChatService {
         this.jwtService = jwtService;
     }
 
+
+
+    /**
+     * 채팅방 생성 관련 처리 여부 후 DAO 로 넘어감
+     *
+     * */
     public PostChatRes postChatInfo(PostChatReq postChatReq, int userIdx) throws BaseException {
 
         //1. 상태값에 따라 나오는 2면 탈퇴한 사용자 한테 보낸다고 하면 , 탈퇴한 사용자 입니다! , 체크 검증 해서 나오는지
@@ -58,6 +64,9 @@ public class ChatService {
     }
 
 
+    /**
+     * 메세지 전송
+     * */
     public PostChatMessageRes postMessage(int userIdx, int chatRoomIdx, PostChatMessageRep postChatMessageRep) throws BaseException {
         int chatMessageIdx = chatDao.ChatMessage(userIdx,chatRoomIdx,postChatMessageRep);
         return new PostChatMessageRes(userIdx,chatRoomIdx,chatMessageIdx,postChatMessageRep.getMessage());

@@ -1,7 +1,7 @@
-package com.example.demo.src.follow;
+package com.example.demo.src.Follow;
 
 
-import com.example.demo.src.follow.model.*;
+import com.example.demo.src.Follow.model.*;
 
 
 import org.slf4j.Logger;
@@ -36,6 +36,9 @@ FollowController {
     }
 
 
+
+    /**팔로워 생성, 삭제 API 해당 API Send 할때마다, Follow status를  1, 2 로 변경한다
+     * */
     @ResponseBody
     @PostMapping ("")
     public BaseResponse<PostFollowInfoRes> postfollowInfo(@RequestBody PostFollowInfoReq postFollowInfoReq){
@@ -53,12 +56,15 @@ FollowController {
         }
     }
 
+
+    /**
+     * 팔로우한 유저정보 조회 API
+     * */
     @ResponseBody
     @GetMapping("/follow/{userIdx}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
     public BaseResponse<List<GetfollowRes>> getuserFollowList(@PathVariable("userIdx") int userIdx){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
-            System.out.println(userIdxByJwt);
 
             //userIdx와 접근한 유저가 같은지 확인
             if(userIdx != userIdxByJwt){
@@ -77,13 +83,14 @@ FollowController {
 
 
 
-
+    /**
+     * 유저를 팔로잉한 유저들 조회
+     * */
     @ResponseBody
     @GetMapping("/followers/{userIdx}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
     public BaseResponse<List<GetFollowerRes>> getuserFollower(@PathVariable("userIdx") int userIdx) {
         try {
             int userIdxByJwt = jwtService.getUserIdx();
-            System.out.println(userIdxByJwt);
 
             //userIdx와 접근한 유저가 같은지 확인
             if(userIdx != userIdxByJwt){

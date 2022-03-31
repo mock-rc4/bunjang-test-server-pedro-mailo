@@ -1,10 +1,9 @@
-package com.example.demo.src.follow;
+package com.example.demo.src.Follow;
 
 
 import com.example.demo.config.BaseException;
 
-import com.example.demo.src.follow.model.PostFollowInfoReq;
-import com.example.demo.src.follow.model.PostFollowInfoRes;
+import com.example.demo.src.Follow.model.*;
 import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
@@ -32,20 +31,27 @@ public class FollowService {
 
     }
 
+
+    /**
+     * 팔로우 등록, 삭제 API
+     * */
     public PostFollowInfoRes postfollowInfo(PostFollowInfoReq postFollowInfoReq) throws BaseException{
         try{
+
+            // 기존에 팔로우한 기록이 있는지 Follow 테이블에 여부 조회
             if (followProvider.checkfollowInfo(postFollowInfoReq.getUserIdx(),postFollowInfoReq.getFollowingIdx()) == 1) {
                 PostFavoriteInfoRes getfollowinfo = followDao.getfollowinfo(postFollowInfoReq);
 
+                // 상태값이 1 인경우, 삭제하는 경우니까, status 를 2 로 변경
                 if(getfollowinfo.getStatus() ==1){
                     followDao.deletefollowInfo(postFollowInfoReq);
-                    //return new PostFavoriteInfoRes(getfav.getProductIdx(),getfav.getUserIdx(),getfav.getStatus());
                 }
+                // 상태값이 2 인경우, 등록하는 경우니까, status 를 1 로 변경
                 if(getfollowinfo.getStatus() ==2){
                     followDao.statusChangefollowInfo(postFollowInfoReq);
-                    //return new PostFavoriteInfoRes(getfav.getProductIdx(),getfav.getUserIdx(),getfav.getStatus());
                 }
             }
+            // Follow 테이블에 없는 경우, 추가
             else {
                 followDao.createFollowInfo(postFollowInfoReq);
             }

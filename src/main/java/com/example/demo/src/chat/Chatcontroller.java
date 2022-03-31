@@ -33,6 +33,11 @@ public class Chatcontroller {
         this.jwtService = jwtService;
     }
 
+
+
+    /**
+     * 채팅방 생성 API
+     * */
     @ResponseBody
     @PostMapping ("/{userIdx}")
     public BaseResponse<PostChatRes> postChatInfo(@RequestBody PostChatReq postaddressReq,@PathVariable("userIdx") int userIdx){
@@ -51,6 +56,9 @@ public class Chatcontroller {
     }
 
 
+    /**
+     * 메세지 전송 API
+     * */
     @ResponseBody
     @PostMapping ("/{chatRoomIdx}/{userIdx}")
     public BaseResponse<PostChatMessageRes> postMessage(@RequestBody PostChatMessageRep postChatMessageRep,@PathVariable("chatRoomIdx") int chatRoomIdx,@PathVariable("userIdx") int userIdx ){
@@ -68,6 +76,9 @@ public class Chatcontroller {
     }
 
 
+    /**
+     * 채팅방 입장하여 채팅 내역 조회 API
+     * */
     @ResponseBody
     @GetMapping ("/{chatRoomIdx}/{userIdx}")
     public BaseResponse<List<String>> getChatInfo(@PathVariable("chatRoomIdx") int chatRoomIdx, @PathVariable("userIdx") int userIdx){

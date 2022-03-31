@@ -53,6 +53,10 @@ public class UserProvider {
 
     }
 
+
+    /**
+     * 로그인 API 처리 클래스
+     * */
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
         User user = userDao.getUserInfo(postLoginReq);
         String encryptPwd;
@@ -84,6 +88,10 @@ public class UserProvider {
 
     }
 
+
+    /**
+     * 유저 메인페이지 조회하는 클래스, 각각 유저 개인정보, 진행사항별 상품수,상품상세 를 List 로 받아서 리턴
+     */
     public List<String> getUserMainPage(int userIdx,int progress) throws BaseException{
         try{
             List UserInfo = userDao.UserInfo(userIdx);
@@ -98,12 +106,12 @@ public class UserProvider {
 
     }
 
-
+    /**
+     * 유저 상점명 검색
+     * */
     public List<GetSearchByUserNameRes> SearchByUserName(String shopName) throws BaseException{
         try{
-            System.out.println("3");
             List<GetSearchByUserNameRes> getSearchByUserNameResList = userDao.SearchByUserName(shopName);
-            System.out.println("4");
             return getSearchByUserNameResList;
         }
         catch (Exception exception) {
@@ -111,6 +119,9 @@ public class UserProvider {
         }
     }
 
+    /**
+     * 유저 상점설정정보 조회
+     * */
     public List<GerUserSettingRes> GetsettingInfo(int userIdx) throws BaseException{
 
         try{

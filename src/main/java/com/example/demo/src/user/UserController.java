@@ -293,7 +293,9 @@ public class UserController {
     }
 
 
-
+    /**
+    * 유저 상점 설정 정보 조회 API
+    * */
     @ResponseBody
     @GetMapping("/{userIdx}/setting")
     public BaseResponse<List<GerUserSettingRes>> GetsettingInfo(@PathVariable("userIdx") int userIdx) { //
@@ -313,6 +315,10 @@ public class UserController {
         }
     }
 
+
+    /**
+     *  유저 상점 정보 설정 API
+     */
     @ResponseBody
     @PatchMapping("/{userIdx}/setting")
     public BaseResponse<String> patchUserSetting(@RequestBody PatchUserSettingReq patchUserSettingReq,@PathVariable("userIdx") int userIdx) {

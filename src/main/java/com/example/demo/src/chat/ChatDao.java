@@ -19,6 +19,10 @@ public class ChatDao {
     }
 
 
+
+    /**
+     * 채팅방 생성 SQL 처리
+     * */
     public int postChatInfo(int userIdx, PostChatReq postChatReq) {
         //1. 채팅방 먼저 생성 1개만 생성 -> 조인 라인 생성 , 나 상대방 각각 2개 쿼리문 생성-> 메시지 생성 1개만
         String CreateChatRoom = "insert into ChatRoom values ()";
@@ -40,6 +44,10 @@ public class ChatDao {
         return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class);
     }
 
+
+    /**
+     * 탈퇴한 유저 여부 확인 SQL 처리
+     * */
     public int checkUserStatus(int userIdx) {
         String checkUserStatusQuery = "select exists(select status from User where Idx = ? and status =1);";
         int checkUserStatusParams = userIdx;
@@ -48,6 +56,11 @@ public class ChatDao {
                 checkUserStatusParams);
     }
 
+
+    /**
+     * 채팅방 생성시 이미 존재하는 채팅방인지 확인 SQL 처리
+     *
+     * */
     public int checkExistChatroom(int userIdx, int getUserIdx) {
         String checkExistChatroomQuery = "select exists(select * from ChatRoomjoinUser C inner join (select chatRoomIdx from ChatRoomjoinUser where userIdx = ?)CR on CR.chatRoomIdx = C.chatRoomIdx where C.userIdx =? group by CR.chatRoomIdx) ;";
         int userIdxParams = userIdx;
@@ -58,17 +71,23 @@ public class ChatDao {
 
     }
 
+
+    /**
+     * 메세지 전송 SQL 처리
+     * */
     public int ChatMessage(int userIdx, int chatRoomIdx,PostChatMessageRep postChatMessageRep) {
-        System.out.println("4");
         String Chatmessage = "insert into ChatMessage(message,userIdx,chatRoomIdx) values (?,?,?);";
         this.jdbcTemplate.update(Chatmessage,postChatMessageRep.getMessage(),userIdx,chatRoomIdx);
-        System.out.println("5");
 
         String lastInserIdQuery = "select last_insert_id()";
         return this.jdbcTemplate.queryForObject(lastInserIdQuery, int.class);
 
     }
 
+
+    /**
+     * 채팅방 입장후 채팅하는 유저 정보 조회
+     * */
     public List<GetUserInfoRes> UserInfo(int userIdx, int chatRoomIdx) {
         String GetUserInfoResQuery = "select C.userIdx,\n" +
                 "       U.userShopName,\n" +
@@ -131,6 +150,11 @@ public class ChatDao {
 
     }
 
+
+    /**
+     * 채팅방 메세지 리스트 조회
+     *
+     * */
     public List<getMessageRes> chatMessagList(int chatRoomIdx) {
         String GetUserInfoResQuery ="select updateAt, message, userIdx, chatRoomIdx\n" +
                 "from ChatMessage\n" +

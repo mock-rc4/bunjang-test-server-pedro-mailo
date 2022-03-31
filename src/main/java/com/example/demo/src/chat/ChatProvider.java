@@ -28,6 +28,9 @@ public class ChatProvider {
         this.jwtService = jwtService;
     }
 
+    /**
+     * 회원탈퇴한 유저 여부 확인
+     * */
     public int checkUserStatus(int userIdx) throws BaseException{
         try{
             return chatDao.checkUserStatus(userIdx);
@@ -36,6 +39,10 @@ public class ChatProvider {
         }
     }
 
+
+    /**
+     * 이미 존재하는 채팅방인지 확인
+     * */
     public int checkExistChatroom(int userIdx, int getUserIdx) throws BaseException{
 
         try{
@@ -45,6 +52,10 @@ public class ChatProvider {
         }
     }
 
+
+    /**
+     * 채팅방 입장
+     * */
     public List<String> getChatInfo(int userIdx, int chatRoomIdx) {
         List UserInfo = chatDao.UserInfo(userIdx,chatRoomIdx);
         List chatMessagList = chatDao.chatMessagList(chatRoomIdx);
