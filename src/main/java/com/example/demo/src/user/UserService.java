@@ -30,7 +30,9 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-    //POST
+    /**
+     * 회원가입  API
+    * */
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         //해당 코드는 질의 한다. 그리고 닉네임이 동일한것은 존재할수 없기 떄문에 동일한 닉네임 입력시 나오는
         if(userProvider.checkPhone(postUserReq.getPhoneNumber())==1){
@@ -60,7 +62,9 @@ public class UserService {
         }
     }
 
-
+    /**
+     * 상점명 변경 API
+     * */
     public void modifyshopName(PatchShopNameReq patchShopNameReq) throws BaseException {
             if(userProvider.checkShopName(patchShopNameReq.getShopName())==1){
                 throw new BaseException(POST_USERS_EXISTS_ShopName);
@@ -72,7 +76,9 @@ public class UserService {
             }
     }
 
-
+    /**
+     * 회원 성별 변경 API (1. 남자 , 2. 여자 )
+     * */
     public void modifyUserSex(PatchUserSexReq patchUserSexReq) throws BaseException {
         try{
             int result = userDao.modifyUserSex(patchUserSexReq);
@@ -83,7 +89,9 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
+    /**
+     * 생년월일 변경 API
+     * */
     public void modifyUserBrith(PatchUserBirthReq patchUserBirthReq) throws BaseException {
         try{
             int result = userDao.modifyUserBirth(patchUserBirthReq);
@@ -94,7 +102,11 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
+    /**
+     * 유저 핸드폰 번호 변경 API
+     * 번개장터는 핸드폰번호 기준으로 회원 조회하기 때문에,
+     * 변경할려는 핸드폰 번호가 db 에 존재하는지 확인후 변경 , 존재하는경우  BaseException 처리
+     * */
     public void modifyUserPhone(PatchUserPhoneReq patchUserPhoneReq) throws BaseException {
         if (userProvider.checkPhone(patchUserPhoneReq.getPhoneNumber()) == 1) {
             throw new BaseException(POST_USERS_EXISTS_PHONE);
@@ -106,6 +118,9 @@ public class UserService {
         }
     }
 
+    /**
+     * 탈퇴 사유 입력 받아서 회원 상태를 변경 (Status = 2 )
+     * */
     public void deleteUserInfo(DeleteUserReq deleteUserReq) throws BaseException {
 //        try{
         int result = userDao.deleteUserInfo(deleteUserReq);
@@ -117,6 +132,10 @@ public class UserService {
 //        }
     }
 
+    /**
+     * 회원 상점정보 변경 API
+     * 기존 변경할려는 상점명이 이미 존재하는지 유무 확인해서 변경한다, 존재하는경우  BaseException 처리
+     * */
     public void patchUserSetting(PatchUserSettingReq patchUserSettingReq, int userIdx) throws BaseException{
         if(userProvider.checkShopName(patchUserSettingReq.getShopName())==1){
             throw new BaseException(POST_USERS_EXISTS_ShopName);

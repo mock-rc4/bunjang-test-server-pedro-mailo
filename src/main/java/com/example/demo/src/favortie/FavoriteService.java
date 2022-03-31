@@ -31,6 +31,10 @@ public class FavoriteService {
 
     }
 
+
+    /**
+     * 찜 생성 하기전에 기존에 등록한 찜 인지 , 또 존재한다면, 상태값에 따라 삭제, 등록여부 판단
+     * */
     public PostFavoriteInfoRes PostFavoriteInfo(PostFavoriteInfoReq postFavoriteInfoReq) throws BaseException {
 
         if (favoriteProvider.checkFavoriteInfo(postFavoriteInfoReq.getUserIdx(),postFavoriteInfoReq.getProductIdx()) == 1) {
@@ -38,11 +42,9 @@ public class FavoriteService {
 
             if(getfav.getStatus() ==1){
                 favoriteDao.deleteFavorite(postFavoriteInfoReq);
-                //return new PostFavoriteInfoRes(getfav.getProductIdx(),getfav.getUserIdx(),getfav.getStatus());
             }
             if(getfav.getStatus() ==2){
                 favoriteDao.statusChangeFavorite(postFavoriteInfoReq);
-                //return new PostFavoriteInfoRes(getfav.getProductIdx(),getfav.getUserIdx(),getfav.getStatus());
             }
 
         }

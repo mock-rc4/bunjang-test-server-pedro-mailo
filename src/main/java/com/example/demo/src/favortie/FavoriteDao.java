@@ -18,6 +18,12 @@ public class FavoriteDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
+
+    /**
+     *
+     * 기존에 유저가 찜 누른 이력 확인하는 SQL 처리
+     * */
     public int checkFavoriteInfo(int userIdx, int productIdx) {
         String checkFavoriteInfoQuery = "select exists(select userIdx from Favorite where userIdx = ? and productIdx = ?)";
         int checkUserIdxParams = userIdx;
@@ -27,6 +33,10 @@ public class FavoriteDao {
                 checkUserIdxParams,checkProductIdxParams);
     }
 
+
+    /**
+     * 찜 생성 SQL 처리
+     * */
     public int createFavorite(PostFavoriteInfoReq postFavoriteInfoReq) {
         String deleteFavoriteQuery = "insert into Favorite (userIdx,productIdx) values (?,?)";
         int userParams = postFavoriteInfoReq.getUserIdx();
@@ -35,6 +45,11 @@ public class FavoriteDao {
         return this.jdbcTemplate.update(deleteFavoriteQuery, deleteFavoriteParams);
 
     }
+
+
+    /**
+     * 찜삭제 SQL 처리 (상태값만 1-> 2 로 변경)
+     * */
     public int deleteFavorite(PostFavoriteInfoReq postFavoriteInfoReq) {
         String deleteFavoriteQuery = "update Favorite set status = 2 where userIdx = ? and productIdx =?";
         int userParams = postFavoriteInfoReq.getUserIdx();
@@ -43,6 +58,10 @@ public class FavoriteDao {
         return this.jdbcTemplate.update(deleteFavoriteQuery, deleteFavoriteParams);
 
     }
+
+    /**
+     * 기존에 삭제한 찜 Status -> 1 로 변경
+     * */
     public int statusChangeFavorite(PostFavoriteInfoReq postFavoriteInfoReq) {
         String statusChangeFavoriteQuery = "update Favorite set status = 1 where userIdx = ? and productIdx =?";
         int userParams = postFavoriteInfoReq.getUserIdx();
@@ -52,6 +71,10 @@ public class FavoriteDao {
 
     }
 
+
+    /**
+     * 유저의 찜 여부 Favorite 테이블에서 조회 SQL 처리
+     * */
     public PostFavoriteInfoRes getfav(PostFavoriteInfoReq postFavoriteInfoReq) {
 
         String gefavQuery = "select userIdx,productIdx,status from Favorite where userIdx = ? and productIdx =?";
@@ -65,6 +88,10 @@ public class FavoriteDao {
                 userParams,productParams);
     }
 
+
+    /**
+     * 찜한 상품 조회  SQL 조회
+     * */
     public List<GetUserFavoriteListRes> getFavoriteInfo(int userIdx) {
 
         String GetUserFavoriteListQuery ="select P.shopName,\n" +

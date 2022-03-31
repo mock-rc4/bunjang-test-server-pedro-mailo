@@ -41,6 +41,11 @@ public class FavoriteController {
 
 
 
+
+    /**
+     * 찜 삭제, 등록 API
+     *
+     * */
     @ResponseBody
     @PostMapping ("")
     public BaseResponse<PostFavoriteInfoRes> PostFavoriteInfo(@RequestBody PostFavoriteInfoReq postFavoriteInfoReq){
@@ -58,12 +63,15 @@ public class FavoriteController {
         }
     }
 
+
+    /**
+     * 유저가 찜한 상품 리스트 조회 API
+     * */
     @ResponseBody
     @GetMapping ("")
     public BaseResponse<List<GetUserFavoriteListRes>> getFavoriteInfo(){
         try{
             int userIdx = jwtService.getUserIdx();
-            //userIdx와 접근한 유저가 같은지 확인
 
             List<GetUserFavoriteListRes> getUserFavoriteListRes = favoriteProvider.getFavoriteInfo(userIdx);
 

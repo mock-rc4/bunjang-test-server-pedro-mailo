@@ -1,6 +1,6 @@
-package com.example.demo.src.follow;
+package com.example.demo.src.Follow;
 
-import com.example.demo.src.follow.model.*;
+import com.example.demo.src.Follow.model.*;
 import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +24,10 @@ public class FollowDao {
     }
 
 
+
+    /**
+     * 팔로우 한 이력 여부 체크 SQL 처리
+     * */
     public int checkfollowInfo(int userIdx, int followingIdx) {
         String checkShopNameQuery = "select exists(select userIdx from Follow where userIdx = ? and followingIdx = ?)";
         int checkUserIdxParams = userIdx;
@@ -33,6 +37,10 @@ public class FollowDao {
                 checkUserIdxParams, checkFollowingIdxParams);
     }
 
+
+    /**
+     * 현재 팔로우 여부 확인 위한 SQL 처리
+     * */
     public PostFavoriteInfoRes getfollowinfo(PostFollowInfoReq postFollowInfoReq) {
         String getfollowinfoQuery = "select userIdx,followingIdx,status from Follow where userIdx = ? and followingIdx =?";
         int userParams = postFollowInfoReq.getUserIdx();
@@ -45,6 +53,10 @@ public class FollowDao {
                 userParams, followingIdxParams);
     }
 
+
+    /**
+     * 언팔로우 SQL 처리
+     * */
     public int deletefollowInfo(PostFollowInfoReq postFollowInfoReq) {
         String deletefollowQuery = "update Follow set status = 2 where userIdx = ? and followingIdx =?";
         int userParams = postFollowInfoReq.getUserIdx();
@@ -53,6 +65,10 @@ public class FollowDao {
         return this.jdbcTemplate.update(deletefollowQuery, deletefollowParams);
     }
 
+
+    /**
+     * 언팔로우 유저 -> 팔로우로 변경 SQL 처리
+     * */
     public int statusChangefollowInfo(PostFollowInfoReq postFollowInfoReq) {
         String statusChangefollowQuery = "update Follow set status = 1 where userIdx = ? and followingIdx =?";
         int userParams = postFollowInfoReq.getUserIdx();
@@ -61,6 +77,10 @@ public class FollowDao {
         return this.jdbcTemplate.update(statusChangefollowQuery, statusChangefollowParams);
     }
 
+
+    /**
+     * 새로 팔로우 한 유저 SQL 처리
+     * */
     public int createFollowInfo(PostFollowInfoReq postFollowInfoReq) {
         String createFollowQuery = "insert into Follow (userIdx,followingIdx) values (?,?)";
         int userParams = postFollowInfoReq.getUserIdx();
@@ -69,6 +89,11 @@ public class FollowDao {
         return this.jdbcTemplate.update(createFollowQuery, createFollowParams);
     }
 
+
+
+    /**
+     * 팔로우한 유저 정보 조회
+     * */
     public List<GetfollowRes> FollowList(int userIdx ,int q) {
         String FollowListQuery = "select F.followingIdx, U.shopName, P.productCnt , F2.followerCnt followCnt\n" +
                 "from Follow F\n" +
@@ -93,6 +118,10 @@ public class FollowDao {
     }
 
 
+
+    /**
+     * 팔로우 한 유저 정보 조회
+     * */
     public List<GetfollowDescRes> FollowListDesc(int userIdx, int q) {
         String FollowListDescQuery = "select F.followingIdx, U.shopName, price, P.imageUrl, P.Idx productIdx\n" +
                 "from Follow F\n" +
@@ -118,6 +147,10 @@ public class FollowDao {
 
     }
 
+
+    /**
+     * 팔로잉한 유저 인수 구하기 위한 SQL 처리 . 솔직히 능력부족으로 억지로 만들어낸 클래스
+     * */
     public List<FollointIdxRes> getfollowIdxInfo(int userIdx) {
         String FollointIdxResQuery = "select F.followingIdx followingIdx\n" +
                 "from Follow F\n" +
@@ -131,6 +164,10 @@ public class FollowDao {
     }
 
 
+
+    /**
+     * 유저를 팔로우한 유저 정보 SQL 처리
+     * */
     public List<GetFollowerRes> getuserFollower(int userIdx) {
         String getuserFollowerQuery = "select F.userIdx userIdx, U.shopName shopName, case when P.productCnt is null then 0 else  P.productCnt end productCnt ,case when F2.followerCnt is null then 0 else F2.followerCnt end followCnt, U.profileImage userImage\n" +
                 "from Follow F\n" +
@@ -154,6 +191,10 @@ public class FollowDao {
                 userParams);
     }
 
+
+    /**
+     * 팔로우한 유저 IDX 추출하기위한 SQL 처리
+     * */
     public int getfollowoneIdx(int k) {
         String lastInserIdQuery = "select F.followingIdx\n" +
                 "from Follow F\n" +

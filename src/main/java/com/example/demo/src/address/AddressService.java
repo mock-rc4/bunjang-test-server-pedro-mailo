@@ -28,6 +28,10 @@ public class AddressService {
 
     }
 
+
+    /**
+     * 배송지 등록시 기존에 동일한 주소지 등록했는지 여부 확인후, 맞을경우 삭제처리된 주소지를 다시 활성화한다
+     * */
     public PostaddressRes postaddress(PostaddressReq postaddressReq) throws BaseException {
 
         if (addressProvider.checkaddress(postaddressReq) == 1) {
@@ -48,10 +52,19 @@ public class AddressService {
 
     }
 
+
+    /**
+     * 유저 배송지 정보 수정
+     * */
     public void patchaddressInfo(PatchAddressReq patchAddressReq,int addressIdx) throws BaseException {
         int j =  addressDao.patchaddressInfo(patchAddressReq,addressIdx);
     }
 
+
+    /**
+     *
+     * 유저 배송지 삭제
+     * */
     public void deleteaddressInfo(int addressIdx,int userIdx) throws BaseException {
 
         int j = addressDao.deleteaddress(addressIdx,userIdx);

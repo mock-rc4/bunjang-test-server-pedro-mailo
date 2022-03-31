@@ -1,4 +1,4 @@
-package com.example.demo.src.chat;
+package com.example.demo.src.chat.model;
 
 
 import lombok.AllArgsConstructor;

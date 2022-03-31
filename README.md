@@ -2,7 +2,7 @@
 > ## [🙈 기획서](https://docs.google.com/document/d/1mJEql5gy8jLTYZXEtAzuZwmRtznI321b/edit)
 > ## [📫 API Sheet](https://docs.google.com/spreadsheets/d/1saKFspgb7g0NZVLX445RVXS27s1UKaY5/edit#gid=990061567)    
 > ## [🧩 ERD](https://aquerytool.com/aquerymain/index/?rurl=f5891c32-395a-4960-8e52-5380280e35ef&)
->> password:42g555
+>> password : 42g555
 
 <br /> 
 
@@ -13,14 +13,20 @@
 - [x] API Sheet 리스트업
 - [x] 유저 회원가입 API 제작
 - [x] 유저 로그인 API 제작
-- [x] 상품 조회 API 제작
-- [x] 결제 API 제작
-
-<br /> 
+- [x] 유저 마이페이지 API 제작 
+- [x] 유저 정보(성별, 생년월일, 핸드폰 번호,) 변경 API
+<br />  
 
 ## 📌 2주차 목표 작업 범위 (2022-03-26 ~ 2022-04-01)
-- [ ] 
-
+- [x] 유저 찜 등록/삭제 API 제작
+- [x] 유저 찜 목록 조회 API 제작 
+- [x] 유저 팔로우 등록/삭제 API 제작
+- [x] 유저 팔로우, 팔로워 조회 API 제작
+- [x] 유저 배송지 등록, 삭제 , 조회 3개 API 제작  
+- [x] 유저 회원탈퇴 API 제작
+- [x] 유저 상점 설정정보 조회, 수정 2개 API 제작
+- [x] 번개톡 채팅방생성, 채팅방 입장 조회, 메세지 전송 3개 API 제작
+- [x] 카카오 로그인   
 
 <br /> 
 
@@ -69,7 +75,7 @@
  
  > 
   - API 명세서 리스트 작성 
-  - validation 처리 (회원가입, 로그인 API 관련 처리 but 정규식은 아직 안함)
+  - validation 처리 (회원가입, 로그인 API 관련 처리)
   - 개발팀장(코롱) 피드백
   - API 명세서 작성 (완성된 API 업데이트)
 
@@ -109,10 +115,21 @@
  > 
   - API 명세서 작성 (완성된 API 업데이트)
   - 더미데이터 생성 작업
+  - 회원 정보(성별, 생년월일, 핸드폰번호) 수정 API 서버에 반영
 </div>
 </details>
  
-
+<details> 
+<summary> 2022.3.26 (SAT) </summary>
+<div markdown="1">
+ 
+ 
+ > 
+  - API 명세서 작성 (완성된 API 업데이트)
+  - 유저 찜 등록/삭제 API 작업 (50%)
+  - 팔로우 생성/ 삭제 API 작업 (50%)
+</div>
+</details>
  
 <details> 
 <summary> 2022.3.27 (SUN) </summary>
@@ -163,6 +180,30 @@
   - 번개톡 채팅방 생성 API 서버 반영
   - API 명세서 작성 (완성된 API 업데이트)
   - 쿼리문 수정 (유저 메인 페이지, 번개톡 채팅방 불러오기)
+  - 마일로 작성 API 서버반영 (후기 API)
+ 
+ > 2차 피드백 내용 
+  - GIT 을 사용하는방법을 굉장히 못했다.
+  - 현재 사용하는 방법 말고 다른 방법을 이용해 코드를 보안해라
+  1. Try - Catch 문을 지양하자 
+  2. 어노테이션을 활용하라 
+  3. DAO대신 마이바티스와 JPA 를 사용하여 sql 문은 처리하자
+
+</div>
+</details>
+
+
+<details> 
+<summary> 2022.3.31 (THU)  </summary>
+<div markdown="1">
+ 
+ > 
+  - 팔로우 조회 API 작성 완료 (100%)
+  - 카카오 API 작성 완료(100%)
+  - 팔로우 조회, 카카오 API 서버에 반영
+  - 코드 구성도 작성
+  - 소스코드 주석 작성
+  
 </div>
 </details>
 
@@ -182,8 +223,12 @@
 - 문제 : 서버 가동중 3/23 새벽 2시경 EC2 인스턴스 에러 나는것 확인 시스템은 정상이었지만, 통신상 오류가 나는 상황 확인.
 - 해결 : 인스턴스 재부팅 후 정상으로 되는것 확인 완료
 
+### 4. API 설정 여부
+- 문제 : 기존 찜/ 팔로우 생성과 삭제 전부 동일한 상황에서 선택되는것인데, 따로 API 구성을 하는게 맞는지 고민
 
-### 4. 찜 API 오류 (22-03-26)
+- 해결 : 각 찜 / 팔로우 테이블에 Status 를 1 : 활성화 , 2 : 비활성화 기준으로 두어서, 
+
+### 5. 찜 API 오류 (22-03-26)
 - 문제 : 찜 비활성화 하는 과정에서 코드 에러가 나는것 확인
 ``` JAVA
 in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause]- Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result size: expected 1, actual 2] with root cause
@@ -192,10 +237,14 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 - 해결 : DAO에서 Body 에 작성한 내용을 파라미터로 받고 Favorite 테이블에 데이터 조회해 데이터 유무를 파악하는데, status = 1 처럼 특정 조건으로 지정해서 쿼리문 오류 나는것 확인
 
 
-### 5. 팔로워 생성 API (22-03-28)
-- 문제 : 팔로워 조회 API 관련 매개변수 처리 문제 
+### 6. 팔로워 조회 API (22-03-28)
+- 문제 : 팔로워 조회 API 생성도중 , 기존에 작성한 List 형태가 [팔로잉한 유저 정보] [팔로잉한 유저가 올린 상품 리스트] 형태로 리스트 나와야하는데 분리를 못하는 상황 생김
+ 
+- 시도 : List로 followingIdx 를 받아서 매개변수로 받아야하는데 , List 형태로 받은 값들이 원하는 형태로 안나오는 것 확인 , List 형태가 int 형태인 followingIdx 를 담은 json 형태로 안나오는것으로 확인
+ 
+- 해결 : followingIdx 를 받은 List의 Length 를 for문으로 각각 followingIdx를 queryforobject 형태로 추출하여 매개변수로 사용하여 API 생성 완료 
 
-### 6. 파싱 오류 (22-03-30)
+### 7. 파싱 오류 (22-03-30)
 - 문제 : 메세지 전송 API 테스트중 파싱 에러 나는 것 확인
  ``` JAVA
  04:31:14.359 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:207] [Message:Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot construct instance of `com.example.demo.src.chat.model.PostChatMessageRep` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.example.demo.src.chat.model.PostChatMessageRep` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator)
@@ -210,7 +259,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 <br />
 =======
 
-### 7. GET 오류 (22-03-30)
+### 8. GET 오류 (22-03-30)
 - 문제 : 채팅방 입장및 조회 하는 API 테스트 중 에러 나오는 것 확인
 ``` JAVA 
 15:03:06.699 WARN  [File:AbstractHandlerExceptionResolver.java] [Func:logException] [Line:207] [Message:Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]]- Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]

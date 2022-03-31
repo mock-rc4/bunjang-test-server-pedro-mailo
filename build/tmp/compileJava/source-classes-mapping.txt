@@ -1,11 +1,11 @@
 com/example/demo/src/review/model/PostReviewReq.java
  com.example.demo.src.review.model.PostReviewReq
-com/example/demo/src/chat/GetUserInfoRes.java
- com.example.demo.src.chat.GetUserInfoRes
 com/example/demo/src/review/ReviewDao.java
  com.example.demo.src.review.ReviewDao
 com/example/demo/src/address/model/GetUserAddressRes.java
  com.example.demo.src.address.model.GetUserAddressRes
+com/example/demo/src/chat/model/GetUserInfoRes.java
+ com.example.demo.src.chat.model.GetUserInfoRes
 com/example/demo/src/product/model/PostPaymentRes.java
  com.example.demo.src.product.model.PostPaymentRes
 com/example/demo/src/review/model/PostCreateNewReview.java
@@ -13,7 +13,7 @@ com/example/demo/src/review/model/PostCreateNewReview.java
 com/example/demo/src/address/AddressController.java
  com.example.demo.src.address.AddressController
 com/example/demo/src/Follow/model/GetfollowDescRes.java
- com.example.demo.src.follow.model.GetfollowDescRes
+ com.example.demo.src.Follow.model.GetfollowDescRes
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/favortie/FavoriteDao.java
@@ -51,7 +51,7 @@ com/example/demo/src/product/ProductProvider.java
 com/example/demo/utils/SHA256.java
  com.example.demo.utils.SHA256
 com/example/demo/src/Follow/model/PostFollowInfoRes.java
- com.example.demo.src.follow.model.PostFollowInfoRes
+ com.example.demo.src.Follow.model.PostFollowInfoRes
 com/example/demo/src/home/HomeService.java
  com.example.demo.src.home.HomeService
 com/example/demo/src/user/model/PostLoginRes.java
@@ -106,7 +106,7 @@ com/example/demo/src/review/ReviewService.java
 com/example/demo/src/chat/ChatService.java
  com.example.demo.src.chat.ChatService
 com/example/demo/src/Follow/FollowController.java
- com.example.demo.src.follow.FollowController
+ com.example.demo.src.Follow.FollowController
 com/example/demo/src/review/model/GetReviewRes.java
  com.example.demo.src.review.model.GetReviewRes
 com/example/demo/config/Constant.java
@@ -132,7 +132,7 @@ com/example/demo/src/user/model/DeleteUserReq.java
 com/example/demo/src/chat/ChatProvider.java
  com.example.demo.src.chat.ChatProvider
 com/example/demo/src/Follow/model/GetFollowerRes.java
- com.example.demo.src.follow.model.GetFollowerRes
+ com.example.demo.src.Follow.model.GetFollowerRes
 com/example/demo/src/product/model/GetBuyRes.java
  com.example.demo.src.product.model.GetBuyRes
 com/example/demo/config/secret/Secret.java
@@ -150,7 +150,7 @@ com/example/demo/config/BaseResponse.java
 com/example/demo/src/address/model/PatchAddressReq.java
  com.example.demo.src.address.model.PatchAddressReq
 com/example/demo/src/Follow/model/PostFollowInfoReq.java
- com.example.demo.src.follow.model.PostFollowInfoReq
+ com.example.demo.src.Follow.model.PostFollowInfoReq
 com/example/demo/src/product/model/PostProductQuesReq.java
  com.example.demo.src.product.model.PostProductQuesReq
 com/example/demo/src/user/UserService.java
@@ -160,7 +160,7 @@ com/example/demo/src/product/model/PostProductRes.java
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/src/Follow/model/GetfollowRes.java
- com.example.demo.src.follow.model.GetfollowRes
+ com.example.demo.src.Follow.model.GetfollowRes
 com/example/demo/src/user/model/GetUserInfoRes.java
  com.example.demo.src.user.model.GetUserInfoRes
 com/example/demo/src/user/model/PostUserReq.java
@@ -174,7 +174,7 @@ com/example/demo/src/home/HomeDao.java
 com/example/demo/src/product/model/GetProductQuesStatus.java
  com.example.demo.src.product.model.GetProductQuesStatus
 com/example/demo/src/Follow/FollowDao.java
- com.example.demo.src.follow.FollowDao
+ com.example.demo.src.Follow.FollowDao
 com/example/demo/src/product/model/PostcreateNewProduct.java
  com.example.demo.src.product.model.PostcreateNewProduct
 com/example/demo/src/user/model/GetSearchByUserNameRes.java
@@ -198,17 +198,17 @@ com/example/demo/src/user/model/PostLoginReq.java
 com/example/demo/src/Follow/model/GetUserAddressRes.java
  com.example.demo.src.Follow.model.GetUserAddressRes
 com/example/demo/src/Follow/model/FollointIdxRes.java
- com.example.demo.src.follow.model.FollointIdxRes
+ com.example.demo.src.Follow.model.FollointIdxRes
 com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
 com/example/demo/src/Follow/FollowService.java
- com.example.demo.src.follow.FollowService
+ com.example.demo.src.Follow.FollowService
 com/example/demo/src/address/model/PostaddressReq.java
  com.example.demo.src.address.model.PostaddressReq
 com/example/demo/src/user/model/User.java
  com.example.demo.src.user.model.User
 com/example/demo/src/Follow/FollowProvider.java
- com.example.demo.src.follow.FollowProvider
+ com.example.demo.src.Follow.FollowProvider
 com/example/demo/src/address/AddressService.java
  com.example.demo.src.address.AddressService
 com/example/demo/src/user/model/GetUserRes.java

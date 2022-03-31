@@ -28,6 +28,10 @@ public class FavoriteProvider {
         this.jwtService = jwtService;
     }
 
+
+    /**
+     * 찜 정보 여부 조회
+     * */
     public int checkFavoriteInfo(int userIdx,int productIdx) throws BaseException {
         try{
             return favoriteDao.checkFavoriteInfo(userIdx,productIdx);
@@ -37,6 +41,11 @@ public class FavoriteProvider {
 
     }
 
+
+    /**
+     *
+     * 유저가 찜한 상품 조회
+     * */
     public List<GetUserFavoriteListRes> getFavoriteInfo(int userIdx) throws BaseException{
 
         try{

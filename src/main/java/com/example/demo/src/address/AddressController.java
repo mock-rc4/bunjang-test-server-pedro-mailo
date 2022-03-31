@@ -37,6 +37,11 @@ public class AddressController {
     }
 
 
+
+    /**
+     * 배송지 등록 API
+     *
+     * */
     @ResponseBody
     @PostMapping ("")
     public BaseResponse<PostaddressRes> postaddressInfo(@RequestBody PostaddressReq postaddressReq){
@@ -53,6 +58,10 @@ public class AddressController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    /**
+     * 배송지 정보 수정 API
+     * */
     @ResponseBody
     @PatchMapping ("{addressIdx}")
     public BaseResponse<String> patchaddressInfo(@RequestBody PatchAddressReq patchAddressReq, @PathVariable("addressIdx") int addressIdx){
@@ -69,6 +78,11 @@ public class AddressController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
+    /**
+     * 배송지 삭제 API
+     * */
     @ResponseBody
     @PatchMapping ("{addressIdx}/delete")
     public BaseResponse<String> deleteaddressInfo(@PathVariable("addressIdx") int addressIdx){
@@ -83,6 +97,10 @@ public class AddressController {
         }
     }
 
+
+    /**
+     * 유저가 등록한 주소지 조회
+     * */
     @ResponseBody
     @GetMapping ("")
     public BaseResponse<List<GetUserAddressRes>> getaddressInfo() {
@@ -90,7 +108,6 @@ public class AddressController {
             int userIdx = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
 
-            String result = "주소조회 완료";
             List<GetUserAddressRes> getUserAddressResList = addressProvider.getaddressInfo(userIdx);
             return new BaseResponse<>(getUserAddressResList);
         }catch (BaseException exception){
