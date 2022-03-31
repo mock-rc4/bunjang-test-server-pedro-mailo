@@ -63,6 +63,34 @@ public class ProductService {
 
     }
 
+// 상품 수정
+    public int editProduct(PostProductReq postProductReq, int userIdx, int productIdx){
+        int checkMyProduct = productDao.checkProductUser(userIdx, productIdx);  // 물건이 내가 올린게 맞는지
+        if(checkMyProduct == 0){
+            System.out.println("내가 작성한 물건이 아니었음");
+            return 0;
+        }
+        List<String> editImages = postProductReq.getImageUrl();
+        List<String> editTags = postProductReq.getTagName();
+
+        if(editImages != null){ // 바꿀 사진이 있으면
+            productDao.deleteProductPictureReal(productIdx);
+            productDao.createProductPicture(postProductReq, productIdx);
+        }
+        if(editTags != null){   // 바꿀 태그가 있으면
+            productDao.deleteTagReal(productIdx);
+            productDao.createProductTag(postProductReq, productIdx);
+        }
+        productDao.editProduct(postProductReq, productIdx);
+        return 1;
+    }
+
+
+
+
+
+
+
 
 // 상품 삭제
     public int deleteProduct(int userIdx, int productIdx) throws BaseException{

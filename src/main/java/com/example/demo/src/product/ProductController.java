@@ -73,6 +73,32 @@ public class ProductController {
     }
 
     /**
+     * 제품 정보 수정 API
+     * [PATCH] products/{productIdx}/edit
+     *
+     */
+    @ResponseBody
+    @PatchMapping("/{productIdx}/edit")
+    public BaseResponse<String> editProduct(@PathVariable("productIdx") int productIdx, @RequestBody PostProductReq postProductReq){
+        try {
+            int userByJwt = jwtService.getUserIdx();
+            int editProduct = productService.editProduct(postProductReq, userByJwt, productIdx);
+            if(editProduct == 0){
+                throw new BaseException(NOT_MY_PRODUCT);    //5002, "본인이 생성한 제품이 아닙니다."
+            }
+            else{
+                return new BaseResponse<>("제품정보 변경 성공");
+            }
+
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+
+
+    /**
      * 제품 삭제 API
      * [PATCH] products/{productIdx}/delete
      *
