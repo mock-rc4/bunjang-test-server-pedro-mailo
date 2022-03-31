@@ -46,6 +46,13 @@ public class ReviewController {
     @PostMapping("/paymentIdx/{paymentIdx}")
     public BaseResponse<List<String>> createReview(@RequestBody PostReviewReq postReviewReq, @PathVariable("paymentIdx") int paymentIdx){
         try{
+            if(postReviewReq.getReviewRate() == 0){
+                throw new BaseException(EMPTY_RATE);
+            }
+            else if(postReviewReq.getReviewDesc() == null){
+                throw new BaseException(EMPTY_REVIEWDESC);
+            }
+
             System.out.println(paymentIdx);
             int userIdxByJwt = jwtService.getUserIdx();
 
@@ -90,6 +97,12 @@ public class ReviewController {
     @PatchMapping("{reviewIdx}/edit")
     public BaseResponse<String> editReview(@PathVariable("reviewIdx") int reviewIdx, @RequestBody PostReviewReq postReviewReq){
         try {
+            if(postReviewReq.getReviewRate() == 0){
+                throw new BaseException(EMPTY_RATE);
+            }
+            else if(postReviewReq.getReviewDesc() == null){
+                throw new BaseException(EMPTY_REVIEWDESC);
+            }
             System.out.println("리뷰 수정 컨트롤러 진입");
             int userIdxByJwt = jwtService.getUserIdx();
             int editReview = reviewService.editReview(postReviewReq, userIdxByJwt, reviewIdx);

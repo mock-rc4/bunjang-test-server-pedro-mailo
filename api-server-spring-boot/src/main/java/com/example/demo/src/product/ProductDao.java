@@ -144,6 +144,19 @@ public class ProductDao {
         return newTagList;
     }
 
+    /**
+     * 상품의 상태(status) 확인쿼리
+     *
+     */
+    public int checkProductStatus(int productIdx){
+        System.out.println("상태확인 다오 들어옴");
+        String checkStatusQuery = "select P.status \n" +
+                                    "from Product P \n" +
+                                    "where P.Idx = ?";
+        return this.jdbcTemplate.queryForObject(checkStatusQuery,int.class,productIdx);
+    }
+
+
 
     /**
      * 상품이 내가 올린 상품인지 확인쿼리

@@ -70,6 +70,12 @@ public class ProductService {
             System.out.println("내가 작성한 물건이 아니었음");
             return 0;
         }
+
+        int checkProductStatus = productDao.checkProductStatus(productIdx);
+        if(checkProductStatus == 2){    // 삭제된 제품일때
+            return 2;
+        }
+
         List<String> editImages = postProductReq.getImageUrl();
         List<String> editTags = postProductReq.getTagName();
 
@@ -99,18 +105,22 @@ public class ProductService {
             if(checkMyProduct == 0){
                 return 0;
                 //throw new BaseException(INVALID_USER_JWT);
+
             }
-            else{
-                productDao.deleteProduct(productIdx);
-                System.out.println("상품 status 변경");
-                productDao.deleteProductPicture(productIdx);
-                System.out.println("상품사진 status 변경");
-                productDao.deleteProductTag(productIdx);
-                System.out.println("상품태그 status 변경");
-                productDao.deleteProductQuestionByPIdx(productIdx);
-                System.out.println("상품문의 status 변경");
-                return 1;
-             }
+            int checkProductStatus = productDao.checkProductStatus(productIdx);
+            if(checkProductStatus == 2){    // 삭제된 제품일때
+                return 2;
+            }
+            productDao.deleteProduct(productIdx);
+            System.out.println("상품 status 변경");
+            productDao.deleteProductPicture(productIdx);
+            System.out.println("상품사진 status 변경");
+            productDao.deleteProductTag(productIdx);
+            System.out.println("상품태그 status 변경");
+            productDao.deleteProductQuestionByPIdx(productIdx);
+            System.out.println("상품문의 status 변경");
+            return 1;
+
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }

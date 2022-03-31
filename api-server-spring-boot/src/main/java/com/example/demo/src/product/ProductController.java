@@ -8,6 +8,7 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +65,40 @@ public class ProductController {
     public BaseResponse<List<String>> createProduct(@RequestBody PostProductReq postProductReq){
         try {
             System.out.println("제품생성 컨트롤러 들어옴");
+
+            if(postProductReq.getImageUrl() == null){
+                throw new BaseException(EMPTY_IMAGE);
+            }
+            else if(postProductReq.getPrice() == 0){
+                throw new BaseException(EMPTY_PRICE);
+            }
+            else if(postProductReq.getCategoryIdx() == 0){
+                throw new BaseException(EMPTY_CATAGORY);
+            }
+            else if(postProductReq.getProductName() ==null){    // 제품이름 안적었을때
+                throw new BaseException(EMPTY_PRODUCTNAME);
+            }
+            else if(postProductReq.getProductDesc() == null){   // 상세정보 누락
+                throw new BaseException(EMPTY_DESC);
+            }
+            else if(postProductReq.getProductCondition() == 0){ // 컨디션 누락
+                throw new BaseException(EMPTY_CONDITION);
+            }
+            else if(postProductReq.getSaftyPay() == 0){ // 안전결제 누락
+                throw new BaseException(EMPTY_SAFTYPAY);
+            }
+            else if(postProductReq.getIsExchange() == 0){   // 교환여부 누락
+                throw new BaseException(EMPTY_EXCHANGE);
+            }
+            else if(postProductReq.getAmount() == 0){   // 수량 누락
+                throw new BaseException(EMPTY_AMOUNT);
+            }
+            else if(postProductReq.getIncludeFee() == 0){   // 택배비 포함여부 누락
+                throw new BaseException(EMPTY_INCLUDEFEE);
+            }
+
+
+
             int userIdx = jwtService.getUserIdx();
             List<String> getProductDetail = productService.createProduct(postProductReq, userIdx);
             return new BaseResponse<>(getProductDetail);
@@ -81,10 +116,40 @@ public class ProductController {
     @PatchMapping("/{productIdx}/edit")
     public BaseResponse<String> editProduct(@PathVariable("productIdx") int productIdx, @RequestBody PostProductReq postProductReq){
         try {
+            if(postProductReq.getCategoryIdx() == 0){    // 카터고리 안적었을때
+                throw new BaseException(EMPTY_CATAGORY);
+            }
+            else if(postProductReq.getProductName() ==null){    // 제품이름 안적었을때
+                throw new BaseException(EMPTY_PRODUCTNAME);
+            }
+            else if(postProductReq.getProductDesc() == null){   // 상세정보 누락
+                throw new BaseException(EMPTY_DESC);
+            }
+            else if(postProductReq.getProductCondition() == 0){ // 컨디션 누락
+                throw new BaseException(EMPTY_CONDITION);
+            }
+            else if(postProductReq.getSaftyPay() == 0){ // 안전결제 누락
+                throw new BaseException(EMPTY_SAFTYPAY);
+            }
+            else if(postProductReq.getIsExchange() == 0){   // 교환여부 누락
+                throw new BaseException(EMPTY_EXCHANGE);
+            }
+            else if(postProductReq.getAmount() == 0){   // 수량 누락
+                throw new BaseException(EMPTY_AMOUNT);
+            }
+            else if(postProductReq.getIncludeFee() == 0){   // 택배비 포함여부 누락
+                throw new BaseException(EMPTY_INCLUDEFEE);
+            }
+
+
+
             int userByJwt = jwtService.getUserIdx();
             int editProduct = productService.editProduct(postProductReq, userByJwt, productIdx);
             if(editProduct == 0){
                 throw new BaseException(NOT_MY_PRODUCT);    //5002, "본인이 생성한 제품이 아닙니다."
+            }
+            else if(editProduct == 2){
+                throw new BaseException(NOT_EXIST);     // 5003, "삭제된 제품입니다."
             }
             else{
                 return new BaseResponse<>("제품정보 변경 성공");
@@ -111,6 +176,9 @@ public class ProductController {
             int deleteProduct = productService.deleteProduct(userIdxByJwt, productIdx);
             if(deleteProduct == 0){
                 throw new BaseException(INVALID_USER_JWT);
+            }
+            else if(deleteProduct ==2){
+                throw new BaseException(AREADY_DELETED);     // 5004, "이미 삭제된 제품입니다."
             }
             else {
                 return new BaseResponse<>("상품 삭제 성공");
