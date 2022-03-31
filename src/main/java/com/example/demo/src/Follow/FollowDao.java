@@ -1,19 +1,14 @@
-package com.example.demo.src.Follow;
+package com.example.demo.src.follow;
 
-import com.example.demo.src.Follow.model.*;
+import com.example.demo.src.follow.model.*;
 import com.example.demo.src.favortie.model.PostFavoriteInfoRes;
-import com.example.demo.src.user.model.GetUserRes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 
@@ -74,7 +69,7 @@ public class FollowDao {
         return this.jdbcTemplate.update(createFollowQuery, createFollowParams);
     }
 
-    public List<GetfollowRes> FollowList(int userIdx) {
+    public List<GetfollowRes> FollowList(int userIdx ,int q) {
         String FollowListQuery = "select F.followingIdx, U.shopName, P.productCnt , F2.followerCnt followCnt\n" +
                 "from Follow F\n" +
                 "         inner join (select count(*) followerCnt, followingIdx\n" +
@@ -84,20 +79,21 @@ public class FollowDao {
                 "         left join User U on U.Idx = F.followingIdx\n" +
                 "         left join (select userIdx, count(*) productCnt from Product group by userIdx) P on F.followingIdx = P.userIdx\n" +
                 "\n" +
-                "where F.userIdx = ?;";
+                "where F.userIdx = ? and F.followingIdx = ?;";
         int userParams = userIdx;
+        int followingIdxParams = q;
         return this.jdbcTemplate.query(FollowListQuery,
                 (rs, rowNum) -> new GetfollowRes(
                         rs.getInt("followingIdx"),
                         rs.getString("shopName"),
                         rs.getInt("productCnt"),
                         rs.getInt("followCnt")),
-                userParams);
+                userParams,followingIdxParams);
 
     }
 
 
-    public List<GetfollowDescRes> FollowListDesc(int userIdx) {
+    public List<GetfollowDescRes> FollowListDesc(int userIdx, int q) {
         String FollowListDescQuery = "select F.followingIdx, U.shopName, price, P.imageUrl, P.Idx productIdx\n" +
                 "from Follow F\n" +
                 "         inner join (select count(*) followerCnt, followingIdx\n" +
@@ -110,16 +106,15 @@ public class FollowDao {
                 "                             left join(select * from ProductImage group by productIdx) PI\n" +
                 "                                      on Product.Idx = PI.productIdx) P on F.followingIdx = P.userIdx\n" +
                 "\n" +
-                "where F.userIdx = ?;";
+                "where F.userIdx = ? and F.followingIdx =?;";
         int userParams = userIdx;
+        int followintParams =q;
         return this.jdbcTemplate.query(FollowListDescQuery,
                 (rs, rowNum) -> new GetfollowDescRes(
-                        rs.getInt("followingIdx"),
-                        rs.getString("shopName"),
                         rs.getInt("price"),
                         rs.getString("imageUrl"),
                         rs.getInt("productIdx")),
-                userParams);
+                userParams,followintParams);
 
     }
 
@@ -128,10 +123,6 @@ public class FollowDao {
                 "from Follow F\n" +
                 "where F.userIdx = ?";
         int userParams = userIdx;
-        System.out.println(jdbcTemplate.query(FollointIdxResQuery,
-                (rs, rowNum) -> new FollointIdxRes11(
-                        rs.getInt("followingIdx")),
-                userParams)); // 캡처한 화면 결과값
         return this.jdbcTemplate.query(FollointIdxResQuery,
                 (rs, rowNum) -> new FollointIdxRes(
                         rs.getInt("followingIdx")),
@@ -162,9 +153,13 @@ public class FollowDao {
                         rs.getString("userImage")),
                 userParams);
     }
-    @Getter
-    @AllArgsConstructor
-    public class FollointIdxRes11 {
-        int followingIdx;
-    }
+
+    public int getfollowoneIdx(int k) {
+        String lastInserIdQuery = "select F.followingIdx\n" +
+                "from Follow F\n" +
+                "where F.userIdx = 1  LIMIT ?,1 ";
+        int userParams = k ;
+        Object[] statusChangefollowParams = new Object[]{userParams};
+        return this.jdbcTemplate.queryForObject(lastInserIdQuery,statusChangefollowParams,int.class);}
+
 }

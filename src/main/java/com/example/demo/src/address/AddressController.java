@@ -1,6 +1,6 @@
 package com.example.demo.src.address;
 
-import com.example.demo.src.Follow.model.GetUserAddressRes;
+import com.example.demo.src.address.model.GetUserAddressRes;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
