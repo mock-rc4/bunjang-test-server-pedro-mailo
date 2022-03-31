@@ -1,8 +1,7 @@
-package com.example.demo.src.Follow.model;
+package com.example.demo.src.follow.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter

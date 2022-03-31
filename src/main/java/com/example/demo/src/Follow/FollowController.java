@@ -1,11 +1,9 @@
-package com.example.demo.src.Follow;
+package com.example.demo.src.follow;
 
 
-import com.example.demo.src.Follow.model.*;
+import com.example.demo.src.follow.model.*;
 
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;

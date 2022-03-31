@@ -62,7 +62,7 @@ public class HomeDao {
                 "      where U.Idx =?) UF on UF.FavoriteProcductIdx = P.Idx\n" +
                 "left join ProductImage PI on P.Idx = PI.productIdx\n" +
                 "left join Favorite F2 on P.Idx = F2.productIdx\n" +
-                "where P.progress != 3 \n" +
+                "where P.progress != 3 and P.status = 1 \n" +
                 "group by P.Idx";
         int GetProductByHomeParams = userIdx;
         System.out.println("GetProductByHomeParams");

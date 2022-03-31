@@ -1,4 +1,4 @@
-package com.example.demo.src.Follow.model;
+package com.example.demo.src.follow.model;
 
 
 
@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class GetfollowDescRes {
-    private int followingIdx;
-    private String shopName;
     private int price;
     private String imageUrl;
     private int productIdx;

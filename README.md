@@ -6,6 +6,7 @@
 
 <br /> 
 
+
 ## 📌 1주차 목표 작업 범위 (2022-03-19 ~ 2022-03-25) 
 - [x] ERD 설계
 - [x] EC2 환경구축
@@ -206,6 +207,9 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 <br />
 =======
 
+<br />
+=======
+
 ### 7. GET 오류 (22-03-30)
 - 문제 : 채팅방 입장및 조회 하는 API 테스트 중 에러 나오는 것 확인
 ``` JAVA 
@@ -215,4 +219,121 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 - 해결 : 매핑하는 URL 잘못 기재하여 생긴 오류 , URL 수정후 정상적으로 나오는것 확인
 >>>>>>> pedro
 
-## 🚀 참고자료
+
+## 🚀 코드분석(주요 폴더및 파일로 분석)
+``` text
+bunjang-test-server-pedro-mailo 
+
+ > gradle
+ > .idea // 인텔리제이의 프로젝트별 설정 파일이 포함되어있는 폴더. 해당 폴더에는 VCS 매핑 및 실행 및 디버그 구성과 같은 프로젝트 세부정보, 탐색 기록, 현재 선택된 구성과 같은 사용자별 세부 정보를 포함한다
+  | .gitignore // git 버전 관리에서 제외할 파일 목록을 지정하는 파일(JWT 비밀키, 등등 보안에 신경써야하는 정보)
+ > gradle // 빌드 자동화 위한 폴더
+  | gradle-wrapper.jar // Wrapper 파일, 실행 스크립트가 동작하면 Wrapper에 맞는 환경을 로컬 캐시에 다운로드 받은 뒤에 실제 명령에 해당하는 task를 실행. 
+  | gradle-wrapper.properties // 해당 프로젝트에 사용할 Gradle 버전의 상세 내용이 포함되어있다. 
+ > logs // 로그 파일??? 
+  | app.log // warn, error 레벨에 해당하는 로그가 작성 되는 파일
+  | app-%d{yyyy-MM-dd}.%i.gz
+  | error.log // error 레벨에 해당하는 로그가 작성 되는 파일
+  | error-%d{yyyy-MM-dd}.%i.gz
+ build.gradle // gradle 빌드시에 필요한 dependency 설정하는 곳
+ gradlew // gradle wrapper 줄임말 , 새로운 환경에서도 gradle을 설치하지 않아도 빌드 할 수있게 해주는 역할
+ 
+ > src // 해당 구조는 페드로가 작성한 파일 우선순위로 작성하였습니다. 
+  > java
+   | DemoApplication // SpringBootApplication 서버 시작 지점
+   > config
+    | BaseException.java // Controller, Service, Provider 에서 Response 용으로 공통적으로 사용 될 익셉션 클래스
+    | BaseResponse.java // Controller 에서 Response 용으로 공통적으로 사용되는 구조를 위한 모델 클래스
+    | BaseResponseStatus.java // Controller, Service, Provider 에서 사용 할 Response Status 관리 클래스 
+    | Constant.java // 공통적으로 사용될 상수 값들을 관리하는 곳
+    > secret
+     | Secret.java // 시크릿 키 값들이 작성되어있는 파일
+   > utils
+    | AES128.java // 암호화 관련 클래스
+    | JwtService.java // jwt 관련 클래스
+    | ValidateRegex.java // 정규표현식 관련 클래스
+   > src(각 폴더의 controller, service, provider, Dao 는 이하 전부 동일한 이름으로 작성하였습니다. ) 
+    > address
+     > model
+      | GetUserAddressRes.java // 유저 배송지 리스트 Response 클래스 
+      | PatchAddressReq.java // 유저 배송지 수정 Request 클래스 
+      | PatchAddressRes.java // 유저 배송지 수정 Response 클래스 
+      | PostaddressReq.java // 유저 배송지 등록 Request 클래스 
+      | PostaddressRes.java // 유저 배송지 등록 Response 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
+    > chat
+     > model
+      | GetChatInfoRes.java //특정 채팅방 정보 불러오는 Response 클래스
+      | getMessageRes.java // 채팅방 메시지 정보 조회 Response 클래스 
+      | PostChatMessageReq.java // 채팅방 메시지 전송 Request 클래스 
+      | PostChatMessageRes.java // 채팅방 메시지 전송 Response 클래스
+      | PostChatReq.java // 채팅방 생성 Respuest 클래스 
+      | PostChatRes.java // 채팅방 생성 Ruponse 클래스 
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
+    > faovire
+     > model
+      | GetUserFavoriteListRes.java // 유저 찜 목록 조회 Response 클래스
+      | PostFavoriteInfoReq.java // 유저 찜 등록/삭제 resquest 클래스 
+      | PostFavoriteInfoRes.java // 유저 찜 등록/삭제 response 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
+    > Follow
+     > model
+      | FollointIdxRes.java // 팔로우한 사람들 리스트 수정 요망
+      | GetfollowDescRes.java // 팔로우 한 사람들 상세 정보 Response 클래스
+      | GetFollowerRes.java // 팔로워 리스트 정보 조회 Response 클래스 
+      | GetfollowRes.java // 팔로워 정보 조회 response 클래스
+      | PostFollowInfoReq // 팔로워 등록/삭제여부 resquest 클래스
+      | PostFollowInfoRes // 팔로워 등록/삭제여부 response 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
+    > user
+     > model
+      | DeleteUserReq.java // 유저 탈퇴(삭제는 안하고 status 값만 변경) Request 클래스
+      | GerUserSettingRes.java // 유저 상점정보 조회 Response 클래스
+      | GetSearchByUserNameRes.java // 상점명 키워드로하여 상점 조회 Response 클래스
+      | GetUserInfoRes.java // 유저 메인페이지 유저기본정보 조회 Response 클래스
+      | GetUserProductCountRes.java // 유저가 등록한 판매상품 갯수 조회하는 Response 클래스
+      | GetUserProductListRes.java  // 유저가 등록한 판매상품 리스트 조회하는 Response 클래스
+      | PatchShopNameReq.java // 유저 상점명 변경 Request 클래스
+      | PatchUserBirthReq.java // 유저 생년월일 변경 Request 클래스
+      | PatchUserPhoneReq.java // 유저 핸드폰 번호 변경 Request 클래스
+      | PatchUserSettingReq.java // 유저 상점정보 설정 Request 클래스
+      | PatchUserSexReq.java // 유저 성별정보 변경 Request 클래스
+      | PostLoginReq.java // 유저 로그인 Request 클래스
+      | PostLoginRes.java // 유저 로그인 Response 클래스
+      | PostUserReq.java // 유저 회원가입 Request 클래스 
+      | PostUserRes.java // 유저 회원가입 Response 클래스
+      | User.java // 유저 정보 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
+    > home
+    > product
+    > review
+    > test
+  > resource
+   | application.yml // Database 연동을 위한 설정 값 세팅 및 Port 정의 파일
+   | logback-spring.xml // logger 사용시 console, file 설정 값 정의 파일
+   
+ 
+ 
+ 
+```
+
+
+## 참고폴더
+1. [idea폴더](https://rider-support.jetbrains.com/hc/en-us/articles/207097529-What-is-the-idea-folder-)
+2. [gitignore](https://devlog-wjdrbs96.tistory.com/237)
+3. [gradle](https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/gradle-wrapper/)

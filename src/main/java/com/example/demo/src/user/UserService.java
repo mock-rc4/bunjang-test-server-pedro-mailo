@@ -60,16 +60,7 @@ public class UserService {
         }
     }
 
-    public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
-        try{
-            int result = userDao.modifyUserName(patchUserReq);
-            if(result == 0){
-                throw new BaseException(MODIFY_FAIL_USERNAME);
-            }
-        } catch(Exception exception){
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+
     public void modifyshopName(PatchShopNameReq patchShopNameReq) throws BaseException {
             if(userProvider.checkShopName(patchShopNameReq.getShopName())==1){
                 throw new BaseException(POST_USERS_EXISTS_ShopName);

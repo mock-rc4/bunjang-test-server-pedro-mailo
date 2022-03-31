@@ -1,8 +1,8 @@
 package com.example.demo.src.address;
 
 
-import com.example.demo.src.Follow.model.GetUserAddressRes;
-import com.example.demo.src.address.model.*;
+import com.example.demo.src.address.model.GetUserAddressRes;
+import com.example.demo.src.address.model.PatchAddressReq;
 import com.example.demo.src.address.model.PostaddressReq;
 import com.example.demo.src.address.model.PostaddressRes;
 import org.springframework.stereotype.Repository;
@@ -98,11 +98,12 @@ public class AddressDao {
     }
 
     public List<GetUserAddressRes> getaddressInfo(int userIdx) {
-        String getaddressQuery = "select userIdx,name,phoneNumber,address,addressDesc,defaultAddress from Address where userIdx =? and status =1;";
+        String getaddressQuery = "select userIdx,Idx,name,phoneNumber,address,addressDesc,defaultAddress from Address where userIdx =? and status =1;";
         int userParams = userIdx;
         return this.jdbcTemplate.query(getaddressQuery,
                 (rs, rowNum) -> new GetUserAddressRes(
                         rs.getInt("userIdx"),
+                        rs.getInt("Idx"),
                         rs.getString("name"),
                         rs.getString("phoneNumber"),
                         rs.getString("address"),
