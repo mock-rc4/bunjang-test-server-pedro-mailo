@@ -6,6 +6,7 @@
 
 <br /> 
 
+
 ## 📌 1주차 목표 작업 범위 (2022-03-19 ~ 2022-03-25) 
 - [x] ERD 설계
 - [x] EC2 환경구축
@@ -202,6 +203,9 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
  ```
 - 해결 : Req 값으로 파라미터를 메세지만 받아서 생기는 결과.. 임의로 매개변수 하나 추가 해서 테스트 결과 나오는걸로 확인
 
+<<<<<<< HEAD
+<br />
+=======
 
 ### 7. GET 오류 (22-03-30)
 - 문제 : 채팅방 입장및 조회 하는 API 테스트 중 에러 나오는 것 확인
@@ -210,5 +214,91 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 
 ```
 - 해결 : 매핑하는 URL 잘못 기재하여 생긴 오류 , URL 수정후 정상적으로 나오는것 확인
+>>>>>>> pedro
 
-## 🚀 참고자료
+## 🚀 코드분석(주요 폴더및 파일로 분석)
+``` text
+bunjang-test-server-pedro-mailo 
+
+ > gradle
+ > .idea // 인텔리제이의 프로젝트별 설정 파일이 포함되어있는 폴더. 해당 폴더에는 VCS 매핑 및 실행 및 디버그 구성과 같은 프로젝트 세부정보, 탐색 기록, 현재 선택된 구성과 같은 사용자별 세부 정보를 포함한다
+  | .gitignore // git 버전 관리에서 제외할 파일 목록을 지정하는 파일(JWT 비밀키, 등등 보안에 신경써야하는 정보)
+ > gradle // 빌드 자동화 위한 폴더
+  | gradle-wrapper.jar // Wrapper 파일, 실행 스크립트가 동작하면 Wrapper에 맞는 환경을 로컬 캐시에 다운로드 받은 뒤에 실제 명령에 해당하는 task를 실행. 
+  | gradle-wrapper.properties // 해당 프로젝트에 사용할 Gradle 버전의 상세 내용이 포함되어있다. 
+ > logs // 로그 파일??? 
+  | app.log // warn, error 레벨에 해당하는 로그가 작성 되는 파일
+  | app-%d{yyyy-MM-dd}.%i.gz
+  | error.log // error 레벨에 해당하는 로그가 작성 되는 파일
+  | error-%d{yyyy-MM-dd}.%i.gz
+ build.gradle // gradle 빌드시에 필요한 dependency 설정하는 곳
+ gradlew // gradle wrapper 줄임말 , 새로운 환경에서도 gradle을 설치하지 않아도 빌드 할 수있게 해주는 역할
+ 
+ > src // 해당 구조는 페드로가 작성한 파일 우선순위로 작성하였습니다. 
+  > java
+   | DemoApplication // SpringBootApplication 서버 시작 지점
+   > config
+    | BaseException.java // Controller, Service, Provider 에서 Response 용으로 공통적으로 사용 될 익셉션 클래스
+    | BaseResponse.java // Controller 에서 Response 용으로 공통적으로 사용되는 구조를 위한 모델 클래스
+    | BaseResponseStatus.java // Controller, Service, Provider 에서 사용 할 Response Status 관리 클래스 
+    | Constant.java // 공통적으로 사용될 상수 값들을 관리하는 곳
+    > secret
+     | Secret.java // 시크릿 키 값들이 작성되어있는 파일
+   > utils
+    | AES128.java // 암호화 관련 클래스
+    | JwtService.java // jwt 관련 클래스
+    | ValidateRegex.java // 정규표현식 관련 클래스
+   > src(각 폴더의 controller, service, provider, Dao 는 이하 전부 동일한 이름으로 작성하였습니다. ) 
+    > address
+     > model
+      | GetUserAddressRes.java // 유저 주소 리스트 Response
+      | PatchAddressReq .java // 
+      | 
+      |
+      |
+     | Controller
+     | Service
+     | Provider
+     | Dao
+    > chat
+     > model
+     | Controller
+     | Service
+     | Provider
+     | Dao
+    > faovire
+     > model
+     | Controller
+     | Service
+     | Provider
+     | Dao
+    > Follow
+     > model
+     | Controller
+     | Service
+     | Provider
+     | Dao
+    > user
+     > model
+     | Controller
+     | Service
+     | Provider
+     | Dao
+    > home
+    > product
+    > review
+    > test
+  > resource
+   | application.yml // Database 연동을 위한 설정 값 세팅 및 Port 정의 파일
+   | logback-spring.xml // logger 사용시 console, file 설정 값 정의 파일
+   
+ 
+ 
+ 
+```
+
+
+## 참고폴더
+1. [idea폴더](https://rider-support.jetbrains.com/hc/en-us/articles/207097529-What-is-the-idea-folder-)
+2. [gitignore](https://devlog-wjdrbs96.tistory.com/237)
+3. [gradle](https://www.jetbrains.com/idea/guide/tutorials/working-with-gradle/gradle-wrapper/)
