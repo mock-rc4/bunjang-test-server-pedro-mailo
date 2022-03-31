@@ -430,14 +430,11 @@ public class ProductDao {
         String getProductsBySellerQuery = "select PY.Idx PYIdx, P.Idx PIdx,\n" +
                 "       PI.imageUrl, P.productName,\n" +
                 "       P.price,\n" +
-                "       U.shopName buyerNmae, PY.paymentMethod,\n" +
-                "  case when\n" +
-                "      instr(DATE_FORMAT(P.updateAt, '%Y-%m-%d %p %h:%i'), 'PM') > 0\n" +
-                "        THEN\n" +
-                "        replace(DATE_FORMAT(P.updateAt, '%Y-%m-%d %p %h:%i'), 'PM', '오후')\n" +
-                "        ELSE\n" +
-                "        replace(DATE_FORMAT(P.updateAt, '%Y-%m-%d %p %h:%i'), 'AM', '오전')\n" +
-                "        END AS updateTime\n" +
+                "       U.shopName buyerName, PY.paymentMethod,\n" +
+                "       case when instr(DATE_FORMAT(PY.updateAt, '%Y-%m-%d %p %h:%i'), 'PM') > 0\n" +
+                "       then replace(DATE_FORMAT(PY.updateAt, '%Y-%m-%d %p %h:%i'), 'PM', '오후')\n" +
+                "       else replace(DATE_FORMAT(PY.updateAt, '%Y-%m-%d %p %h:%i'), 'AM', '오전')\n" +
+                "       end as updateTime\n" +
                 "from Payment PY\n" +
                 "join Product P on PY.productIdx = P.Idx\n" +
                 "join User U on PY.buyerIdx = U.Idx\n" +

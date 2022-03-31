@@ -78,8 +78,8 @@ com/example/demo/src/product/model/PostProductPictureRes.java
  com.example.demo.src.product.model.PostProductPictureRes
 com/example/demo/src/favortie/model/PostFavoriteInfoReq.java
  com.example.demo.src.favortie.model.PostFavoriteInfoReq
-com/example/demo/src/product/ProductDao.java
- com.example.demo.src.product.ProductDao
+com/example/demo/src/review/ReviewService.java
+ com.example.demo.src.review.ReviewService
 com/example/demo/src/address/model/PostaddressRes.java
  com.example.demo.src.address.model.PostaddressRes
 com/example/demo/src/user/model/UserProductCountRes.java
@@ -116,14 +116,14 @@ com/example/demo/src/chat/model/PostChatRes.java
  com.example.demo.src.chat.model.PostChatRes
 com/example/demo/src/chat/GetUserInfoRes.java
  com.example.demo.src.chat.GetUserInfoRes
-com/example/demo/src/product/ProductProvider.java
- com.example.demo.src.product.ProductProvider
+com/example/demo/src/chat/ChatService.java
+ com.example.demo.src.chat.ChatService
 com/example/demo/src/Follow/FollowController.java
  com.example.demo.src.follow.FollowController
 com/example/demo/src/Follow/model/PostFollowInfoRes.java
  com.example.demo.src.follow.model.PostFollowInfoRes
-com/example/demo/src/product/ProductService.java
- com.example.demo.src.product.ProductService
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
 com/example/demo/src/home/HomeProvider.java
  com.example.demo.src.home.HomeProvider
 com/example/demo/src/address/model/GetUserAddressRes.java
@@ -191,19 +191,19 @@ com/example/demo/src/address/AddressService.java
  com.example.demo.src.address.AddressService
 com/example/demo/src/address/AddressDao.java
  com.example.demo.src.address.AddressDao
-com/example/demo/src/product/ProductController.java
- com.example.demo.src.product.ProductController
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/src/chat/model/getMessageRes.java
  com.example.demo.src.chat.model.getMessageRes
 com/example/demo/src/Follow/model/GetfollowRes.java
  com.example.demo.src.follow.model.GetfollowRes
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
-com/example/demo/src/user/UserProvider.java
- com.example.demo.src.user.UserProvider
-com/example/demo/src/review/ReviewService.java
- com.example.demo.src.review.ReviewService
-com/example/demo/src/chat/ChatService.java
- com.example.demo.src.chat.ChatService
+com/example/demo/src/product/ProductProvider.java
+ com.example.demo.src.product.ProductProvider
+com/example/demo/src/product/ProductDao.java
+ com.example.demo.src.product.ProductDao
+com/example/demo/src/product/ProductService.java
+ com.example.demo.src.product.ProductService
+com/example/demo/src/product/ProductController.java
+ com.example.demo.src.product.ProductController
