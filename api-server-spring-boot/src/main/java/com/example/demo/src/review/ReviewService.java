@@ -30,6 +30,12 @@ public class ReviewService {
         this.jwtService = jwtService;
     }
 
+// 후기 존재하는지 확인
+    public int checkReviewAlready(int userIdx, int paymentIdx){
+        return reviewDao.checkReviewAlready(userIdx, paymentIdx);
+    }
+
+
 // 후기 등록
     public List<String> createReview(PostReviewReq postReviewReq, int userIdx,int paymentIdx)throws BaseException{
         try{

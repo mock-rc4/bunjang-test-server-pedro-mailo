@@ -2,7 +2,7 @@ package com.example.demo.src.address;
 
 import com.example.demo.config.BaseException;
 
-import com.example.demo.src.Follow.model.GetUserAddressRes;
+import com.example.demo.src.address.model.GetUserAddressRes;
 import com.example.demo.src.address.model.PostaddressReq;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;

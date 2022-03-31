@@ -41,6 +41,30 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_USER_STATUS(false,2025,"탈퇴한 회원과 채팅을 할수 없습니다"),
     POST_USERS_EXIST_CHATROOM(false,2026,"이미 해당 사용자와 채팅을 하고있습니다."),
 
+    // review
+    NOT_MY_REVIEW(false, 2031, "본인이 작성한 리뷰가 아닙니다."),
+    EMPTY_RATE(false, 2032, "별점을 입력해주세요."),
+    EMPTY_REVIEWDESC(false, 2033, "후기 상세정보를 입력해주세요."),
+    REVEIW_ALREADY(false, 2034, "이미 작성한 후기가 있습니다."),
+
+    // product
+    EMPTY_IMAGE(false, 2041, "사진을 1개 이상 첨부해주세요."),
+    EMPTY_PRICE(false, 2042, "가격을 적어주세요, 미입력시 무료나눔."),
+
+    EMPTY_CATAGORY(false, 2043, "카테고리를 입력해주세요."),
+    EMPTY_PRODUCTNAME(false, 2044, "게시물 제목을 적어주세요"),
+    EMPTY_DESC(false, 2045, "게시물 내용을 적어주세요."),
+    EMPTY_CONDITION(false, 2046, "제품상태를 선택해주세요."),
+    EMPTY_SAFTYPAY(false, 2047, "안전결제 여부를 선택해주세요."),
+    EMPTY_EXCHANGE(false, 2048, "교환가능여부를 선택해주세요."),
+    EMPTY_AMOUNT(false, 2049, "수량을 적어주세요."),
+    EMPTY_INCLUDEFEE(false, 2050, "택배비 포함여부를 선택해주세요."),
+
+
+    NOT_MY_PRODUCT(false, 2061, "본인이 생성한 제품이 아닙니다."),
+    NOT_EXIST(false, 2062, "존재하지 않는 제품입니다."),
+    AREADY_DELETED(false, 2063, "이미 삭제된 제품입니다."),
+
 
     /**
      * 3000 : Response 오류
@@ -68,26 +92,14 @@ public enum BaseResponseStatus {
     MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
-    PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다."),
+    PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
 
 
     // 5000 : 필요시 만들어서 쓰세요
-    NOT_MY_REVIEW(false, 5001, "본인이 작성한 리뷰가 아닙니다."),
-    NOT_MY_PRODUCT(false, 5002, "본인이 생성한 제품이 아닙니다."),
-    NOT_EXIST(false, 5003, "존재하지 않는 제품입니다."),
-    AREADY_DELETED(false, 5004, "이미 삭제된 제품입니다."),
-    EMPTY_CATAGORY(false, 5005, "카테고리를 입력해주세요."),
-    EMPTY_PRODUCTNAME(false, 5006, "게시물 제목을 적어주세요"),
-    EMPTY_DESC(false, 5007, "게시물 내용을 적어주세요."),
-    EMPTY_CONDITION(false, 5008, "제품상태를 선택해주세요."),
-    EMPTY_SAFTYPAY(false, 5009, "안전결제 여부를 선택해주세요."),
-    EMPTY_EXCHANGE(false, 5010, "교환가능여부를 선택해주세요."),
-    EMPTY_AMOUNT(false, 5011, "수량을 적어주세요."),
-    EMPTY_INCLUDEFEE(false, 5012, "택배비 포함여부를 선택해주세요."),
-    EMPTY_IMAGE(false, 5013, "사진을 1개 이상 첨부해주세요."),
-    EMPTY_PRICE(false, 5014, "가격을 적어주세요, 미입력시 무료나눔."),
-    EMPTY_RATE(false, 5015, "별점을 입력해주세요."),
-    EMPTY_REVIEWDESC(false, 5016, "후기 상세정보를 입력해주세요.");
+
+
+
+
 
     // 6000 : 필요시 만들어서 쓰세요
 

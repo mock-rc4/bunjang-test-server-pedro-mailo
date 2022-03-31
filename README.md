@@ -147,3 +147,13 @@
   -> git merge 등의 명령어를 이용해 서로의 코드를 주기적으로 병합해야 했는데 이해를 잘못한채로 진행해옴
   </div>
   </details>
+
+    
+## 2022-03-31 진행상황
+  + API 설계
+    + HomeDao 쿼리 수정
+    + Product 관련 API 예외처리 추가
+    + Review 관련 API 예외처리 추가
+  + API 명세서 정리
+  + BaseResponseStatus 에러코드 정리
+  + gitignore -> application.yml 추가

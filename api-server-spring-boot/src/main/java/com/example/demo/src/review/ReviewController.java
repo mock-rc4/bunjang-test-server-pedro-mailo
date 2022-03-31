@@ -46,6 +46,15 @@ public class ReviewController {
     @PostMapping("/paymentIdx/{paymentIdx}")
     public BaseResponse<List<String>> createReview(@RequestBody PostReviewReq postReviewReq, @PathVariable("paymentIdx") int paymentIdx){
         try{
+            int userIdxByJwt = jwtService.getUserIdx();
+
+
+
+            if(reviewService.checkReviewAlready(userIdxByJwt, paymentIdx) != 0){
+                throw new BaseException(REVEIW_ALREADY);
+            }
+
+
             if(postReviewReq.getReviewRate() == 0){
                 throw new BaseException(EMPTY_RATE);
             }
@@ -54,7 +63,7 @@ public class ReviewController {
             }
 
             System.out.println(paymentIdx);
-            int userIdxByJwt = jwtService.getUserIdx();
+
 
             int checkuserIdx = reviewProvider.checkBuyerIdxandjwt(paymentIdx, userIdxByJwt);
             if(checkuserIdx == 0){

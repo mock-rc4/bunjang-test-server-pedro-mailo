@@ -78,6 +78,17 @@ public class ReviewDao {
     }
 
 
+    /**
+     * 후기 이미 존재하는지 확인쿼리
+     **/
+    public int checkReviewAlready(int userIdx, int paymentIdx){
+        String checkQuery = "select exists( select *\n" +
+                "                where R.userIdx = ?) myReview\n" +
+                "                from Review R\n" +
+                "                where R.paymentIdx = ?";
+        return this.jdbcTemplate.queryForObject(checkQuery,int.class,userIdx,paymentIdx);
+    }
+
 
     /**
      * 후기 등록
