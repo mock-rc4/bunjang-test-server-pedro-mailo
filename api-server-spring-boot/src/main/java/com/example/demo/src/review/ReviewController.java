@@ -48,12 +48,12 @@ public class ReviewController {
         try{
             int userIdxByJwt = jwtService.getUserIdx();
 
-
+            System.out.println("리뷰 컨트롤러 들어옴");
 
             if(reviewService.checkReviewAlready(userIdxByJwt, paymentIdx) != 0){
                 throw new BaseException(REVEIW_ALREADY);
             }
-
+            System.out.println("리뷰 컨트롤러 들어옴");
 
             if(postReviewReq.getReviewRate() == 0){
                 throw new BaseException(EMPTY_RATE);

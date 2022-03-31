@@ -32,6 +32,7 @@ public class ReviewService {
 
 // 후기 존재하는지 확인
     public int checkReviewAlready(int userIdx, int paymentIdx){
+        System.out.println("체크리뷰 들어옴");
         return reviewDao.checkReviewAlready(userIdx, paymentIdx);
     }
 
@@ -39,6 +40,7 @@ public class ReviewService {
 // 후기 등록
     public List<String> createReview(PostReviewReq postReviewReq, int userIdx,int paymentIdx)throws BaseException{
         try{
+            System.out.println("리뷰 서비스 들어옴");
             PostCreateNewReview newReviewRes = reviewDao.createReview(postReviewReq, userIdx, paymentIdx);
             int ReviewIdx = newReviewRes.getReviewIdx();
             PostReviewRes ReviewDetail = newReviewRes.getReviewDetail();

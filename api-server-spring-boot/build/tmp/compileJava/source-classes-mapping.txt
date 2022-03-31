@@ -40,8 +40,8 @@ com/example/demo/src/product/model/GetProductDetailRes.java
  com.example.demo.src.product.model.GetProductDetailRes
 com/example/demo/src/user/model/PatchUserReq.java
  com.example.demo.src.user.model.PatchUserReq
-com/example/demo/src/review/ReviewDao.java
- com.example.demo.src.review.ReviewDao
+com/example/demo/src/product/ProductController.java
+ com.example.demo.src.product.ProductController
 com/example/demo/src/product/model/PostProductReq.java
  com.example.demo.src.product.model.PostProductReq
 com/example/demo/src/product/model/GetBuyRes.java
@@ -78,8 +78,8 @@ com/example/demo/src/product/model/PostProductPictureRes.java
  com.example.demo.src.product.model.PostProductPictureRes
 com/example/demo/src/favortie/model/PostFavoriteInfoReq.java
  com.example.demo.src.favortie.model.PostFavoriteInfoReq
-com/example/demo/src/review/ReviewService.java
- com.example.demo.src.review.ReviewService
+com/example/demo/src/product/ProductProvider.java
+ com.example.demo.src.product.ProductProvider
 com/example/demo/src/address/model/PostaddressRes.java
  com.example.demo.src.address.model.PostaddressRes
 com/example/demo/src/user/model/UserProductCountRes.java
@@ -147,8 +147,8 @@ com/example/demo/src/kakao/KakaoProfile.java
  com.example.demo.src.kakao.KakaoProfile$KakaoAccount
  com.example.demo.src.kakao.KakaoProfile$KakaoAccount$Profile
  com.example.demo.src.kakao.KakaoProfile$Properties
-com/example/demo/src/review/ReviewController.java
- com.example.demo.src.review.ReviewController
+com/example/demo/src/product/ProductService.java
+ com.example.demo.src.product.ProductService
 com/example/demo/src/chat/Chatcontroller.java
  com.example.demo.src.chat.Chatcontroller
 com/example/demo/src/chat/ChatProvider.java
@@ -169,8 +169,8 @@ com/example/demo/src/chat/model/PostChatMessageRep.java
  com.example.demo.src.chat.model.PostChatMessageRep
 com/example/demo/src/kakao/UserRepository.java
  com.example.demo.src.kakao.UserRepository
-com/example/demo/src/review/ReviewProvider.java
- com.example.demo.src.review.ReviewProvider
+com/example/demo/src/product/ProductDao.java
+ com.example.demo.src.product.ProductDao
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/src/chat/ChatDao.java
@@ -199,11 +199,11 @@ com/example/demo/src/chat/model/getMessageRes.java
  com.example.demo.src.chat.model.getMessageRes
 com/example/demo/src/Follow/model/GetfollowRes.java
  com.example.demo.src.follow.model.GetfollowRes
-com/example/demo/src/product/ProductProvider.java
- com.example.demo.src.product.ProductProvider
-com/example/demo/src/product/ProductDao.java
- com.example.demo.src.product.ProductDao
-com/example/demo/src/product/ProductService.java
- com.example.demo.src.product.ProductService
-com/example/demo/src/product/ProductController.java
- com.example.demo.src.product.ProductController
+com/example/demo/src/review/ReviewDao.java
+ com.example.demo.src.review.ReviewDao
+com/example/demo/src/review/ReviewController.java
+ com.example.demo.src.review.ReviewController
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
+com/example/demo/src/review/ReviewService.java
+ com.example.demo.src.review.ReviewService

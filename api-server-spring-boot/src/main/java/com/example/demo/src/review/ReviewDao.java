@@ -82,10 +82,10 @@ public class ReviewDao {
      * 후기 이미 존재하는지 확인쿼리
      **/
     public int checkReviewAlready(int userIdx, int paymentIdx){
-        String checkQuery = "select exists( select *\n" +
-                "                where R.userIdx = ?) myReview\n" +
-                "                from Review R\n" +
-                "                where R.paymentIdx = ?";
+        System.out.println("체크다오 들어옴");
+        String checkQuery = "select case when exists( select * from Review R\n" +
+                "                            where R.userIdx = ? and R.paymentIdx = ?) then 1\n" +
+                "                else 0 end myReview";
         return this.jdbcTemplate.queryForObject(checkQuery,int.class,userIdx,paymentIdx);
     }
 
@@ -94,6 +94,7 @@ public class ReviewDao {
      * 후기 등록
      **/
     public PostCreateNewReview createReview(PostReviewReq postReviewReq, int userIdx,int paymentIdx){
+        System.out.println("리뷰 Dao 들어옴");
         String createReviewQuery = "insert into Review(createAt, updateAt, reviewRate, reviewDesc, paymentIdx, userIdx)" +
                 "values (current_timestamp,current_timestamp,?,?,?,?)";
         this.jdbcTemplate.update(createReviewQuery, postReviewReq.getReviewRate(), postReviewReq.getReviewDesc(), paymentIdx, userIdx);
