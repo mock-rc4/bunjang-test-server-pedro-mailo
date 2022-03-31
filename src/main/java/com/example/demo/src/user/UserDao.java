@@ -1,6 +1,7 @@
 package com.example.demo.src.user;
 
 
+import com.example.demo.src.Follow.model.GetUserAddressRes;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -59,11 +60,8 @@ public class UserDao {
 
 
     public int createUser(PostUserReq postUserReq) {
-        System.out.println("CCC6");
         String createUserQuery = "insert into User (shopName, phoneNumber, userName,userBirth,userPwd) VALUES (?,?,?,?,?);";
-        System.out.println("CCC8");
         //Object[] createUserParams = new Object[]{postUserReq.getShopName(),postUserReq.getPhoneNumber(),postUserReq.getUserName(),postUserReq.getUserBirth(),postUserReq.getUserPwd()};
-        System.out.println("CCC9");
         System.out.println(createUserQuery);
         //System.out.println(createUserParams);
         this.jdbcTemplate.update(createUserQuery, postUserReq.getShopName(), postUserReq.getPhoneNumber(), postUserReq.getUserName(), postUserReq.getUserBirth(), postUserReq.getUserPwd());//// 에러 나는 라인!
@@ -157,17 +155,29 @@ public class UserDao {
     }
 
     public List<GetUserInfoRes> UserInfo(int userIdx) {
-        String GetUserInfoResQuery = "select U.shopName  userShopName,\n" +
-                "       U.profileImage userProfileImage,\n" +
-                "       count(F.userIdx)       as userFavCount,\n" +
-                "       count(R.userIdx)       as userReviewCount,\n" +
-                "       count(F2.userIdx)      as userFollowingCount,\n" +
-                "       count(F2.followingIdx) as userFollwerCount,\n" +
-                "       case when avg(R.reviewRate) is null then 0 else avg(R.reviewRate) end as `reviewrate`\n" +
+        String GetUserInfoResQuery = "select U.shopName          userShopName,\n" +
+                "       U.profileImage      userProfileImage,\n" +
+                "       count(F.userIdx) as userFavCount,\n" +
+                "       count(R.userIdx) as userReviewCount,\n" +
+                "       F2.followcnt     as userFollowingCount,\n" +
+                "       F3.followercnt   as userFollwerCount,\n" +
+                "       case when avg(distinct FORRATE.reviewRate) is null then 0 else avg(distinct FORRATE.reviewRate) end as `reviewrate`\n" +
                 "from User U\n" +
+                "         left join (select count(userIdx) followcnt, userIdx from Follow where status = 1 group by userIdx) F2\n" +
+                "                   on F2.userIdx = U.Idx\n" +
+                "         left join (select count(followingIdx) followercnt, followingIdx\n" +
+                "                    from Follow\n" +
+                "                    where status = 1\n" +
+                "                    group by followingIdx) F3 on F3.followingIdx = U.Idx\n" +
                 "         left join Favorite F on U.Idx = F.userIdx\n" +
                 "         left join Review R on U.Idx = R.userIdx\n" +
-                "         left join (select * from Follow where status = 1) F2 on F2.userIdx = U.Idx\n" +
+                "\n" +
+                "left join ((select P2.Idx, P2.userIdx, PYR.productIdx, PYR.reviewRate\n" +
+                "    from Product P2\n" +
+                "    join (select PY.productIdx,R.reviewRate\n" +
+                "                from Payment PY\n" +
+                "                join Review R on PY.Idx = R.paymentIdx) as PYR on PYR.productIdx = P2.Idx) as FORRATE) on U.Idx = FORRATE.userIdx\n" +
+                "\n" +
                 "where U.Idx = ?;";
         int GetUserInfoResParams = userIdx;
         return this.jdbcTemplate.query(GetUserInfoResQuery,
@@ -242,8 +252,26 @@ public class UserDao {
         return this.jdbcTemplate.update(deleteUserInfoQuery, deleteUserInfoParams);
     }
 
-///
+    public List<GerUserSettingRes> GerUserSetting(int userIdx) {
+        String GerUserSettingQuery = "select shopName, shopAddress , case when avaTimeStart=avaTimeEnd then '24시간'else concat(avaTimeStart,'~',avaTimeEnd)  end avaTime, shopIntro,shopPolicy,preCaution from User where Idx = ?;";
+        int userParams = userIdx;
+        return this.jdbcTemplate.query(GerUserSettingQuery,
+                (rs, rowNum) -> new GerUserSettingRes(
+                        rs.getString("shopName"),
+                        rs.getString("shopAddress"),
+                        rs.getString("avaTime"),
+                        rs.getString("shopIntro"),
+                        rs.getString("shopPolicy"),
+                        rs.getString("preCaution")),
+                userParams);
 
-    /*로그인 주석*/
-///
+    }
+
+    public int patchUserSetting(PatchUserSettingReq patchUserSettingReq, int userIdx) {
+        String patchUserSettingQuery = "update User set shopName=? , shopAddress =? , avaTimeStart =? , avaTimeEnd = ? , shopIntro = ? , shopPolicy =? , preCaution =? where Idx = ?;";
+        Object[]  patchUserSettingParams = new Object[]{patchUserSettingReq.getShopName(), patchUserSettingReq.getShopAddress() , patchUserSettingReq.getAvaTimeStart(),patchUserSettingReq.getAvaTimeEnd(),patchUserSettingReq.getShopIntro(),patchUserSettingReq.getShopPolicy(),patchUserSettingReq.getPreCaution(),userIdx};
+
+        return this.jdbcTemplate.update(patchUserSettingQuery, patchUserSettingParams);
+    }
+
 }

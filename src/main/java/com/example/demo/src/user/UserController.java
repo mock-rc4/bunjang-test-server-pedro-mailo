@@ -34,48 +34,30 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    /**
-     * 회원 조회 API
-     * [GET] /users
-     * 회원 번호 및 이메일 검색 조회 API
-     * [GET] /users? Email=
-     * @return BaseResponse<List<GetUserRes>>
-     */
-    //Query String
-    @ResponseBody
-    @GetMapping("") // (GET) 127.0.0.1:9000/app/users
-    public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String Email) {
-        try{
-            if(Email == null){
-                List<GetUserRes> getUsersRes = userProvider.getUsers();
-                return new BaseResponse<>(getUsersRes);
-            }
-            // Get Users
-            List<GetUserRes> getUsersRes = userProvider.getUsersByEmail(Email);
-            return new BaseResponse<>(getUsersRes);
-        } catch(BaseException exception){
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
+//    /**
+//     * 회원 조회 API
+//     * [GET] /users
+//     * 회원 번호 및 이메일 검색 조회 API
+//     * [GET] /users? Email=
+//     * @return BaseResponse<List<GetUserRes>>
+//     */
+//    //Query String
+//    @ResponseBody
+//    @GetMapping("") // (GET) 127.0.0.1:9000/app/users
+//    public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String Email) {
+//        try{
+//            if(Email == null){
+//                List<GetUserRes> getUsersRes = userProvider.getUsers();
+//                return new BaseResponse<>(getUsersRes);
+//            }
+//            // Get Users
+//            List<GetUserRes> getUsersRes = userProvider.getUsersByEmail(Email);
+//            return new BaseResponse<>(getUsersRes);
+//        } catch(BaseException exception){
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 
-    /**
-     * 회원 1명 조회 API
-     * [GET] /users/:userIdx
-     * @return BaseResponse<GetUserRes>
-     */
-    // Path-variable
-    @ResponseBody
-    @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/app/users/:userIdx
-    public BaseResponse<GetUserRes> getUser(@PathVariable("userIdx") int userIdx) {
-        // Get Users
-        try{
-            GetUserRes getUserRes = userProvider.getUser(userIdx);
-            return new BaseResponse<>(getUserRes);
-        } catch(BaseException exception){
-            return new BaseResponse<>((exception.getStatus()));
-        }
-
-    }
 
     /**첫번째 작업 3/21 00:41
      * 회원가입 API
@@ -86,7 +68,9 @@ public class UserController {
     @ResponseBody
     @PostMapping("")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
-        // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
+
+
+        // 핸드폰 번호, 유저이름, 생년월일을 공백으로 기재할시 나오는 BaseResponse<>(상태) 리턴
         if (postUserReq.getPhoneNumber() == null || postUserReq.getPhoneNumber().length() == 0) {
             return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
         }
@@ -96,7 +80,7 @@ public class UserController {
         if (postUserReq.getUserBirth() == null || postUserReq.getUserBirth().length() == 0) {
             return new BaseResponse<>(POST_USERS_EMPTY_BIRTH);
         }
-//        //이메일 정규표현
+//        //이메일 정규표현 참고 코드
 //        if(!isRegexEmail(postUserReq.getEmail())){
 //            return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
 //        }
@@ -119,6 +103,8 @@ public class UserController {
             // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
             // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
 
+
+            // 핸드폰 번호, 유저이름, 생년월일을 공백으로 기재할시 나오는 BaseResponse<>(상태) 리턴
             if (postLoginReq.getPhoneNumber() == null || postLoginReq.getPhoneNumber().length() == 0) {
                 return new BaseResponse<>(POST_USERS_EMPTY_PHONE);
             }
@@ -129,6 +115,7 @@ public class UserController {
                 return new BaseResponse<>(POST_USERS_EMPTY_BIRTH);
             }
 
+            //입력한 핸드폰 번호가 DB에 되지 않은 핸드폰 번호 일경우
             if(userProvider.checkPhone(postLoginReq.getPhoneNumber())==0){
                 //userProvider.logIn(postLoginReq);
                 return new BaseResponse<>(POST_USERS_INVALID_PHONENUMBER);
@@ -141,14 +128,12 @@ public class UserController {
         }
     }
 
-// 주석 라인
- // /
 
 
 
 
     /**
-     * 유저정보변경 API
+     * 유저성별 변경 API
      * [PATCH] /users/:userIdx
      * @return BaseResponse<String>
      */
@@ -175,7 +160,7 @@ public class UserController {
 
 
     /**
-     * 유저 상점명 변경 API 솔직히 그렇게 필요없는 API
+     * 유저 상점명 변경 API
      * [PATCH] /users/:userIdx
      * @return BaseResponse<String>
      */
@@ -251,7 +236,7 @@ public class UserController {
 
 
     /**
-     * 유저 성별변경 API
+     * 유저 핸드폰 번호변경 API
      * [PATCH] /users/:userIdx
      * @return BaseResponse<String>
      */
@@ -278,8 +263,12 @@ public class UserController {
 
 
 
-/**
-* 자기 메인페이지 접근*/
+    /**
+     * 유저 메인페이지 조회 API
+     * [PATCH] /:userIdx/:progress
+     * @return BaseResponse<list<String>>
+     * 유저인덱스와 판매진행 상태 progress 를 매개변수로 받아서 유저 메인페이지 조회
+     */
     @ResponseBody
     @GetMapping("/{userIdx}/{progress}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
     public BaseResponse<List<String>> getUserMainPage(@PathVariable("userIdx") int userIdx,@PathVariable("progress") int progress){
@@ -303,7 +292,12 @@ public class UserController {
 
     }
 
-
+    /**
+     * 상점명 검색 API
+     * [PATCH] /shopname?{shopName}
+     * @return BaseResponse<list<GetSearchByUserNameRes>>
+     *
+     */
     @ResponseBody
     @GetMapping("/shopName")
     public BaseResponse<List<GetSearchByUserNameRes>> SeatchByUserName(@RequestParam(required = false) String shopName) { //
@@ -322,7 +316,7 @@ public class UserController {
 
     /**
      * 유저 탈퇴 API
-     * [PATCH] /users/:userInfoIdx/delete
+     * [PATCH] /users/:userIdx/delete
      *
      * @return BaseResponse<String>
      */
@@ -350,6 +344,43 @@ public class UserController {
         }
     }
 
+
+
+    @ResponseBody
+    @GetMapping("/{userIdx}/setting")
+    public BaseResponse<List<GerUserSettingRes>> GetsettingInfo(@PathVariable("userIdx") int userIdx) { //
+        try {
+            //jwt에서 idx 추출.
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            //같다면 유저네임 변경
+            List<GerUserSettingRes> GetsettingInfoRes = userProvider.GetsettingInfo(userIdx);
+
+            return new BaseResponse<>(GetsettingInfoRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @ResponseBody
+    @PatchMapping("/{userIdx}/setting")
+    public BaseResponse<String> patchUserSetting(@RequestBody PatchUserSettingReq patchUserSettingReq,@PathVariable("userIdx") int userIdx) {
+        try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            //userIdx와 접근한 유저가 같은지 확인
+            if(userIdx != userIdxByJwt){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            userService.patchUserSetting(patchUserSettingReq,userIdx);
+            String result = "설정변경완료";
+            return new BaseResponse<>(result);
+        }catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
 

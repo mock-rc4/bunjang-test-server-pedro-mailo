@@ -4,6 +4,8 @@ package com.example.demo.src.Follow;
 import com.example.demo.src.Follow.model.*;
 
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;
@@ -17,7 +19,8 @@ import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
 @RequestMapping("/app/follows")
-public class FollowController {
+public class
+FollowController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -54,7 +57,7 @@ public class FollowController {
 
     @ResponseBody
     @GetMapping("/follow/{userIdx}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
-    public BaseResponse<List<String>> getuserFollowList(@PathVariable("userIdx") int userIdx){
+    public BaseResponse<List<GetfollowRes>> getuserFollowList(@PathVariable("userIdx") int userIdx){
         try{
             int userIdxByJwt = jwtService.getUserIdx();
             System.out.println(userIdxByJwt);
@@ -63,13 +66,20 @@ public class FollowController {
             if(userIdx != userIdxByJwt){
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
-            List<String> getUserMainPage = followProvider.getuserFollowList(userIdx);
+            List<GetfollowRes> getUserMainPage = followProvider.getuserFollowList(userIdx);
+
+
             return new BaseResponse<>(getUserMainPage);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
 
     }
+
+
+
+
+
     @ResponseBody
     @GetMapping("/followers/{userIdx}") // (GET) 127.0.0.1:9000/app/hotels/:hotelIdx
     public BaseResponse<List<GetFollowerRes>> getuserFollower(@PathVariable("userIdx") int userIdx) {

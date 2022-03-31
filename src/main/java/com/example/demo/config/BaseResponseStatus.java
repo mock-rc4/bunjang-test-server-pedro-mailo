@@ -39,8 +39,8 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_PHONENUMBER(false,2023,"등록되지 않은 핸드폰번호입니다."),
     POST_USERS_INVALID_USERBIRTH(false,2024,"등록된 생년월일과 일치하지 않습니다."),
     //POST_USERS_INVALID_(false,2021,"이미 등록된 회원 정보입니다."),
-
-
+    POST_USERS_INVALID_USER_STATUS(false,2025,"탈퇴한 회원과 채팅을 할수 없습니다"),
+    POST_USERS_EXIST_CHATROOM(false,2026,"이미 해당 사용자와 채팅을 하고있습니다."),
 
     /**
      * 3000 : Response 오류
@@ -56,7 +56,7 @@ public enum BaseResponseStatus {
 
     LOGIN_USERS_NOT_JOIN(false,3015 , "로그인실패"),
 
-
+     NOT_MY_REVIEW(false,5001 ,"본인이 작성한 리뷰가 아닙니다." ),
     /**
      * 4000 : Database, Server 오류
      */

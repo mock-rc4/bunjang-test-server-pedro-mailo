@@ -9,11 +9,11 @@ import com.example.demo.src.Follow.model.GetFollowerRes;
 import com.example.demo.src.user.model.GetUserRes;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
+import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,28 +46,12 @@ public class FollowProvider {
 
     }
 
-    public List<String> getuserFollowList(int userIdx) throws BaseException{
-        List folidx = followDao.getfollowIdxInfo(userIdx);
-        System.out.println(folidx);
-        List<Map<String,Object>> listMap = folidx;
-
-        listMap.get(1);
-//        int isi = folidx.size();
-//        for (int i = 0 ; i<isi ; i++){
-//        }
-//            List FollowList = followDao.FollowList(userIdx);
-//
-//            List FollowListDesc = followDao.FollowListDesc(userIdx);
-//            List resultDetailList = new ArrayList<>(Arrays.asList(FollowList,FollowListDesc));
-//            return resultDetailList;
-//
-//
-//        }
+    public List<GetfollowRes> getuserFollowList(int userIdx) throws BaseException{
+        System.out.println(followDao.getfollowIdxInfo(userIdx));
     List FollowList = followDao.FollowList(userIdx);
-
     List FollowListDesc = followDao.FollowListDesc(userIdx);
     List resultDetailList = new ArrayList<>(Arrays.asList(FollowList,FollowListDesc));
-            return resultDetailList;
+    return resultDetailList;
 //        List<FollointIdxRes> folidx = followDao.getfollowIdxInfo(userIdx);
 //
 //        System.out.println(folidx);

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 @Service
 public class ProductService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -31,23 +33,64 @@ public class ProductService {
 
 
 // product 생성
-    public PostProductRes createProduct(PostProductReq postProductReq, int userIdx) throws BaseException{
+    public List<String> createProduct(PostProductReq postProductReq, int userIdx) throws BaseException{
         try{
-            System.out.println("제품생성 서비스 들어옴");
+            //System.out.println("제품생성 서비스 들어옴");
             int userIdxPram = userIdx;
-            int Idx = productDao.createProduct(postProductReq,userIdxPram);
+            PostcreateNewProduct newProductRes = productDao.createProduct(postProductReq,userIdxPram);
+            //int Idx = productDao.createProduct(postProductReq,userIdxPram).getProductIdx(); // 방금 만든 product의 Idx
+            int Idx = newProductRes.getProductIdx();
+            PostProductRes ProductDetail = newProductRes.getProductDetail();
 
-            return new PostProductRes(Idx, userIdxPram, postProductReq.getCategoryIdx(),
-                    postProductReq.getProductName(), postProductReq.getProductDesc(), postProductReq.getProductCondition(),
-                    postProductReq.getSaftyPay(), postProductReq.getIsExchange(), postProductReq.getAmount(),
-                    postProductReq.getIncludeFee(), postProductReq.getPrice(), postProductReq.getDirecttrans());
+            List newProduct = new ArrayList<PostProductRes>();
+            newProduct.add(ProductDetail);
+            //System.out.println("제품생성 다오 통과");
+
+            List newProductPictureList = productDao.createProductPicture(postProductReq, Idx);
+            //System.out.println("사진생성 다오 통과");
+            List newProductTagList = productDao.createProductTag(postProductReq, Idx);
+            //System.out.println("태그생성 다오 통과");
+
+            List newProductDetail = new ArrayList<>(Arrays.asList(newProduct, newProductPictureList, newProductTagList));
+
+
+            return newProductDetail;
 
         }catch(Exception exception){
-            System.out.println("dao에서 불러올때 에러");
+            //System.out.println("dao에서 불러올때 에러");
             throw new BaseException(DATABASE_ERROR);
         }
 
     }
+
+
+// 상품 삭제
+    public int deleteProduct(int userIdx, int productIdx) throws BaseException{
+        try {
+            int checkMyProduct = productDao.checkProductUser(userIdx,productIdx);
+            if(checkMyProduct == 0){
+                return 0;
+                //throw new BaseException(INVALID_USER_JWT);
+            }
+            else{
+                productDao.deleteProduct(productIdx);
+                System.out.println("상품 status 변경");
+                productDao.deleteProductPicture(productIdx);
+                System.out.println("상품사진 status 변경");
+                productDao.deleteProductTag(productIdx);
+                System.out.println("상품태그 status 변경");
+                productDao.deleteProductQuestionByPIdx(productIdx);
+                System.out.println("상품문의 status 변경");
+                return 1;
+             }
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+
+
 
 // payment 생성
     public PostPaymentRes createPayment(PostPaymentReq postPaymentReq, int buyerIdx, int productIdx) throws BaseException{
@@ -61,6 +104,39 @@ public class ProductService {
             return new PostPaymentRes(Idx, productIdxParm, buyerIdxParm, postPaymentReq.getSafetyTax(),
                     postPaymentReq.getPoint(), postPaymentReq.getTotalPaymentAmount(), postPaymentReq.getPaymentMethod(), postPaymentReq.getTransactionMethod(),
                     postPaymentReq.getAddress());
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+// ProductQuestion 생성
+    public PostProductQuesRes createProductQuestion(PostProductQuesReq postProductQuesReq, int userIdx, int productIdx) throws BaseException{
+        try{
+            System.out.println("상품문의 생성 서비스 들어옴");
+            int userIdxParm =userIdx;
+            int productIdxParm = productIdx;
+            int QIdx = productDao.createProductQuestion(postProductQuesReq, productIdxParm, userIdxParm);
+
+            return new PostProductQuesRes(QIdx, productIdxParm, userIdxParm, postProductQuesReq.getQuestionDesc());
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+// 상품 문의 삭제
+    public void deleteProductQuestion(int userIdx, int QIdx)throws BaseException{
+        try{
+            System.out.println("상품문의 삭제 서비스 들어옴");
+            int checkMyQuestion = productDao.checkQuestionUser(userIdx, QIdx);
+            if(checkMyQuestion == 0){
+                System.out.println("체크에서 걸렸을때");
+                throw new BaseException(INVALID_USER_JWT);
+            }
+            else{
+                System.out.println("체크에서 안 걸렸을때");
+                int changeStatus = productDao.deleteProductQuestion(QIdx);
+                System.out.println("dao에서 불러오기 성공");
+            }
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
