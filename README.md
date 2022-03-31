@@ -203,7 +203,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
  ```
 - 해결 : Req 값으로 파라미터를 메세지만 받아서 생기는 결과.. 임의로 매개변수 하나 추가 해서 테스트 결과 나오는걸로 확인
 
-<<<<<<< HEAD
+
 <br />
 =======
 
@@ -214,7 +214,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Incorrect result
 
 ```
 - 해결 : 매핑하는 URL 잘못 기재하여 생긴 오류 , URL 수정후 정상적으로 나오는것 확인
->>>>>>> pedro
+
 
 ## 🚀 코드분석(주요 폴더및 파일로 분석)
 ``` text
@@ -251,39 +251,70 @@ bunjang-test-server-pedro-mailo
    > src(각 폴더의 controller, service, provider, Dao 는 이하 전부 동일한 이름으로 작성하였습니다. ) 
     > address
      > model
-      | GetUserAddressRes.java // 유저 주소 리스트 Response
-      | PatchAddressReq .java // 
-      | 
-      |
-      |
-     | Controller
-     | Service
-     | Provider
-     | Dao
+      | GetUserAddressRes.java // 유저 배송지 리스트 Response 클래스 
+      | PatchAddressReq.java // 유저 배송지 수정 Request 클래스 
+      | PatchAddressRes.java // 유저 배송지 수정 Response 클래스 
+      | PostaddressReq.java // 유저 배송지 등록 Request 클래스 
+      | PostaddressRes.java // 유저 배송지 등록 Response 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
     > chat
      > model
-     | Controller
-     | Service
-     | Provider
-     | Dao
+      | GetChatInfoRes.java //특정 채팅방 정보 불러오는 Response 클래스
+      | getMessageRes.java // 채팅방 메시지 정보 조회 Response 클래스 
+      | PostChatMessageReq.java // 채팅방 메시지 전송 Request 클래스 
+      | PostChatMessageRes.java // 채팅방 메시지 전송 Response 클래스
+      | PostChatReq.java // 채팅방 생성 Respuest 클래스 
+      | PostChatRes.java // 채팅방 생성 Ruponse 클래스 
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
     > faovire
      > model
-     | Controller
-     | Service
-     | Provider
-     | Dao
+      | GetUserFavoriteListRes.java // 유저 찜 목록 조회 Response 클래스
+      | PostFavoriteInfoReq.java // 유저 찜 등록/삭제 resquest 클래스 
+      | PostFavoriteInfoRes.java // 유저 찜 등록/삭제 response 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
     > Follow
      > model
-     | Controller
-     | Service
-     | Provider
-     | Dao
+      | FollointIdxRes.java // 팔로우한 사람들 리스트 수정 요망
+      | GetfollowDescRes.java // 팔로우 한 사람들 상세 정보 Response 클래스
+      | GetFollowerRes.java // 팔로워 리스트 정보 조회 Response 클래스 
+      | GetfollowRes.java // 팔로워 정보 조회 response 클래스
+      | PostFollowInfoReq // 팔로워 등록/삭제여부 resquest 클래스
+      | PostFollowInfoRes // 팔로워 등록/삭제여부 response 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
     > user
      > model
-     | Controller
-     | Service
-     | Provider
-     | Dao
+      | DeleteUserReq.java // 유저 탈퇴(삭제는 안하고 status 값만 변경) Request 클래스
+      | GerUserSettingRes.java // 유저 상점정보 조회 Response 클래스
+      | GetSearchByUserNameRes.java // 상점명 키워드로하여 상점 조회 Response 클래스
+      | GetUserInfoRes.java // 유저 메인페이지 유저기본정보 조회 Response 클래스
+      | GetUserProductCountRes.java // 유저가 등록한 판매상품 갯수 조회하는 Response 클래스
+      | GetUserProductListRes.java  // 유저가 등록한 판매상품 리스트 조회하는 Response 클래스
+      | PatchShopNameReq.java // 유저 상점명 변경 Request 클래스
+      | PatchUserBirthReq.java // 유저 생년월일 변경 Request 클래스
+      | PatchUserPhoneReq.java // 유저 핸드폰 번호 변경 Request 클래스
+      | PatchUserSettingReq.java // 유저 상점정보 설정 Request 클래스
+      | PatchUserSexReq.java // 유저 성별정보 변경 Request 클래스
+      | PostLoginReq.java // 유저 로그인 Request 클래스
+      | PostLoginRes.java // 유저 로그인 Response 클래스
+      | PostUserReq.java // 유저 회원가입 Request 클래스 
+      | PostUserRes.java // 유저 회원가입 Response 클래스
+      | User.java // 유저 정보 클래스
+     | Controller // 코드 주석 참고
+     | Service // 코드 주석 참고
+     | Provider // 코드 주석 참고
+     | Dao // 코드 주석 참고
     > home
     > product
     > review
