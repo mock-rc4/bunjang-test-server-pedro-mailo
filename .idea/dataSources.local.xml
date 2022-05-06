@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-213.6461.79">
-    <data-source name="rasingtest-bunjang@rc4-pedro-server-db.cuupyzlcppur.ap-northeast-2.rds.amazonaws.com" uuid="45ab3dfe-47a8-4975-aae8-731e1b26aee7">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
-      <schema-mapping />
-    </data-source>
-  </component>
-</project>
